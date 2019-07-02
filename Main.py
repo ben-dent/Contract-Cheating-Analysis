@@ -16,7 +16,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnExit.clicked.connect(self.exit)
 
     def createDatabase(self):
-        dbName = "Cheating.db"
+        dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
@@ -31,14 +31,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con.commit()
 
     def databaseSetup(self):
-        dbName = "Cheating.db"
+        dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
-        cur.execute('SELECT JobID FROM Details')
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Details'")
 
         # Checks if table exists
-        if(len(cur.fetchall()) == 0):
+        if(cur.fetchall() == 0):
             self.createDatabase()
 
     def exit(self):
