@@ -15,6 +15,32 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnFetch.clicked.connect(self.fetch)
         self.btnExit.clicked.connect(self.exit)
 
+    def createDatabase(self):
+        dbName = "Cheating.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Details')
+        cur.execute('''CREATE TABLE Details (
+        'JobID' INTEGER PRIMARY KEY AUTOINCREMENT,
+        'NumberOfBidders' INTEGER NOT NULL,
+        'AverageBidCost' INTEGER NOT NULL,
+        'Country' TEXT NOT NULL
+        );''')
+
+        con.commit()
+
+    def databaseSetup(self):
+        dbName = "Cheating.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('SELECT JobID FROM Details')
+
+        # Checks if table exists
+        if(len(cur.fetchall()) == 0):
+            self.createDatabase()
+
     def exit(self):
         main.close()
 
@@ -60,6 +86,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                         country = b.split("\n")[0]
                         self.lblCountry.setText(country)
                         break
+                self.databaseSetup()
 
             except requests.exceptions.MissingSchema as e:
                 QtWidgets.QMessageBox.warning(self, "Invalid entry", "Please enter a valid URL!",
