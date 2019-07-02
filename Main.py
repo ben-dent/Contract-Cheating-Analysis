@@ -71,10 +71,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 if (data1.text.split("Need to")[0] == data1.text):
                     division = data1.text.split(" ")
 
-                    numFreelancers = division[0] + " " + division[1]
-                    averagePrice = "Bidding an average of " + division[6]
-                    self.lblFreelancers.setText(numFreelancers)
-                    self.lblAvPrice.setText(averagePrice)
+                    self.numFreelancers = division[0] + " " + division[1]
+                    self.averagePrice = "Bidding an average of " + division[6]
+                    self.lblFreelancers.setText(self.numFreelancers)
+                    self.lblAvPrice.setText(self.averagePrice)
                 else:
                     self.lblFreelancers.setText("Nobody has bid on this yet")
                     self.lblAvPrice.setText("No bids yet")
@@ -82,9 +82,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 data2 = soup.find_all("span")
                 for item in data2:
                     if (item.get("itemprop") == "addressLocality"):
-                        b = item.text.split(", ")[1]
-                        country = b.split("\n")[0]
-                        self.lblCountry.setText(country)
+                        b = item.text
+                        if (b.split(", ")[0] != b):
+                            b = item.text.split(", ")[1]
+                        else:
+                            b = " ".join(b.split())
+                            # b.replace(" ", "")
+                        self.country = b.split("\n")[0]
+                        self.lblCountry.setText(self.country)
                         break
                 self.databaseSetup()
 
