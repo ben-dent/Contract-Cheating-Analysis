@@ -146,8 +146,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
+        # The enter key number is 16777220
         ENTER_KEY = 16777220
         if (event.key() == ENTER_KEY):
+            # Calls the fetch function
             self.fetch()
 
 # Runs the application and launches the window
