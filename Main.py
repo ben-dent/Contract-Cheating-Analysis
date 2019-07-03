@@ -8,6 +8,9 @@ Code is provided as-is under an MIT License
 
 from bs4 import BeautifulSoup
 import requests
+import mechanicalsoup
+import urllib3
+import http.cookiejar as cookielib
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
@@ -24,7 +27,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent = None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.fetch)
+        self.btnFetch.clicked.connect(self.loginToFreelancer)
         self.btnExit.clicked.connect(self.exit)
 
     # Creates the table in the database, which will initially be empty
@@ -151,6 +154,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Temporary outputting of the dictionary
         print(bidderCountries)
+
+
+    def loginToFreelancer(self):
+        br = mechanicalsoup.Browser()
+        loginPage = br.get("https://www.freelancer.co.uk/login")
+        forms = loginPage.soup.find_all("form")
+        for form in forms:
+            print(form.get("name"))
+        # form.find("input", {"name": "login"})["value"] = "AnalyisProject"
+        # form.find("input", {"name": "password"})["value"] = "Project!"
+        # print(br.submit(form, loginPage))
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
