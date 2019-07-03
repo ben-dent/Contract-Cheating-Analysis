@@ -72,39 +72,77 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 soup = BeautifulSoup(r.content, "html.parser")
 
                 # Finding the average that freelancers are bidding - the first h2 HTML tag
-                data1 = soup.find("h2")
-
-                # Check if anyone has bid on the job yet
-                if (data1.text.split("Need to")[0] == data1.text):
-                    division = data1.text.split(" ")
-
-                    self.numFreelancers = division[0] + " " + division[1]
-                    self.averagePrice = "Bidding an average of " + division[6]
-                    self.lblFreelancers.setText(self.numFreelancers)
-                    self.lblAvPrice.setText(self.averagePrice)
-                else:
-                    self.lblFreelancers.setText("Nobody has bid on this yet")
-                    self.lblAvPrice.setText("No bids yet")
+                self.biddersAndPriceFind = soup.find("h2")
 
                 # Retrieving the country of the customer
-                data2 = soup.find_all("span")
-                for item in data2:
-                    if (item.get("itemprop") == "addressLocality"):
-                        b = item.text
-                        if (b.split(", ")[0] != b):
-                            b = item.text.split(", ")[1]
-                        else:
-                            b = " ".join(b.split())
-                        self.country = b.split("\n")[0]
-                        self.lblCountry.setText(self.country)
-                        break
-                self.databaseSetup()
+                self.customerCountryFind = soup.find_all("span")
+
+                # Retrieving the tags that the customer gave to their task
+                self.givenTags = soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
+
+                # Retrieving the countries of the bidders
+                self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
+
+                # Output the retrieved results
+                self.output()
 
             except requests.exceptions.MissingSchema as e:
+                # If an entered URL is not valid, it will show an error and clear the inputs
                 QtWidgets.QMessageBox.warning(self, "Invalid entry", "Please enter a valid URL!",
                                               QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
                 self.edtURL.setText("")
                 self.edtURL.setFocus()
+
+    def output(self):
+        # Check if anyone has bid on the job yet
+        if (self.biddersAndPriceFind.text.split("Need to")[0] == self.biddersAndPriceFind.text):
+            division = self.biddersAndPriceFind.text.split(" ")
+
+            self.numFreelancers = division[0] + " " + division[1]
+            self.averagePrice = "Bidding an average of " + division[6]
+            self.lblFreelancers.setText(self.numFreelancers)
+            self.lblAvPrice.setText(self.averagePrice)
+        else:
+            self.lblFreelancers.setText("Nobody has bid on this yet")
+            self.lblAvPrice.setText("No bids yet")
+
+        # Finds the country that the customer is from
+        for item in self.customerCountryFind:
+            if (item.get("itemprop") == "addressLocality"):
+                b = item.text
+                if (b.split(", ")[0] != b):
+                    b = item.text.split(", ")[1]
+                else:
+                    b = " ".join(b.split())
+                self.country = b.split("\n")[0]
+                self.lblCountry.setText(self.country)
+                break
+
+        # Makes sure that the database exists
+        self.databaseSetup()
+
+        # Defines a dictionary to store the number of bidders from each country that has a bidder
+        bidderCountries = {}
+
+        # Saving the locations of bidders and the number from that country into the dictionary
+        for each in self.bidderCountries:
+            # Gets the country of the bidder
+            country = each.contents[1].get("title")
+
+            num = 1
+
+            # Checks if the country is already in the dictionary
+            result = bidderCountries.get(country)
+
+            # Incrementing value if country already in dictionary
+            if (result != None):
+                num = result + 1
+
+            # Updating the dictionary with
+            bidderCountries.update({country : num})
+
+        # Temporary outputting of the dictionary
+        print(bidderCountries)
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
