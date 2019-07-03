@@ -8,9 +8,9 @@ Code is provided as-is under an MIT License
 
 from bs4 import BeautifulSoup
 import requests
-import mechanicalsoup
-import urllib3
-import http.cookiejar as cookielib
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.firefox.options import Options
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
@@ -157,14 +157,32 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
 
     def loginToFreelancer(self):
-        br = mechanicalsoup.Browser()
-        loginPage = br.get("https://www.freelancer.co.uk/login")
-        forms = loginPage.soup.find_all("form")
-        for form in forms:
-            print(form.get("name"))
-        # form.find("input", {"name": "login"})["value"] = "AnalyisProject"
-        # form.find("input", {"name": "password"})["value"] = "Project!"
-        # print(br.submit(form, loginPage))
+        # The username and password for the throwaway account I created
+        username = "AnalysisProject"
+        password = "Project!"
+
+        # Launch the Selenium Firefox browser - Use options.headless as False if you want the popup browser
+        options = Options()
+        options.headless = False
+        driver = webdriver.Firefox(options=options)
+
+        # Opens the Freelancer login page
+        driver.get("https://www.freelancer.co.uk/login")
+
+        # Fills in the username
+        userField = driver.find_element_by_id("username")
+        userField.send_keys(username)
+
+        # Fills in the password
+        passwordField = driver.find_element_by_id("password")
+        passwordField.send_keys(password)
+
+        # Clicks the submit button
+        submitButton = driver.find_element_by_id("login_btn")
+        submitButton.click()
+
+        a = 1
+
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
