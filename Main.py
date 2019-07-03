@@ -9,7 +9,8 @@ Code is provided as-is under an MIT License
 from bs4 import BeautifulSoup
 import requests
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
+import time
+# from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.firefox.options import Options
 import sqlite3 as lite
 import sys
@@ -181,8 +182,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         submitButton = driver.find_element_by_id("login_btn")
         submitButton.click()
 
-        a = 1
+        time.sleep(4)
 
+        driver.get("https://www.freelancer.co.uk/search/projects/")
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
