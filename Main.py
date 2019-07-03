@@ -1,3 +1,11 @@
+'''
+
+Made by Ben Dent as part of an  Undergraduate Research Opportunities Placement (UROP) at Imperial College London
+
+Code is provided as-is under an MIT License
+
+'''
+
 from bs4 import BeautifulSoup
 import requests
 import sqlite3 as lite
