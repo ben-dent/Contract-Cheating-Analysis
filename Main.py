@@ -165,26 +165,31 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Launch the Selenium Firefox browser - Use options.headless as False if you want the popup browser
         options = Options()
         options.headless = False
-        driver = webdriver.Firefox(options=options)
+        self.driver = webdriver.Firefox(options=options)
 
         # Opens the Freelancer login page
-        driver.get("https://www.freelancer.co.uk/login")
+        self.driver.get("https://www.freelancer.co.uk/login")
 
         # Fills in the username
-        userField = driver.find_element_by_id("username")
+        userField = self.driver.find_element_by_id("username")
         userField.send_keys(username)
 
         # Fills in the password
-        passwordField = driver.find_element_by_id("password")
+        passwordField = self.driver.find_element_by_id("password")
         passwordField.send_keys(password)
 
+        time.sleep(1)
+
         # Clicks the submit button
-        submitButton = driver.find_element_by_id("login_btn")
+        submitButton = self.driver.find_element_by_id("login_btn")
         submitButton.click()
 
         time.sleep(4)
 
-        driver.get("https://www.freelancer.co.uk/search/projects/")
+        # Navigates to the projects page
+        self.driver.get("https://www.freelancer.co.uk/search/projects/")
+
+        # soup = BeautifulSoup(self.driver.page_source, 'html.parser')
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
