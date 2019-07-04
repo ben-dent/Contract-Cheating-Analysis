@@ -9,12 +9,13 @@ Code is provided as-is under an MIT License
 from bs4 import BeautifulSoup
 import requests
 import time
-from datetime import date
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
+
+from Crawler import *
 
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
@@ -29,7 +30,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         # self.btnFetch.clicked.connect(self.loginToFreelancer)
-        self.btnFetch.clicked.connect(self.fetch)
+        self.btnFetch.clicked.connect(crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 2))
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
@@ -211,18 +212,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # self.driver.get("https://www.freelancer.co.uk/archives/")
 
         # soup = BeautifulSoup(self.driver.page_source, 'html.parser')
-
-    # Will crawl through the whole archive
-    def crawlWholeArchive(self):
-        print("Hello")
-
-    # Will crawl through the archived projects within the given time-frame
-    def crawlArchives(self, startYear, startWeek):
-        # Get the (zero-indexed) week number
-        today = date.today().isocalendar()
-        currentWeek = today[2] - 1
-        years = today[1] - startYear
-        print("Hello")
 
     # Handles closing the browser and the program
     # Precondition - the browser launched by the program is currently open
