@@ -28,8 +28,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent = None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.loginToFreelancer)
+        # self.btnFetch.clicked.connect(self.loginToFreelancer)
+        self.btnFetch.clicked.connect(self.fetch)
         self.btnExit.clicked.connect(self.exit)
+        self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
     # Creates the table in the database, which will initially be empty
     def createDatabase(self):
@@ -83,8 +85,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 r = requests.get(url)
                 soup = BeautifulSoup(r.content, "html.parser")
 
+                self.archiveCheck = soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
+
+                self.archived = False
+
+                if (self.archiveCheck != None):
+                    self.archived = True
+
+
                 # Finding the average that freelancers are bidding - the first h2 HTML tag
-                self.biddersAndPriceFind = soup.find("h2")
+                self.biddersInfo = soup.find_all("h2")
+                self.biddersAndPriceFind = self.biddersInfo[0]
+
+                # Makes sure the bidding info is correct as archived pages use a slightly different format
+                if (self.archived):
+                    self.biddersAndPriceFind = self.biddersInfo[1]
 
                 # Retrieving the country of the customer
                 self.customerCountryFind = soup.find_all("span")
@@ -94,6 +109,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # Retrieving the countries of the bidders
                 self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
+
+                # Retrieving the final price for the task if we are looking in the archives
+                self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
 
                 # Output the retrieved results
                 self.output()
@@ -187,9 +205,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
         time.sleep(4)
 
         # Navigates to the projects page
-        self.driver.get("https://www.freelancer.co.uk/search/projects/")
+        # self.driver.get("https://www.freelancer.co.uk/search/projects/")
+
+        # Navigates to the archives page
+        # self.driver.get("https://www.freelancer.co.uk/archives/")
 
         # soup = BeautifulSoup(self.driver.page_source, 'html.parser')
+
+    def getFinalPriceInfo(self):
+        priceParts = self.finalPrice.text.split(" ")
+
+        theFinalPrice = priceParts[0] + " " + priceParts[1]
+
+    def closeBrowser(self):
+        self.driver.close()
+        self.exit()
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button
     def keyPressEvent(self, event):
