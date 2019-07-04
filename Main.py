@@ -8,9 +8,9 @@ Code is provided as-is under an MIT License
 
 from bs4 import BeautifulSoup
 import requests
-from selenium import webdriver
 import time
-# from selenium.webdriver.common.keys import Keys
+from datetime import date
+from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 import sqlite3 as lite
 import sys
@@ -85,13 +85,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 r = requests.get(url)
                 soup = BeautifulSoup(r.content, "html.parser")
 
+                # Checking if the given page is an archived page
                 self.archiveCheck = soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
-
                 self.archived = False
 
+                # The response will be None if the page is archived
                 if (self.archiveCheck != None):
                     self.archived = True
-
 
                 # Finding the average that freelancers are bidding - the first h2 HTML tag
                 self.biddersInfo = soup.find_all("h2")
@@ -212,11 +212,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # soup = BeautifulSoup(self.driver.page_source, 'html.parser')
 
-    def getFinalPriceInfo(self):
-        priceParts = self.finalPrice.text.split(" ")
+    # Will crawl through the whole archive
+    def crawlWholeArchive(self):
+        print("Hello")
 
-        theFinalPrice = priceParts[0] + " " + priceParts[1]
+    # Will crawl through the archived projects within the given time-frame
+    def crawlArchives(self, startYear, startWeek):
+        # Get the (zero-indexed) week number
+        today = date.today().isocalendar()
+        currentWeek = today[2] - 1
+        years = today[1] - startYear
+        print("Hello")
 
+    # Handles closing the browser and the program
+    # Precondition - the browser launched by the program is currently open
     def closeBrowser(self):
         self.driver.close()
         self.exit()
