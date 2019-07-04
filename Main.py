@@ -6,8 +6,6 @@ Code is provided as-is under an MIT License
 
 '''
 
-from bs4 import BeautifulSoup
-import requests
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
@@ -15,7 +13,7 @@ import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
 
-from Crawler import *
+from Crawler import crawlArchiveByGivenURL, crawlWholeArchive
 
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
@@ -30,9 +28,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         # self.btnFetch.clicked.connect(self.loginToFreelancer)
-        self.btnFetch.clicked.connect(crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 2))
+        self.btnFetch.clicked.connect(self.test)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
+
+    def test(self):
+        crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 2)
 
     # Creates the table in the database, which will initially be empty
     def createDatabase(self):
