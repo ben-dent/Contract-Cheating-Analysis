@@ -2,9 +2,27 @@ import requests
 from bs4 import BeautifulSoup
 from datetime import date
 
+PREFIX_LINK = "https://www.freelancer.co.uk"
 
-def getAllTheData():
-    print("Ok")
+# Will retrieve all the data from the given weeks
+def getAllTheData(links):
+    for link in links:
+        r = requests.get(link)
+        soup = BeautifulSoup(r.content, 'html.parser')
+
+        # Gets the list of projects
+        items = soup.find("ul", {"class" : "prjt"})
+
+        # Gets all the links
+        listLinks = items.contents[1].find_all("a")
+
+        # Calls checkProject on each individual project link
+        for item in listLinks:
+            linkToProject = item.get("href")
+            checkProject(PREFIX_LINK + linkToProject)
+
+def checkProject(link):
+    print("Hello")
 
 # Will crawl through the whole archive
 def crawlWholeArchive():
@@ -34,10 +52,11 @@ def crawlArchiveByGivenURL(url, numberofYearsToView):
 
     linksToFollow = []
 
+    # Builds a list of all the links of the weeks
     for i in range(len(data)):
         newData = BeautifulSoup(str(data[i]), 'html.parser')
         links = newData.find_all("a")
         for link in links:
-            linksToFollow.append("https://www.freelancer.co.uk" + link.get("href"))
+            linksToFollow.append(PREFIX_LINK + link.get("href"))
 
-    getAllTheData()
+    getAllTheData(linksToFollow)

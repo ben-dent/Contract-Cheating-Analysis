@@ -13,7 +13,8 @@ import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
 
-from Crawler import crawlArchiveByGivenURL, crawlWholeArchive
+from Crawler import *
+from DataAnalysis import *
 
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
@@ -66,115 +67,115 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def exit(self):
         main.close()
 
-    # Does all the fetching and handling of the data required
-    def fetch(self):
-        valid = False
-        url = self.edtURL.text()
+        # Does all the fetching and handling of the data required
+        def fetch(self):
+            valid = False
+            url = self.edtURL.text()
 
-        # Checking if the user has entered anything in the text box
-        if (url == ""):
-            QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
-                                      QtWidgets.QMessageBox.Ok)
-            self.edtURL.setFocus()
-        else:
-            valid = True
-
-        if valid:
-            # url = "https://www.freelancer.co.uk/projects/word/guide-copy-typing/"
-
-            # Checking if the user entered a valid URL
-            try:
-                r = requests.get(url)
-                soup = BeautifulSoup(r.content, "html.parser")
-
-                # Checking if the given page is an archived page
-                self.archiveCheck = soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
-                self.archived = False
-
-                # The response will be None if the page is archived
-                if (self.archiveCheck != None):
-                    self.archived = True
-
-                # Finding the average that freelancers are bidding - the first h2 HTML tag
-                self.biddersInfo = soup.find_all("h2")
-                self.biddersAndPriceFind = self.biddersInfo[0]
-
-                # Makes sure the bidding info is correct as archived pages use a slightly different format
-                if (self.archived):
-                    self.biddersAndPriceFind = self.biddersInfo[1]
-
-                # Retrieving the country of the customer
-                self.customerCountryFind = soup.find_all("span")
-
-                # Retrieving the tags that the customer gave to their task
-                self.givenTags = soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
-
-                # Retrieving the countries of the bidders
-                self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
-
-                # Retrieving the final price for the task if we are looking in the archives
-                self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
-
-                # Output the retrieved results
-                self.output()
-
-            except requests.exceptions.MissingSchema as e:
-                # If an entered URL is not valid, it will show an error and clear the inputs
-                QtWidgets.QMessageBox.warning(self, "Invalid entry", "Please enter a valid URL!",
-                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
-                self.edtURL.setText("")
+            # Checking if the user has entered anything in the text box
+            if (url == ""):
+                QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
+                                              QtWidgets.QMessageBox.Ok)
                 self.edtURL.setFocus()
+            else:
+                valid = True
 
-    def output(self):
-        # Check if anyone has bid on the job yet
-        if (self.biddersAndPriceFind.text.split("Need to")[0] == self.biddersAndPriceFind.text):
-            division = self.biddersAndPriceFind.text.split(" ")
+            if valid:
+                # url = "https://www.freelancer.co.uk/projects/word/guide-copy-typing/"
 
-            self.numFreelancers = division[0] + " " + division[1]
-            self.averagePrice = "Bidding an average of " + division[6]
-            self.lblFreelancers.setText(self.numFreelancers)
-            self.lblAvPrice.setText(self.averagePrice)
-        else:
-            self.lblFreelancers.setText("Nobody has bid on this yet")
-            self.lblAvPrice.setText("No bids yet")
+                # Checking if the user entered a valid URL
+                try:
+                    r = requests.get(url)
+                    soup = BeautifulSoup(r.content, "html.parser")
 
-        # Finds the country that the customer is from
-        for item in self.customerCountryFind:
-            if (item.get("itemprop") == "addressLocality"):
-                b = item.text
-                if (b.split(", ")[0] != b):
-                    b = item.text.split(", ")[1]
-                else:
-                    b = " ".join(b.split())
-                self.country = b.split("\n")[0]
-                self.lblCountry.setText(self.country)
-                break
+                    # Checking if the given page is an archived page
+                    self.archiveCheck = soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"})
+                    self.archived = False
 
-        # Makes sure that the database exists
-        self.databaseSetup()
+                    # The response will be None if the page is archived
+                    if (self.archiveCheck != None):
+                        self.archived = True
 
-        # Defines a dictionary to store the number of bidders from each country that has a bidder
-        bidderCountries = {}
+                    # Finding the average that freelancers are bidding - the first h2 HTML tag
+                    self.biddersInfo = soup.find_all("h2")
+                    self.biddersAndPriceFind = self.biddersInfo[0]
 
-        # Saving the locations of bidders and the number from that country into the dictionary
-        for each in self.bidderCountries:
-            # Gets the country of the bidder
-            country = each.contents[1].get("title")
+                    # Makes sure the bidding info is correct as archived pages use a slightly different format
+                    if (self.archived):
+                        self.biddersAndPriceFind = self.biddersInfo[1]
 
-            num = 1
+                    # Retrieving the country of the customer
+                    self.customerCountryFind = soup.find_all("span")
 
-            # Checks if the country is already in the dictionary
-            result = bidderCountries.get(country)
+                    # Retrieving the tags that the customer gave to their task
+                    self.givenTags = soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
 
-            # Incrementing value if country already in dictionary
-            if (result != None):
-                num = result + 1
+                    # Retrieving the countries of the bidders
+                    self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
 
-            # Updating the dictionary with
-            bidderCountries.update({country : num})
+                    # Retrieving the final price for the task if we are looking in the archives
+                    self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
 
-        # Temporary outputting of the dictionary
-        print(bidderCountries)
+                    # Output the retrieved results
+                    self.output()
+
+                except requests.exceptions.MissingSchema as e:
+                    # If an entered URL is not valid, it will show an error and clear the inputs
+                    QtWidgets.QMessageBox.warning(self, "Invalid entry", "Please enter a valid URL!",
+                                                  QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+                    self.edtURL.setText("")
+                    self.edtURL.setFocus()
+
+        def output(self):
+            # Check if anyone has bid on the job yet
+            if (self.biddersAndPriceFind.text.split("Need to")[0] == self.biddersAndPriceFind.text):
+                division = self.biddersAndPriceFind.text.split(" ")
+
+                self.numFreelancers = division[0] + " " + division[1]
+                self.averagePrice = "Bidding an average of " + division[6]
+                self.lblFreelancers.setText(self.numFreelancers)
+                self.lblAvPrice.setText(self.averagePrice)
+            else:
+                self.lblFreelancers.setText("Nobody has bid on this yet")
+                self.lblAvPrice.setText("No bids yet")
+
+            # Finds the country that the customer is from
+            for item in self.customerCountryFind:
+                if (item.get("itemprop") == "addressLocality"):
+                    b = item.text
+                    if (b.split(", ")[0] != b):
+                        b = item.text.split(", ")[1]
+                    else:
+                        b = " ".join(b.split())
+                    self.country = b.split("\n")[0]
+                    self.lblCountry.setText(self.country)
+                    break
+
+            # Makes sure that the database exists
+            self.databaseSetup()
+
+            # Defines a dictionary to store the number of bidders from each country that has a bidder
+            bidderCountries = {}
+
+            # Saving the locations of bidders and the number from that country into the dictionary
+            for each in self.bidderCountries:
+                # Gets the country of the bidder
+                country = each.contents[1].get("title")
+
+                num = 1
+
+                # Checks if the country is already in the dictionary
+                result = bidderCountries.get(country)
+
+                # Incrementing value if country already in dictionary
+                if (result != None):
+                    num = result + 1
+
+                # Updating the dictionary with
+                bidderCountries.update({country: num})
+
+            # Temporary outputting of the dictionary
+            print(bidderCountries)
 
 
     def loginToFreelancer(self):
