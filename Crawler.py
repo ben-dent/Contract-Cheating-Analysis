@@ -1,11 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from datetime import date
 
 PREFIX_LINK = "https://www.freelancer.co.uk"
 
 # Will retrieve all the data from the given weeks
 def getAllTheData(links):
+    results = []
+
     for link in links:
         r = requests.get(link)
         soup = BeautifulSoup(r.content, 'html.parser')
@@ -22,6 +23,9 @@ def getAllTheData(links):
             checkProject(PREFIX_LINK + linkToProject)
 
 def checkProject(link):
+    r = requests.get(link)
+    soup = BeautifulSoup(r.content, 'html.parser')
+
     print("Hello")
 
 # Will crawl through the whole archive
@@ -30,9 +34,6 @@ def crawlWholeArchive():
 
 # Will crawl through the archived projects within the given time-frame for a given URL
 def crawlArchiveByGivenURL(url, numberofYearsToView):
-    # Get the (zero-indexed) week number
-    thisYear = date.today().isocalendar()[0]
-
     # Get the data from the page
     r = requests.get(url)
     soup = BeautifulSoup(r.content, 'html.parser')
