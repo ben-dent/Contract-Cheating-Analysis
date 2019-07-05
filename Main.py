@@ -34,7 +34,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
     def test(self):
-        crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 2)
+        linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
+        for project in linksToLookAt:
+            self.fetchDataNonLogin(project)
+        a = 1
+        # crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 1)
 
     # Creates the table in the database, which will initially be empty
     def createDatabase(self):
@@ -68,19 +72,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
         main.close()
 
     # Does all the fetching and handling of the data required
-    def fetch(self):
-        url = self.edtURL.text()
+    # def fetch(self, url):
+        # url = self.edtURL.text()
+        #
+        # # Checking if the user has entered anything in the text box
+        # if (url == ""):
+        #     QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
+        #                                   QtWidgets.QMessageBox.Ok)
+        #     self.edtURL.setFocus()
+        # else:
+        #     self.fetchDataNonLogin(url)
 
-        # Checking if the user has entered anything in the text box
-        if (url == ""):
-            QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
-                                          QtWidgets.QMessageBox.Ok)
-            self.edtURL.setFocus()
-        else:
-            self.fetchData(url)
 
 
-    def fetchData(self, url):
+
+    def fetchDataNonLogin(self, url):
         # url = "https://www.freelancer.co.uk/projects/word/guide-copy-typing/"
 
         # Checking if the user entered a valid URL
