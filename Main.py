@@ -35,8 +35,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
+        self.loginToFreelancer()
         for project in linksToLookAt:
             self.fetchDataNonLogin(project)
+            b = 1
         a = 1
         # crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 1)
 
@@ -84,6 +86,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         #     self.fetchDataNonLogin(url)
 
 
+    def fetchDataWithLogin(self, url):
+        print("Hello")
 
 
     def fetchDataNonLogin(self, url):
@@ -192,7 +196,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Launch the Selenium Firefox browser
         # Use options.headless as False if you want the popup browser, True otherwise
         options = Options()
-        options.headless = False
+        options.headless = True
         self.driver = webdriver.Firefox(options=options)
 
         # Opens the Freelancer login page
