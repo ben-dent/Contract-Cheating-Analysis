@@ -57,6 +57,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'JobID' INTEGER PRIMARY KEY AUTOINCREMENT,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' INTEGER NOT NULL,
+        'FinalCost' INTEGER NOT NULL,
         'Country' TEXT NOT NULL
         );''')
 
@@ -78,24 +79,22 @@ class Main(QtWidgets.QMainWindow, mainUI):
         main.close()
 
     # Does all the fetching and handling of the data required
-    # def fetch(self, url):
-        # url = self.edtURL.text()
-        #
-        # # Checking if the user has entered anything in the text box
-        # if (url == ""):
-        #     QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
-        #                                   QtWidgets.QMessageBox.Ok)
-        #     self.edtURL.setFocus()
-        # else:
-        #     self.fetchDataNonLogin(url)
+    def fetch(self, url):
+        url = self.edtURL.text()
 
+        # Checking if the user has entered anything in the text box
+        if (url == ""):
+            QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
+                                          QtWidgets.QMessageBox.Ok)
+            self.edtURL.setFocus()
+        else:
+            self.fetchDataNonLogin(url)
 
     def fetchDataWithLogin(self, url):
         print("Hello")
 
-
+    # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
-
         # Checking if the user entered a valid URL
         try:
             r = requests.get(url)
@@ -119,8 +118,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             self.awarded = False
 
-
-
             # Checks if the project was awarded to anyone
             if (self.archived and self.finishedType == "Completed"):
                 self.awarded = True
@@ -131,8 +128,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # Retrieving the final price for the task if we are looking at a completed project in the archives
                 self.finalPrice = self.soup.find("div", {"class": "FreelancerInfo-price"}).text
 
-
-
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
 
@@ -141,8 +136,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Gets the information about the bidders
             self.getBiddersInfo()
-            # Output the retrieved results
-            # self.output()
 
         except requests.exceptions.MissingSchema as e:
             # If an entered URL is not valid, it will show an error and clear the inputs
@@ -151,7 +144,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.edtURL.setText("")
             self.edtURL.setFocus()
 
-    # # Retrieving the country of the customer
+    # Retrieving the country of the customer
     def getCustomerCountry(self):
         self.customerCountryFind = self.soup.find_all("span")
 
@@ -168,6 +161,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         print("Customer country: " + self.customerCountry + "\n")
 
+    # Gets all information about the bidders then calls getBiddersCountries to get their locations
     def getBiddersInfo(self):
         # A list for the links to the bidders' profiles
         self.bidderProfileLinks = []
@@ -195,8 +189,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         else:
             print("No bids yet")
 
+    # Retrieving the countries of the bidders and storing them in a dictionary
     def getBiddersCountries(self):
-        # Retrieving the countries of the bidders
+        # Retrieves all listed countries of the bidders
         self.bidderCountries = self.soup.find_all("span", {"class": "FreelancerInfo-flag"})
 
         # Defines a dictionary to store the number of bidders from each country that has a bidder
@@ -227,7 +222,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.databaseSetup()
 
-
+    # Handles logging into the site
     def loginToFreelancer(self):
         # The username and password for the throwaway account I created
         username = "AnalysisProject"
@@ -278,7 +273,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         ENTER_KEY = 16777220
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
-            self.fetch()
+            self.checkWorks()
 
 # Runs the application and launches the window
 app = QtWidgets.QApplication(sys.argv)
