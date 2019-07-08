@@ -29,7 +29,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent = None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        # self.btnFetch.clicked.connect(self.loginToFreelancer)
         self.btnFetch.clicked.connect(self.check)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
@@ -95,16 +94,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Fetch the data that requires logging in
         self.fetchDataWithLogin(url)
-
-        # url = self.edtURL.text()
-        #
-        # # Checking if the user has entered anything in the text box
-        # if (url == ""):
-        #     QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
-        #                                   QtWidgets.QMessageBox.Ok)
-        #     self.edtURL.setFocus()
-        # else:
-        #     self.fetchDataNonLogin(url)
 
     # Retrieves the profile link of the customer who posted the job
     def getCustomerProfileLink(self):
@@ -287,9 +276,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
         time.sleep(4)
 
     # Handles closing the browser and the program
-    # Precondition - the browser launched by the program is currently open
     def closeBrowser(self):
-        self.driver.close()
+        # Checks if browser is actually open and closes it if it is open
+        if (hasattr(self, 'driver')):
+            self.driver.close()
+
+        # Close the program
         self.exit()
 
     # Handles the user pressing enter, instead of clicking on the 'Fetch' button

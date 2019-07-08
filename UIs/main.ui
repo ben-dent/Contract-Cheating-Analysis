@@ -6,45 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
-    <height>272</height>
+    <width>200</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Site Analyser</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>24</y>
-      <width>171</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Enter a Freelancer URL:</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="edtURL">
-    <property name="geometry">
-     <rect>
-      <x>230</x>
-      <y>20</y>
-      <width>481</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>URL</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnFetch">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>170</y>
+      <x>47</x>
+      <y>20</y>
       <width>110</width>
       <height>32</height>
      </rect>
@@ -56,8 +30,8 @@
    <widget class="QPushButton" name="btnExit">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>170</y>
+      <x>47</x>
+      <y>120</y>
       <width>110</width>
       <height>32</height>
      </rect>
@@ -69,8 +43,8 @@
    <widget class="QPushButton" name="btnCloseBrowser">
     <property name="geometry">
      <rect>
-      <x>450</x>
-      <y>170</y>
+      <x>47</x>
+      <y>70</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -85,7 +59,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>733</width>
+     <width>200</width>
      <height>22</height>
     </rect>
    </property>
