@@ -29,16 +29,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         # self.btnFetch.clicked.connect(self.loginToFreelancer)
-        self.btnFetch.clicked.connect(self.test)
+        self.btnFetch.clicked.connect(self.checkWorks)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
+    def checkWorks(self):
+        url = "https://www.freelancer.co.uk/projects/photography/would-like-hire-Photographer-19480412/"
+        self.fetchDataNonLogin(url)
+
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
-        self.loginToFreelancer()
         for project in linksToLookAt:
             self.fetchDataNonLogin(project)
             b = 1
+        self.loginToFreelancer()
         a = 1
         # crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 1)
 
@@ -99,11 +103,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
             soup = BeautifulSoup(r.content, "html.parser")
 
             # Checking if the given page is an archived page
-            self.archiveCheck = soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"})
+            self.archiveCheck = soup.find("span", {"class": "promotion-tag"}).text
             self.archived = False
 
             # The response will be None if the page is archived
-            if (self.archiveCheck != None):
+            if ((self.archiveCheck == " Cancelled") or (self.archiveCheck == " Closed")):
                 self.archived = True
 
             # Finding the average that freelancers are bidding - the first h2 HTML tag
@@ -114,6 +118,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.archived):
                 self.biddersAndPriceFind = self.biddersInfo[1]
 
+                # Checks if the project was awarded to anyone
+                self.awardedCheck = soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
+
+                if (self.awardedCheck != None):
+                    # Retrieving the final price for the task if we are looking in the archives
+                    self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
+
             # Retrieving the country of the customer
             self.customerCountryFind = soup.find_all("span")
 
@@ -122,9 +133,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Retrieving the countries of the bidders
             self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
-
-            # Retrieving the final price for the task if we are looking in the archives
-            self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
 
             # Output the retrieved results
             self.output()
@@ -196,7 +204,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Launch the Selenium Firefox browser
         # Use options.headless as False if you want the popup browser, True otherwise
         options = Options()
-        options.headless = True
+        options.headless = False
         self.driver = webdriver.Firefox(options=options)
 
         # Opens the Freelancer login page
