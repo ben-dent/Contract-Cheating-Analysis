@@ -34,7 +34,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
     def checkWorks(self):
-        url = "https://www.freelancer.co.uk/projects/graphic-design/Photos-for-Radio-Promo/"
+        url = "https://www.freelancer.co.uk/projects/graphic-design/Photo-editor-19585957/"
         self.fetchDataNonLogin(url)
 
     def test(self):
@@ -102,34 +102,36 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.soup = BeautifulSoup(r.content, "html.parser")
 
             # Checking if the given page is an archived page
-            self.archiveCheck = self.soup.find("span", {"class": "promotion-tag"}).text
+            self.finishedType = self.soup.find("span", {"class": "promotion-tag"}).text
 
             # Removing irrelevant characters
-            self.archiveCheck = ''.join(c for c in self.archiveCheck if c.isalnum())
+            self.finishedType = ''.join(c for c in self.finishedType if c.isalnum())
 
             self.archived = False
 
             # If the project is archived then the response will definitely be one of these
-            if (self.archiveCheck == "Cancelled" or self.archiveCheck == "Closed" or self.archiveCheck == "Completed"):
+            if (self.finishedType == "Cancelled" or self.finishedType == "Closed" or self.finishedType == "Completed"):
                 self.archived = True
 
             # Finding the average that freelancers are bidding - the first h2 HTML tag
             self.biddersInfo = self.soup.find_all("h2")
             self.biddersAndPriceFind = self.biddersInfo[0]
 
-            # Makes sure the bidding info is correct as archived pages use a slightly different format
-            if (self.archived):
+            self.awarded = False
+
+
+
+            # Checks if the project was awarded to anyone
+            if (self.archived and self.finishedType == "Completed"):
+                self.awarded = True
+
+                # Makes sure the bidding info is correct as archived pages use a slightly different format
                 self.biddersAndPriceFind = self.biddersInfo[1]
 
-                # Checks if the project was awarded to anyone
-                self.awardedCheck = self.soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
-                self.awarded = False
+                # Retrieving the final price for the task if we are looking at a completed project in the archives
+                self.finalPrice = self.soup.find("div", {"class": "FreelancerInfo-price"}).text
 
-                if (self.awardedCheck != None):
-                    self.awarded = True
 
-                    # Retrieving the final price for the task if we are looking in the archives
-                    self.finalPrice = self.soup.find("div", {"class": "FreelancerInfo-price"}).text
 
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
@@ -164,7 +166,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.customerCountry = countryParts.split("\n")[0]
                 break
 
-        print(self.customerCountry)
+        print("Customer country: " + self.customerCountry + "\n")
 
     def getBiddersInfo(self):
         # A list for the links to the bidders' profiles
@@ -181,10 +183,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             self.numFreelancers = division[0]
             self.averagePrice = division[6]
-            print(self.numFreelancers + " freelancers")
-            print("Bidding an average of " + self.averagePrice)
+            print(self.numFreelancers + " freelancers who are bidding an average of " + self.averagePrice)
+
+            if (self.awarded):
+                print("The final price was: " + self.finalPrice + "\n")
+            else:
+                print("No one was awarded this project\n")
 
             self.getBiddersCountries()
+
         else:
             print("No bids yet")
 
@@ -213,7 +220,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.countriesOfBidders.update({country: num})
 
         # Temporary outputting of the dictionary
-        print(self.countriesOfBidders)
+        print("Countries of bidders: ")
+
+        for key in self.countriesOfBidders.keys():
+            print(key + ": " + str(self.countriesOfBidders.get(key)))
 
         self.databaseSetup()
 
