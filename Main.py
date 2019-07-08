@@ -34,7 +34,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
     def checkWorks(self):
-        url = "https://www.freelancer.co.uk/projects/photography/would-like-hire-Photographer-19480412/"
+        url = "https://www.freelancer.co.uk/projects/graphic-design/Photos-for-Radio-Promo/"
         self.fetchDataNonLogin(url)
 
     def test(self):
@@ -95,7 +95,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
 
     def fetchDataNonLogin(self, url):
-        # url = "https://www.freelancer.co.uk/projects/word/guide-copy-typing/"
 
         # Checking if the user entered a valid URL
         try:
@@ -104,10 +103,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Checking if the given page is an archived page
             self.archiveCheck = soup.find("span", {"class": "promotion-tag"}).text
+
+            # Removing irrelevant characters
+            self.archiveCheck = ''.join(c for c in self.archiveCheck if c.isalnum())
+
             self.archived = False
 
-            # The response will be None if the page is archived
-            if ((self.archiveCheck == " Cancelled") or (self.archiveCheck == " Closed")):
+            # If the project is archived then the response will definitely be one of these
+            if (self.archiveCheck == "Cancelled" or self.archiveCheck == "Closed" or self.archiveCheck == "Completed"):
                 self.archived = True
 
             # Finding the average that freelancers are bidding - the first h2 HTML tag
@@ -120,10 +123,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # Checks if the project was awarded to anyone
                 self.awardedCheck = soup.find("span", {"class" : "PageProjectViewLogout-awardedTo-heading"})
+                self.awarded = False
 
                 if (self.awardedCheck != None):
+                    self.awarded = True
+
                     # Retrieving the final price for the task if we are looking in the archives
-                    self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"})
+                    self.finalPrice = soup.find("div", {"class": "FreelancerInfo-price"}).text
 
             # Retrieving the country of the customer
             self.customerCountryFind = soup.find_all("span")
@@ -133,6 +139,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Retrieving the countries of the bidders
             self.bidderCountries = soup.find_all("span", {"class": "FreelancerInfo-flag"})
+
+            # A list for the links to the bidders' profiles
+            self.bidderProfileLinks = []
+
+            # Adding each link to the bidder profiles to the list
+            a = soup.find_all("a", {"class" : "FreelancerInfo-username"})
+            for each in a:
+                self.bidderProfileLinks.append(PREFIX_LINK + each.get("href"))
 
             # Output the retrieved results
             self.output()
