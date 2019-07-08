@@ -3,3 +3,5 @@ A tool for analysis of contract cheating sites. Designed by Ben Dent as part of 
 
 **PLEASE NOTE - YOU WILL NEED TO INSTALL THE GECKO DRIVER LOCALLY FOR THIS TO WORK:**
 https://github.com/mozilla/geckodriver/releases
+
+Install this in usr/lib or usr/local/bin
