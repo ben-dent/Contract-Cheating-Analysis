@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-PREFIX_LINK = "https://www.freelancer.co.uk"
+LINK_PREFIX = "https://www.freelancer.co.uk"
 
 # Will retrieve all the data from the given weeks
 def getAllTheRelevantLinks(links):
@@ -23,7 +23,7 @@ def getAllTheRelevantLinks(links):
 
             # Only look at projects that do not have a title beginning with "Project for"
             if (len(title.split("Project for")) == 1):
-                projectLink = PREFIX_LINK + item.get("href")
+                projectLink = LINK_PREFIX + item.get("href")
                 projectLinks.append(projectLink)
 
 
@@ -55,7 +55,7 @@ def getThisYearApartFromLastMonth(url):
 
     # Get the links to the weeks and years
     for item in links:
-        data.append(PREFIX_LINK + item.get("href"))
+        data.append(LINK_PREFIX + item.get("href"))
 
     return getAllTheRelevantLinks(data)
 
@@ -85,6 +85,6 @@ def crawlArchiveByGivenURL(url, numberofYearsToView):
         newData = BeautifulSoup(str(data[i]), 'html.parser')
         links = newData.find_all("a")
         for link in links:
-            linksToFollow.append(PREFIX_LINK + link.get("href"))
+            linksToFollow.append(LINK_PREFIX + link.get("href"))
 
     getAllTheRelevantLinks(linksToFollow)

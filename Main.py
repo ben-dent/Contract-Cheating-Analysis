@@ -9,6 +9,7 @@ Code is provided as-is under an MIT License
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
@@ -29,13 +30,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         # self.btnFetch.clicked.connect(self.loginToFreelancer)
-        self.btnFetch.clicked.connect(self.checkWorks)
+        self.btnFetch.clicked.connect(self.check)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
-    def checkWorks(self):
-        url = "https://www.freelancer.co.uk/projects/graphic-design/Photo-editor-19585957/"
-        self.fetchDataNonLogin(url)
+    def check(self):
+        self.loginToFreelancer()
+        url = "https://www.freelancer.co.uk/u/brkbkrcgl"
+        self.driver.get(url)
+        time.sleep(3)
+        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
+        b = 1
 
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
@@ -79,20 +84,40 @@ class Main(QtWidgets.QMainWindow, mainUI):
         main.close()
 
     # Does all the fetching and handling of the data required
-    def fetch(self, url):
-        url = self.edtURL.text()
+    def fetch(self):
+        url = "https://www.freelancer.co.uk/projects/graphic-design/Photos-for-Radio-Promo/"
+        self.fetchDataNonLogin(url)
+        self.fetchDataWithLogin(url)
+        time.sleep(3)
+        customerProfileCheck = self.driver.current_url.split("/")[-1]
+        r = requests.get(url)
+        self.soup = BeautifulSoup(r.content, 'html.parser')
+        if (customerProfileCheck == "reviews"):
+            self.getCustomerProfileLink()
+        # url = self.edtURL.text()
+        #
+        # # Checking if the user has entered anything in the text box
+        # if (url == ""):
+        #     QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
+        #                                   QtWidgets.QMessageBox.Ok)
+        #     self.edtURL.setFocus()
+        # else:
+        #     self.fetchDataNonLogin(url)
 
-        # Checking if the user has entered anything in the text box
-        if (url == ""):
-            QtWidgets.QMessageBox.warning(self, "Invalid Entry", "Please enter a URL!", QtWidgets.QMessageBox.Ok,
-                                          QtWidgets.QMessageBox.Ok)
-            self.edtURL.setFocus()
-        else:
-            self.fetchDataNonLogin(url)
+    # Retrieves the profile link of the customer who posted the job
+    def getCustomerProfileLink(self):
+        self.customerProfileLink = self.driver.find_elements(By.CLASS_NAME, "NativeElement.ng-star-inserted")[10].text
+        self.customerProfileLink = LINK_PREFIX + "/u/" + self.customerProfileLink.split("@")[1]
 
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self, url):
         self.loginToFreelancer()
+        self.driver.get(url)
+        time.sleep(4)
+
+        # Get the profile link for the customer who posted the task (if it shows it to you)
+        if (self.driver.current_url.split("/")[-1] == "reviews"):
+            self.getCustomerProfileLink()
 
     # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
@@ -170,7 +195,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Adding each link to the bidder profiles to the list
         bidderLinks = self.soup.find_all("a", {"class": "FreelancerInfo-username"})
         for each in bidderLinks:
-            self.bidderProfileLinks.append(PREFIX_LINK + each.get("href"))
+            self.bidderProfileLinks.append(LINK_PREFIX + each.get("href"))
 
         # Check if anyone has bid on the job yet
         if (self.biddersAndPriceFind.text.split("Need to")[0] == self.biddersAndPriceFind.text):
@@ -268,7 +293,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         ENTER_KEY = 16777220
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
-            self.checkWorks()
+            self.check()
 
 # Runs the application and launches the window
 app = QtWidgets.QApplication(sys.argv)
