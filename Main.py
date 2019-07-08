@@ -6,6 +6,9 @@ Code is provided as-is under an MIT License
 
 '''
 
+# TODO: Add customer profile link to links to view - but in a different way
+# TODO: Scrape details from profiles
+
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
