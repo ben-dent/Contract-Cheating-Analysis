@@ -5,3 +5,7 @@ A tool for analysis of contract cheating sites. Designed by Ben Dent as part of 
 https://github.com/mozilla/geckodriver/releases
 
 Install this in usr/lib or usr/local/bin
+
+All other requirements can be installed from the cloned directory with
+
+```pip3 install -r requirements.txt```
