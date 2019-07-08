@@ -90,8 +90,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         else:
             self.fetchDataNonLogin(url)
 
+    # Fetching all the data that requires a login first
     def fetchDataWithLogin(self, url):
-        print("Hello")
+        self.loginToFreelancer()
 
     # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
@@ -224,7 +225,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Handles logging into the site
     def loginToFreelancer(self):
-        # The username and password for the throwaway account I created
+        # The username and password for the throwaway account I created - Feel free to make your own
         username = "AnalysisProject"
         password = "Project!"
 
@@ -232,6 +233,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Use options.headless as False if you want the popup browser, True otherwise
         options = Options()
         options.headless = False
+
+        # Creating the browser instance
         self.driver = webdriver.Firefox(options=options)
 
         # Opens the Freelancer login page
@@ -252,14 +255,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         submitButton.click()
 
         time.sleep(4)
-
-        # Navigates to the projects page
-        # self.driver.get("https://www.freelancer.co.uk/search/projects/")
-
-        # Navigates to the archives page
-        # self.driver.get("https://www.freelancer.co.uk/archives/")
-
-        # soup = BeautifulSoup(self.driver.page_source, 'html.parser')
 
     # Handles closing the browser and the program
     # Precondition - the browser launched by the program is currently open
