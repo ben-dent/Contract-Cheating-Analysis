@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1078</width>
-    <height>410</height>
+    <width>733</width>
+    <height>272</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="btnFetch">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>260</y>
+      <x>170</x>
+      <y>170</y>
       <width>110</width>
       <height>32</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="btnExit">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>300</y>
+      <x>310</x>
+      <y>170</y>
       <width>110</width>
       <height>32</height>
      </rect>
@@ -66,80 +66,11 @@
      <string>Exit</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lblFreelancers">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>70</y>
-      <width>1011</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>21</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblAvPrice">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>140</y>
-      <width>1011</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>21</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lblCountry">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>190</y>
-      <width>1011</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>21</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnCloseBrowser">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>270</y>
+      <x>450</x>
+      <y>170</y>
       <width>113</width>
       <height>32</height>
      </rect>
@@ -154,7 +85,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1078</width>
+     <width>733</width>
      <height>22</height>
     </rect>
    </property>
