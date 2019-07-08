@@ -86,14 +86,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
     # Does all the fetching and handling of the data required
     def fetch(self):
         url = "https://www.freelancer.co.uk/projects/graphic-design/Photos-for-Radio-Promo/"
+
+        # Fetch the data that can be gathered without logging in
         self.fetchDataNonLogin(url)
+
+        # Login
+        self.loginToFreelancer()
+
+        # Fetch the data that requires logging in
         self.fetchDataWithLogin(url)
-        time.sleep(3)
-        customerProfileCheck = self.driver.current_url.split("/")[-1]
-        r = requests.get(url)
-        self.soup = BeautifulSoup(r.content, 'html.parser')
-        if (customerProfileCheck == "reviews"):
-            self.getCustomerProfileLink()
+
         # url = self.edtURL.text()
         #
         # # Checking if the user has entered anything in the text box
@@ -111,13 +113,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self, url):
-        self.loginToFreelancer()
+        # Open the project page
         self.driver.get(url)
         time.sleep(4)
 
         # Get the profile link for the customer who posted the task (if it shows it to you)
         if (self.driver.current_url.split("/")[-1] == "reviews"):
             self.getCustomerProfileLink()
+            print("Gathered customer profile link")
+        else:
+            print("Could not gather customer profile link")
 
     # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
