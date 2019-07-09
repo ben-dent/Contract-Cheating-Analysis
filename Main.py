@@ -265,19 +265,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
         pageCheck = pageCheck.split(" ")
         areMorePages = pageCheck[3] != pageCheck[5]
 
-        # TODO: Convert this to do for each review
-
         done = False
 
+        # Will loop through all review pages until every review has been seen
         while (not done):
             # Finds the list of reviews
             reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
-        # TODO: START OF FOR LOOP
+
+            # Go through all the reviews on the current page
             for review in reviews:
+                # Gathering the score of the review out of 5.0
                 scoreElement = review.find_element(By.CLASS_NAME, "user-review-controls")
                 score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
+                # Gathering the amount paid for that project
                 amountElement = review.find_element(By.CLASS_NAME, "user-review-price")
                 value = amountElement.find_element_by_class_name("ng-binding").text
                 amountPaid = value + " " + amountElement.text
@@ -288,15 +290,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # Gets the link to the project that the review is for
                 projectLink = review.find_element_by_class_name("user-review-title").get_attribute("href")
 
+                # Temporary output of the extracted data
                 print("Score: " + score)
                 print("\nWith review of:\n" + reviewText)
                 print("\nAmount paid: " + amountPaid)
                 print("\nProject link: " + projectLink)
                 print("\n###########\n")
 
-            # TODO: END OF FOR LOOP
-
+            # If there are more pages of reviews, go and look at them
             if (areMorePages):
+                # Makes sure the 'next page' button is clicked if there are more pages of reviews to see
                 pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
                 nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
                 nextPageButton.find_element_by_tag_name("a").click()
