@@ -259,14 +259,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         time.sleep(3)
 
+        # Finds the list of reviews
         reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
         reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
+        # Checks if there are more pages of reviews to look at
         pageCheck = self.driver.find_element_by_class_name("user-reviews-navMeta").text
         pageCheck = pageCheck.split(" ")
         areMorePages = pageCheck[3] != pageCheck[5]
 
         # TODO: Convert this to do for each review
+        # TODO: START OF FOR LOOP
         scoreElement = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
         score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
@@ -279,6 +282,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Gets the link to the project that the review is for
         projectLink = reviews[0].find_element_by_class_name("user-review-title").get_attribute("href")
+
+        # TODO: END OF FOR LOOP
+
+        if (areMorePages):
+            pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
+            nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
+            nextPageButton.find_element_by_tag_name("a").click()
 
         b = 1
 
