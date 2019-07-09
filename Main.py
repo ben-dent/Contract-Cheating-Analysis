@@ -40,6 +40,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.loginToFreelancer()
         url = "https://www.freelancer.co.uk/u/brkbkrcgl"
         self.getInformationFromBidderProfile(url)
+        self.projectsToLookAt = []
 
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
@@ -259,38 +260,48 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         time.sleep(3)
 
-        # Finds the list of reviews
-        reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
-        reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
-
         # Checks if there are more pages of reviews to look at
         pageCheck = self.driver.find_element_by_class_name("user-reviews-navMeta").text
         pageCheck = pageCheck.split(" ")
         areMorePages = pageCheck[3] != pageCheck[5]
 
         # TODO: Convert this to do for each review
+
+        done = False
+
+        while (not done):
+            # Finds the list of reviews
+            reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
+            reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
         # TODO: START OF FOR LOOP
-        scoreElement = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
-        score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
+            for review in reviews:
+                scoreElement = review.find_element(By.CLASS_NAME, "user-review-controls")
+                score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
-        amountElement = reviews[0].find_element(By.CLASS_NAME, "user-review-price")
-        value = amountElement.find_element_by_class_name("ng-binding").text
-        amountPaid = value + " " + amountElement.text
+                amountElement = review.find_element(By.CLASS_NAME, "user-review-price")
+                value = amountElement.find_element_by_class_name("ng-binding").text
+                amountPaid = value + " " + amountElement.text
 
-        # Gets the review text
-        reviewText = reviews[0].find_element_by_tag_name("p").text.split('"')[1:][:-1][0]
+                # Gets the review text
+                reviewText = review.find_element_by_tag_name("p").text.split('"')[1:][:-1][0]
 
-        # Gets the link to the project that the review is for
-        projectLink = reviews[0].find_element_by_class_name("user-review-title").get_attribute("href")
+                # Gets the link to the project that the review is for
+                projectLink = review.find_element_by_class_name("user-review-title").get_attribute("href")
 
-        # TODO: END OF FOR LOOP
+                print("Score: " + score)
+                print("\nWith review of:\n" + reviewText)
+                print("\nAmount paid: " + amountPaid)
+                print("\nProject link: " + projectLink)
+                print("\n###########\n")
 
-        if (areMorePages):
-            pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
-            nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
-            nextPageButton.find_element_by_tag_name("a").click()
+            # TODO: END OF FOR LOOP
 
-        b = 1
+            if (areMorePages):
+                pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
+                nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
+                nextPageButton.find_element_by_tag_name("a").click()
+            else:
+                done = True
 
     # Handles logging into the site
     def loginToFreelancer(self):
