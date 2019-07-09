@@ -266,8 +266,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         pageCheck = pageCheck.split(" ")
         areMorePages = pageCheck[3] != pageCheck[5]
 
-        
-
         # TODO: Convert this to do for each review
         scoreElement = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
         score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
