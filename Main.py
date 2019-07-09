@@ -39,10 +39,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def check(self):
         self.loginToFreelancer()
         url = "https://www.freelancer.co.uk/u/brkbkrcgl"
-        self.driver.get(url)
-        time.sleep(3)
-        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
-        b = 1
+        self.getInformationFromBidderProfile(url)
 
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
@@ -244,6 +241,23 @@ class Main(QtWidgets.QMainWindow, mainUI):
             print(key + ": " + str(self.countriesOfBidders.get(key)))
 
         self.databaseSetup()
+
+    # Extracts the information from the profile of the bidder
+    def getInformationFromBidderProfile(self, url):
+        self.driver.get(url)
+        time.sleep(3)
+
+        # Gets the profile description given by the bidder
+        profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
+
+        # Expand to get all reviews
+        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
+
+        # Showing the maximum number of reviews possible per page
+        dropDownList = self.driver.find_elements(By.CLASS_NAME, "small-select")[-1]
+        dropDownList.find_elements(By.TAG_NAME, "option")[-1].click()
+
+        b = 1
 
     # Handles logging into the site
     def loginToFreelancer(self):
