@@ -257,6 +257,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
         dropDownList = self.driver.find_elements(By.CLASS_NAME, "small-select")[-1]
         dropDownList.find_elements(By.TAG_NAME, "option")[-1].click()
 
+        time.sleep(3)
+
+        reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
+        reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
+
+        # TODO: Convert this to do for each review
+        score = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
+        score = score.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
+
+
         b = 1
 
     # Handles logging into the site
