@@ -38,7 +38,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     def check(self):
         self.loginToFreelancer()
-        url = "https://www.freelancer.co.uk/u/brkbkrcgl"
+        # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
+        # url = "https://www.freelancer.co.uk/u/LOSPOS77"
+        url = "https://www.freelancer.co.uk/u/Djdesign"
         self.getInformationFromBidderProfile(url)
         self.projectsToLookAt = []
 
@@ -245,12 +247,34 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Extracts the information from the profile of the bidder
     def getInformationFromBidderProfile(self, url):
+
+        # TODO: Get data from all the various sections of certification
+
         self.driver.get(url)
         time.sleep(3)
 
         # Gets the profile description given by the bidder
         profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
 
+        # Get all the details on the reviews
+        # self.getReviewDetails()
+        a = self.driver.find_elements_by_class_name("profile-experience")
+        if (len(a) > 0):
+            for item in a:
+                experienceItems = item.find_elements_by_class_name("profile-experience-item")
+                sectionName = item.find_element_by_tag_name("h2").text
+                print(sectionName + ":")
+                for qual in experienceItems:
+                    qualName = qual.find_element_by_class_name("profile-experience-title").text
+                    print(qualName)
+                    print(qual.find_element_by_tag_name("span").text)
+                h = 1
+                print("\n#########\n")
+            c = 1
+        b = 1
+
+    # Retrieves details on the reviews on the given bidder profile
+    def getReviewDetails(self):
         # Expand to get all reviews
         self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
 
