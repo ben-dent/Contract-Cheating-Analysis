@@ -38,7 +38,15 @@ If you need to install it:
 **Windows:**\
 It is recommended that you use a Linux Virtual Machine if your Python distribution does not contain the 'pip' command.
 
-Once you have PyPi installed, install all project requirements by executing:
+Once you have PyPi installed, make sure you have Git installed from here:
+
+https://git-scm.com/downloads
+
+Now you can install the project files with:
+
+```git clone https://github.com/ben-dent/Contract-Cheating-Analysis.git```
+
+Next, install all project requirements by executing:
 
 ```pip install -r requirements.txt```
 
