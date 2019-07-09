@@ -36,7 +36,7 @@ If you need to install it:
 ```sudo easy_install pip```
 
 **Windows:**\
-It is recommended that you use a Linux Virtual Machine if your Python distribution does not contain the 'pip' command
+It is recommended that you use a Linux Virtual Machine if your Python distribution does not contain the 'pip' command.
 
 Once you have PyPi installed, install all project requirements by executing:
 
