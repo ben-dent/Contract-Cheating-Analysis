@@ -300,6 +300,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
                 nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
                 nextPageButton.find_element_by_tag_name("a").click()
+                time.sleep(3)
             else:
                 done = True
 
