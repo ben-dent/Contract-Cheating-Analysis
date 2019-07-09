@@ -258,16 +258,24 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Get all the details on the reviews
         # self.getReviewDetails()
-        a = self.driver.find_elements_by_class_name("profile-experience")
-        if (len(a) > 0):
-            for item in a:
+        qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
+        if (len(qualificationTypes) > 0):
+            for item in qualificationTypes:
                 experienceItems = item.find_elements_by_class_name("profile-experience-item")
                 sectionName = item.find_element_by_tag_name("h2").text
+                locationTitle = ""
+                if (sectionName == "Experience"):
+                    locationTitle = "Working at"
+                elif ((sectionName == "Education") or (sectionName == "Qualifications")):
+                    locationTitle = "From"
+                elif (sectionName == "Publications"):
+                    locationTitle = "Published In"
+
                 print(sectionName + ":")
                 for qual in experienceItems:
                     qualName = qual.find_element_by_class_name("profile-experience-title").text
-                    print(qualName)
-                    print(qual.find_element_by_tag_name("span").text)
+                    print("\n" + qualName)
+                    print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
                 h = 1
                 print("\n#########\n")
             c = 1
@@ -340,7 +348,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Launch the Selenium Firefox browser
         # Use options.headless as False if you want the popup browser, True otherwise
         options = Options()
-        options.headless = False
+        options.headless = True
 
         # Creating the browser instance
         self.driver = webdriver.Firefox(options=options)
