@@ -46,4 +46,17 @@ OR
 
 ```pip3 install -r requirements.txt```
 
-Depending on your PyPi distribution
+The relevant instruction to use will depend on your PyPi distribution.
+
+Now make sure you install the gecko driver.
+
+Users on Windows are directed to the instructions at this link if they wish to continue on Windows:
+
+https://selenium-python.readthedocs.io/installation.html#detailed-instructions-for-windows-users
+
+Users on all other Operating Systems can install the drivers here:
+
+https://github.com/mozilla/geckodriver/releases
+
+This needs to be installed in usr/lib or usr/local/bin
+
