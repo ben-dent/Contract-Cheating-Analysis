@@ -263,9 +263,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
         reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
         # TODO: Convert this to do for each review
-        score = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
-        score = score.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
+        scoreElement = reviews[0].find_element(By.CLASS_NAME, "user-review-controls")
+        score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
+        amountElement = reviews[0].find_element(By.CLASS_NAME, "user-review-price")
+        value = amountElement.find_element_by_class_name("ng-binding").text
+        amountPaid = value + " " + amountElement.text
+
+        # Gets the review text
+        reviewText = reviews[0].find_element_by_tag_name("p").text.split('"')[1:][:-1][0]
 
         b = 1
 
