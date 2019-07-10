@@ -249,12 +249,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Extracts the information from the profile of the bidder
     def getInformationFromBidderProfile(self, url):
-
-        # TODO: Get data from all the various sections of certification
-
+        # Go to the bidder profile
         self.driver.get(url)
         time.sleep(3)
 
+        # Get their list of certifications
         self.getCertifications()
 
         z = 1
@@ -262,13 +261,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Gets the profile description given by the bidder
         profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
 
+        # Getting their average review
         reviewAv = self.driver.find_element_by_class_name("Rating").get_attribute("data-star_rating")
 
+        # Get their % of earnings in that category
         earningsPCT = float(self.driver.find_element_by_class_name("Earnings-label").text) * 10
 
         # Get all the details on the reviews
         # self.getReviewDetails()
 
+        # Get the qualifications they give
         qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
         if (len(qualificationTypes) > 0):
             for item in qualificationTypes:
@@ -296,23 +298,25 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # print("\n#########\n")
 
-        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
-
         time.sleep(3)
 
+        # Get the job stats from the right hand side bar
         statList = self.driver.find_element_by_class_name("item-stats")
 
         stats = statList.find_elements_by_class_name("item-stats-stat")
 
         self.dict = {}
 
+        # Store all these job stats in a dictionary
         for stat in stats:
             name = stat.find_element_by_class_name("item-stats-name").find_element_by_class_name("ng-scope").text
             pctScore = stat.find_element_by_class_name("item-stats-value").text
             self.dict[name] = pctScore
 
+        # Get the number of reviews given to this worker
         numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
 
+        # Fetch the review stats
         starsList = self.driver.find_element_by_class_name("user-modal-criteria")
 
         self.starsDict = {}
@@ -324,6 +328,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         stars = starsList.find_elements_by_class_name("Rating")[1:]
         titlesList = starsList.find_elements_by_class_name("reviews-modal-criteria-key")
 
+        # Store the review stats in a dictionary
         for i in range(len(stars)):
             self.starsDict[titlesList[i].text] = stars[i].get_attribute("data-star_rating")
 
