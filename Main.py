@@ -8,11 +8,13 @@ Code is provided as-is under an MIT License
 
 # TODO: Add customer profile link to links to view - but in a different way
 # TODO: Scrape details from profiles
+# TODO: Scrape review details from right sidebar
 
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
@@ -261,7 +263,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
         if (len(qualificationTypes) > 0):
             for item in qualificationTypes:
-                experienceItems = item.find_elements_by_class_name("profile-experience-item")
                 sectionName = item.find_element_by_tag_name("h2").text
                 locationTitle = ""
                 if (sectionName == "Experience"):
@@ -271,15 +272,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 elif (sectionName == "Publications"):
                     locationTitle = "Published In"
 
+                experienceItems = item.find_elements_by_class_name("profile-experience-item")
+
                 print(sectionName + ":")
                 for qual in experienceItems:
                     qualName = qual.find_element_by_class_name("profile-experience-title").text
                     print("\n" + qualName)
                     print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
-                h = 1
+                    try:
+                        description = qual.find_element_by_tag_name("p").text
+                        print("\nDescription: " + description)
+                    except NoSuchElementException:
+                        hasDescription = False
+
                 print("\n#########\n")
-            c = 1
-        b = 1
 
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
