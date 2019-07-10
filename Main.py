@@ -314,6 +314,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         starsList = self.driver.find_element_by_class_name("user-modal-criteria")
 
+        starsDict = {}
+
+        firstStar = starsList.find_element_by_class_name("Rating")
+
+        starsDict["Quality of Work"] = firstStar.get_attribute("data-star_rating")
+
+        stars = starsList.find_elements_by_class_name("Rating")[1:]
+        titlesList = starsList.find_elements_by_class_name("reviews-modal-criteria-key")
+
+        for i in range(len(stars)):
+            starsDict[titlesList[i].text] = stars[i].get_attribute("data-star_rating")
+
+        a = 1
+
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
         # Expand to get all reviews
