@@ -258,8 +258,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Gets the profile description given by the bidder
         profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
 
+        reviewAv = self.driver.find_element_by_class_name("Rating").get_attribute("data-star_rating")
+
+        earningsPCT = float(self.driver.find_element_by_class_name("Earnings-label").text) * 10
+
         # Get all the details on the reviews
         # self.getReviewDetails()
+
         qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
         if (len(qualificationTypes) > 0):
             for item in qualificationTypes:
@@ -274,23 +279,47 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 experienceItems = item.find_elements_by_class_name("profile-experience-item")
 
-                print(sectionName + ":")
+                # print(sectionName + ":")
                 for qual in experienceItems:
                     qualName = qual.find_element_by_class_name("profile-experience-title").text
-                    print("\n" + qualName)
-                    print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
+                    # print("\n" + qualName)
+                    # print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
                     try:
                         description = qual.find_element_by_tag_name("p").text
-                        print("\nDescription: " + description)
+                        # print("\nDescription: " + description)
                     except NoSuchElementException:
                         hasDescription = False
 
-                print("\n#########\n")
+                # print("\n#########\n")
+
+
+        # TODO: Get retrieval of stats working
+
+        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
+
+        time.sleep(3)
+
+        statList = self.driver.find_element_by_class_name("item-stats")
+
+        stats = statList.find_elements_by_class_name("item-stats-stat")
+
+        dict = {}
+
+        for stat in stats:
+            name = stat.find_element_by_class_name("item-stats-name").find_element_by_class_name("ng-scope").text
+            pctScore = stat.find_element_by_class_name("item-stats-value").text
+            dict[name] = pctScore
+
+        numReviewsToOutput = self.driver.find_elements_by_class_name("Rating-review")[2].text
+
+        starsList = self.driver.find_element_by_class_name("user-modal-criteria")
 
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
         # Expand to get all reviews
         self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
+
+        time.sleep(3)
 
         # Showing the maximum number of reviews possible per page
         dropDownList = self.driver.find_elements(By.CLASS_NAME, "small-select")[-1]
