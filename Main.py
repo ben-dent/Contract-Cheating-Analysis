@@ -255,6 +255,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.driver.get(url)
         time.sleep(3)
 
+        self.getCertifications()
+
+        z = 1
+
         # Gets the profile description given by the bidder
         profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
 
@@ -292,9 +296,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # print("\n#########\n")
 
-
-        # TODO: Get retrieval of stats working
-
         self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
 
         time.sleep(3)
@@ -303,30 +304,43 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         stats = statList.find_elements_by_class_name("item-stats-stat")
 
-        dict = {}
+        self.dict = {}
 
         for stat in stats:
             name = stat.find_element_by_class_name("item-stats-name").find_element_by_class_name("ng-scope").text
             pctScore = stat.find_element_by_class_name("item-stats-value").text
-            dict[name] = pctScore
+            self.dict[name] = pctScore
 
-        numReviewsToOutput = self.driver.find_elements_by_class_name("Rating-review")[2].text
+        numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
 
         starsList = self.driver.find_element_by_class_name("user-modal-criteria")
 
-        starsDict = {}
+        self.starsDict = {}
 
         firstStar = starsList.find_element_by_class_name("Rating")
 
-        starsDict["Quality of Work"] = firstStar.get_attribute("data-star_rating")
+        self.starsDict["Quality of Work"] = firstStar.get_attribute("data-star_rating")
 
         stars = starsList.find_elements_by_class_name("Rating")[1:]
         titlesList = starsList.find_elements_by_class_name("reviews-modal-criteria-key")
 
         for i in range(len(stars)):
-            starsDict[titlesList[i].text] = stars[i].get_attribute("data-star_rating")
+            self.starsDict[titlesList[i].text] = stars[i].get_attribute("data-star_rating")
 
-        a = 1
+    # Retrieves all the certifications from the "Certifications" tab
+    def getCertifications(self):
+        # Goes to the sidebar
+        certsList = self.driver.find_element_by_class_name("profile-side-list")
+
+        certs = certsList.find_elements_by_tag_name("li")
+
+        self.certsDict = {}
+
+        # Add to qualification dictionary
+        for qual in certs:
+            name = qual.find_element_by_class_name("skill-exam-link").text
+            score = qual.find_element_by_class_name("skill-exam-value").text
+            self.certsDict[name] = score
 
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
