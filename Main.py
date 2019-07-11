@@ -14,7 +14,9 @@ import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import sqlite3 as lite
 import sys
 from PyQt5 import uic, QtWidgets
@@ -43,6 +45,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
         # url = "https://www.freelancer.co.uk/u/LOSPOS77"
         url = "https://www.freelancer.co.uk/u/Djdesign"
+        # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         self.getInformationFromBidderProfile(url)
         self.projectsToLookAt = []
 
@@ -267,9 +270,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Get their % of earnings in that category
         earningsPCT = float(self.driver.find_element_by_class_name("Earnings-label").text) * 10
 
-        # Get all the details on the reviews
-        # self.getReviewDetails()
-
         # Get the qualifications they give
         qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
         if (len(qualificationTypes) > 0):
@@ -298,6 +298,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # print("\n#########\n")
 
+        # Get all the details on the reviews
+        self.getReviewDetails()
+
         time.sleep(3)
 
         # Get the job stats from the right hand side bar
@@ -312,9 +315,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
             name = stat.find_element_by_class_name("item-stats-name").find_element_by_class_name("ng-scope").text
             pctScore = stat.find_element_by_class_name("item-stats-value").text
             self.dict[name] = pctScore
-
-        # Get the number of reviews given to this worker
-        numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
 
         # Fetch the review stats
         starsList = self.driver.find_element_by_class_name("user-modal-criteria")
@@ -354,33 +354,42 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         time.sleep(3)
 
+        # wait = WebDriverWait(self.driver, 10)
+
         # Showing the maximum number of reviews possible per page
         dropDownList = self.driver.find_elements(By.CLASS_NAME, "small-select")[-1]
         dropDownList.find_elements(By.TAG_NAME, "option")[-1].click()
 
         time.sleep(3)
 
-        # Checks if there are more pages of reviews to look at
-        pageCheck = self.driver.find_element_by_class_name("user-reviews-navMeta").text
-        pageCheck = pageCheck.split(" ")
-        areMorePages = pageCheck[3] != pageCheck[5]
+        # Get the number of reviews given to this worker
+        self.numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
 
         done = False
+        page = 0
+
+        links = {}
+        duplicates = 0
 
         # Will loop through all review pages until every review has been seen
         while (not done):
+
             # Finds the list of reviews
             reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
             # Go through all the reviews on the current page
-            for review in reviews:
+            for i in range (len(reviews)):
+                review = reviews[i]
+
                 # Gathering the score of the review out of 5.0
                 scoreElement = review.find_element(By.CLASS_NAME, "user-review-controls")
+
                 score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
                 # Gathering the amount paid for that project
                 amountElement = review.find_element(By.CLASS_NAME, "user-review-price")
+
                 value = amountElement.find_element_by_class_name("ng-binding").text
                 amountPaid = value + " " + amountElement.text
 
@@ -390,22 +399,38 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # Gets the link to the project that the review is for
                 projectLink = review.find_element_by_class_name("user-review-title").get_attribute("href")
 
+                if (links.get(projectLink) == None):
+                    links[projectLink] = True
+                else:
+                    duplicates += 1
+
+
                 # Temporary output of the extracted data
-                print("Score: " + score)
-                print("\nWith review of:\n" + reviewText)
-                print("\nAmount paid: " + amountPaid)
-                print("\nProject link: " + projectLink)
-                print("\n###########\n")
+                print("Review " + str(i + 1 + (page * 100)) + " / " + str(self.numReviewsToOutput))
+                # print("Score: " + score)
+                # print("\nWith review of:\n" + reviewText)
+                # print("\nAmount paid: " + amountPaid)
+                # print("\nProject link: " + projectLink)
+                # print("\n###########\n")
+
+            # Checks if there are more pages of reviews to look at
+            pageCheck = self.driver.find_element_by_class_name("user-reviews-navMeta").text
+            pageCheck = pageCheck.split(" ")
+
+            areMorePages = pageCheck[3] != pageCheck[5]
 
             # If there are more pages of reviews, go and look at them
             if (areMorePages):
                 # Makes sure the 'next page' button is clicked if there are more pages of reviews to see
                 pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
+                page += 1
                 nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
                 nextPageButton.find_element_by_tag_name("a").click()
-                time.sleep(3)
+                time.sleep(1.5)
             else:
                 done = True
+
+        print(str(duplicates) + " duplicates")
 
     # Handles logging into the site
     def loginToFreelancer(self):
@@ -420,6 +445,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Creating the browser instance
         self.driver = webdriver.Firefox(options=options)
+        self.driver.implicitly_wait(10)
 
         # Opens the Freelancer login page
         self.driver.get("https://www.freelancer.co.uk/login")
