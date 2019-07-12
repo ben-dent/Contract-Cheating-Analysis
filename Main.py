@@ -19,6 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import sqlite3 as lite
 import sys
+import math
 from PyQt5 import uic, QtWidgets
 
 from Crawler import *
@@ -364,6 +365,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Get the number of reviews given to this worker
         self.numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
+        self.numReviews = int(self.numReviewsToOutput.split(" ")[0])
 
         done = False
         page = 0
@@ -371,12 +373,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
         links = {}
         duplicates = 0
 
+        dupes = []
+
         # Will loop through all review pages until every review has been seen
         while (not done):
 
             # Finds the list of reviews
             reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
+
+            if (page == math.floor(self.numReviews / 100)):
+                reviews = reviews[:(self.numReviews % 100)]
 
             # Go through all the reviews on the current page
             for i in range (len(reviews)):
@@ -403,6 +410,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     links[projectLink] = True
                 else:
                     duplicates += 1
+                    dupes.append(i + 1 + (page * 100))
 
 
                 # Temporary output of the extracted data
@@ -445,7 +453,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Creating the browser instance
         self.driver = webdriver.Firefox(options=options)
-        self.driver.implicitly_wait(10)
+        self.driver.implicitly_wait(20)
 
         # Opens the Freelancer login page
         self.driver.get("https://www.freelancer.co.uk/login")
