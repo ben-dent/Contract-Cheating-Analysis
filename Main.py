@@ -8,14 +8,11 @@ Code is provided as-is under an MIT License
 
 # TODO: Add customer profile link to links to view - but in a different way
 # TODO: Scrape details from profiles
-# TODO: Scrape review details from right sidebar
 
 import time
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 import sqlite3 as lite
 import sys
@@ -49,6 +46,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         self.getInformationFromBidderProfile(url)
         self.projectsToLookAt = []
+
 
     def test(self):
         linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
@@ -377,6 +375,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Will loop through all review pages until every review has been seen
         while (not done):
+            try:
+                emptyCheck = self.driver.find_element_by_class_name("user-review-empty")
+                done = True
+            except NoSuchElementException:
+                done = False
+
 
             # Finds the list of reviews
             reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
@@ -438,7 +442,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             else:
                 done = True
 
-        print(str(duplicates) + " duplicates")
+        # print(str(duplicates) + " duplicates")
 
     # Handles logging into the site
     def loginToFreelancer(self):
