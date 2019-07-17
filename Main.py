@@ -7,83 +7,107 @@ Code is provided as-is under an MIT License
 '''
 
 # TODO: Add customer profile link to links to view - but in a different way
-# TODO: Scrape details from profiles
+# TODO: Implement handling of duplicates / missing price
+# TODO: Implement historic currency conversion
+# TODO: Implement saving information to DB
 
-import time
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
+import math
 import sqlite3 as lite
 import sys
-import math
+import time
+
 from PyQt5 import uic, QtWidgets
+from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 
 from Crawler import *
-from DataAnalysis import *
-
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
 
 
 class Main(QtWidgets.QMainWindow, mainUI):
-
     ''' This class handles the window in the application as PyQt requires a class for each program window '''
 
-    # In the constructor, the UI is set up and the buttons are linked to the relevant functions
-    def __init__(self, parent = None):
+    # In the constructor, the UI is set up and the buttons are linked to the
+    # relevant functions
+    def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.btnFetch.clicked.connect(self.check)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
+        self.profilesSeen = {}
+        self.projectsSeen = {}
+
+        self.profileDetails = []
+
     def check(self):
         self.loginToFreelancer()
         # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
         # url = "https://www.freelancer.co.uk/u/LOSPOS77"
-        url = "https://www.freelancer.co.uk/u/Djdesign"
-        # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
+        # url = "https://www.freelancer.co.uk/u/Djdesign"
+        url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         self.getInformationFromBidderProfile(url)
         self.projectsToLookAt = []
 
-
-    def test(self):
-        linksToLookAt = getThisYearApartFromLastMonth("https://www.freelancer.co.uk/archives/essay-writing/")
-        for project in linksToLookAt:
-            self.fetchDataNonLogin(project)
-            b = 1
-        self.loginToFreelancer()
-        a = 1
-        # crawlArchiveByGivenURL("https://www.freelancer.co.uk/archives/dot-net/", 1)
-
-    # Creates the table in the database, which will initially be empty
-    def createDatabase(self):
+    # Creates the Jobs table in the database, which will initially be empty
+    def createJobsDatabase(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
-        cur.execute('DROP TABLE IF EXISTS Details')
-        cur.execute('''CREATE TABLE Details (
-        'JobID' INTEGER PRIMARY KEY AUTOINCREMENT,
+        cur.execute('DROP TABLE IF EXISTS Jobs')
+        cur.execute('''CREATE TABLE Jobs (
+        'JobID' INTEGER PRIMARY KEY,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' INTEGER NOT NULL,
         'FinalCost' INTEGER NOT NULL,
-        'Country' TEXT NOT NULL
+        'CountryOfPoster' TEXT NOT NULL,
+        'CountryOfWinner' TEXT NOT NULL
         );''')
 
         con.commit()
 
-    # Sets up the database. Calls the createDatabase function if the table doesn't exist yet
+    # Creates the Profiles table in the database, which will initially be empty
+    def createProfilesDatabase(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Profiles')
+        cur.execute('''CREATE TABLE Profiles (
+        'ProfileID' INTEGER PRIMARY KEY AUTOINCREMENT,
+        'AverageReview' REAL NOT NULL
+        );''')
+
+        con.commit()
+
+    # Sets up the database. Calls the createDatabase function if the table
+    # doesn't exist yet
     def databaseSetup(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
         # Checks if table exists
-        cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='Details'")
-        if(cur.fetchall() == 0):
-            self.createDatabase()
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Jobs'")
+        if (cur.fetchall() == 0):
+            self.createJobsDatabase()
+
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Profiles'")
+        if (cur.fetchall() == 0):
+            self.createProfilesDatabase()
+
+    # Will save profile details to the database
+    def saveProfileDetails(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
 
     # Closes the window
     def exit(self):
@@ -104,8 +128,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Retrieves the profile link of the customer who posted the job
     def getCustomerProfileLink(self):
-        self.customerProfileLink = self.driver.find_elements(By.CLASS_NAME, "NativeElement.ng-star-inserted")[10].text
-        self.customerProfileLink = LINK_PREFIX + "/u/" + self.customerProfileLink.split("@")[1]
+        self.customerProfileLink = self.driver.find_elements(
+            By.CLASS_NAME, "NativeElement.ng-star-inserted")[10].text
+        self.customerProfileLink = LINK_PREFIX + "/u/" + \
+            self.customerProfileLink.split("@")[1]
 
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self, url):
@@ -113,7 +139,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.driver.get(url)
         time.sleep(4)
 
-        # Get the profile link for the customer who posted the task (if it shows it to you)
+        # Get the profile link for the customer who posted the task (if it
+        # shows it to you)
         if (self.driver.current_url.split("/")[-1] == "reviews"):
             self.getCustomerProfileLink()
             print("Gathered customer profile link")
@@ -128,18 +155,23 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.soup = BeautifulSoup(r.content, "html.parser")
 
             # Checking if the given page is an archived page
-            self.finishedType = self.soup.find("span", {"class": "promotion-tag"}).text
+            self.finishedType = self.soup.find(
+                "span", {"class": "promotion-tag"}).text
 
             # Removing irrelevant characters
-            self.finishedType = ''.join(c for c in self.finishedType if c.isalnum())
+            self.finishedType = ''.join(
+                c for c in self.finishedType if c.isalnum())
 
             self.archived = False
 
-            # If the project is archived then the response will definitely be one of these
-            if (self.finishedType == "Cancelled" or self.finishedType == "Closed" or self.finishedType == "Completed"):
+            # If the project is archived then the response will definitely be
+            # one of these
+            if (self.finishedType == "Cancelled" or self.finishedType ==
+                    "Closed" or self.finishedType == "Completed"):
                 self.archived = True
 
-            # Finding the average that freelancers are bidding - the first h2 HTML tag
+            # Finding the average that freelancers are bidding - the first h2
+            # HTML tag
             self.biddersInfo = self.soup.find_all("h2")
             self.biddersAndPriceFind = self.biddersInfo[0]
 
@@ -149,14 +181,18 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.archived and self.finishedType == "Completed"):
                 self.awarded = True
 
-                # Makes sure the bidding info is correct as archived pages use a slightly different format
+                # Makes sure the bidding info is correct as archived pages use
+                # a slightly different format
                 self.biddersAndPriceFind = self.biddersInfo[1]
 
-                # Retrieving the final price for the task if we are looking at a completed project in the archives
-                self.finalPrice = self.soup.find("div", {"class": "FreelancerInfo-price"}).text
+                # Retrieving the final price for the task if we are looking at
+                # a completed project in the archives
+                self.finalPrice = self.soup.find(
+                    "div", {"class": "FreelancerInfo-price"}).text
 
             # Retrieving the tags that the customer gave to their task
-            self.givenTags = self.soup.find_all("a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
+            self.givenTags = self.soup.find_all(
+                "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
 
             # Get the country of the customer
             self.getCustomerCountry()
@@ -165,9 +201,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.getBiddersInfo()
 
         except requests.exceptions.MissingSchema as e:
-            # If an entered URL is not valid, it will show an error and clear the inputs
-            QtWidgets.QMessageBox.warning(self, "Invalid entry", "Please enter a valid URL!",
-                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            # If an entered URL is not valid, it will show an error and clear
+            # the inputs
+            QtWidgets.QMessageBox.warning(
+                self,
+                "Invalid entry",
+                "Please enter a valid URL!",
+                QtWidgets.QMessageBox.Ok,
+                QtWidgets.QMessageBox.Ok)
             self.edtURL.setText("")
             self.edtURL.setFocus()
 
@@ -188,23 +229,29 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         print("Customer country: " + self.customerCountry + "\n")
 
-    # Gets all information about the bidders then calls getBiddersCountries to get their locations
+    # Gets all information about the bidders then calls getBiddersCountries to
+    # get their locations
     def getBiddersInfo(self):
         # A list for the links to the bidders' profiles
         self.bidderProfileLinks = []
 
         # Adding each link to the bidder profiles to the list
-        bidderLinks = self.soup.find_all("a", {"class": "FreelancerInfo-username"})
+        bidderLinks = self.soup.find_all(
+            "a", {"class": "FreelancerInfo-username"})
         for each in bidderLinks:
             self.bidderProfileLinks.append(LINK_PREFIX + each.get("href"))
 
         # Check if anyone has bid on the job yet
-        if (self.biddersAndPriceFind.text.split("Need to")[0] == self.biddersAndPriceFind.text):
+        if (self.biddersAndPriceFind.text.split("Need to")
+                [0] == self.biddersAndPriceFind.text):
             division = self.biddersAndPriceFind.text.split(" ")
 
             self.numFreelancers = division[0]
             self.averagePrice = division[6]
-            print(self.numFreelancers + " freelancers who are bidding an average of " + self.averagePrice)
+            print(
+                self.numFreelancers +
+                " freelancers who are bidding an average of " +
+                self.averagePrice)
 
             if (self.awarded):
                 print("The final price was: " + self.finalPrice + "\n")
@@ -219,12 +266,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
     # Retrieving the countries of the bidders and storing them in a dictionary
     def getBiddersCountries(self):
         # Retrieves all listed countries of the bidders
-        self.bidderCountries = self.soup.find_all("span", {"class": "FreelancerInfo-flag"})
+        self.bidderCountries = self.soup.find_all(
+            "span", {"class": "FreelancerInfo-flag"})
 
-        # Defines a dictionary to store the number of bidders from each country that has a bidder
+        # Defines a dictionary to store the number of bidders from each country
+        # that has a bidder
         self.countriesOfBidders = {}
 
-        # Saving the locations of bidders and the number from that country into the dictionary
+        # Saving the locations of bidders and the number from that country into
+        # the dictionary
         for each in self.bidderCountries:
             # Gets the country of the bidder
             country = each.contents[1].get("title")
@@ -235,7 +285,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             result = self.countriesOfBidders.get(country)
 
             # Incrementing value if country already in dictionary
-            if (result != None):
+            if (result is not None):
                 num = result + 1
 
             # Updating the dictionary with
@@ -261,16 +311,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
         z = 1
 
         # Gets the profile description given by the bidder
-        profileDescription = self.driver.find_elements(By.CLASS_NAME, "profile-about-description")[1].text
+        profileDescription = self.driver.find_elements(
+            By.CLASS_NAME, "profile-about-description")[1].text
 
         # Getting their average review
-        reviewAv = self.driver.find_element_by_class_name("Rating").get_attribute("data-star_rating")
+        reviewAv = self.driver.find_element_by_class_name(
+            "Rating").get_attribute("data-star_rating")
 
         # Get their % of earnings in that category
-        earningsPCT = float(self.driver.find_element_by_class_name("Earnings-label").text) * 10
+        earningsPCT = float(
+            self.driver.find_element_by_class_name("Earnings-label").text) * 10
 
         # Get the qualifications they give
-        qualificationTypes = self.driver.find_elements_by_class_name("profile-experience")
+        qualificationTypes = self.driver.find_elements_by_class_name(
+            "profile-experience")
         if (len(qualificationTypes) > 0):
             for item in qualificationTypes:
                 sectionName = item.find_element_by_tag_name("h2").text
@@ -282,11 +336,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 elif (sectionName == "Publications"):
                     locationTitle = "Published In"
 
-                experienceItems = item.find_elements_by_class_name("profile-experience-item")
+                experienceItems = item.find_elements_by_class_name(
+                    "profile-experience-item")
 
                 # print(sectionName + ":")
                 for qual in experienceItems:
-                    qualName = qual.find_element_by_class_name("profile-experience-title").text
+                    qualName = qual.find_element_by_class_name(
+                        "profile-experience-title").text
                     # print("\n" + qualName)
                     # print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
                     try:
@@ -311,25 +367,30 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Store all these job stats in a dictionary
         for stat in stats:
-            name = stat.find_element_by_class_name("item-stats-name").find_element_by_class_name("ng-scope").text
+            name = stat.find_element_by_class_name(
+                "item-stats-name").find_element_by_class_name("ng-scope").text
             pctScore = stat.find_element_by_class_name("item-stats-value").text
             self.dict[name] = pctScore
 
         # Fetch the review stats
-        starsList = self.driver.find_element_by_class_name("user-modal-criteria")
+        starsList = self.driver.find_element_by_class_name(
+            "user-modal-criteria")
 
         self.starsDict = {}
 
         firstStar = starsList.find_element_by_class_name("Rating")
 
-        self.starsDict["Quality of Work"] = firstStar.get_attribute("data-star_rating")
+        self.starsDict["Quality of Work"] = firstStar.get_attribute(
+            "data-star_rating")
 
         stars = starsList.find_elements_by_class_name("Rating")[1:]
-        titlesList = starsList.find_elements_by_class_name("reviews-modal-criteria-key")
+        titlesList = starsList.find_elements_by_class_name(
+            "reviews-modal-criteria-key")
 
         # Store the review stats in a dictionary
         for i in range(len(stars)):
-            self.starsDict[titlesList[i].text] = stars[i].get_attribute("data-star_rating")
+            self.starsDict[titlesList[i].text] = stars[i].get_attribute(
+                "data-star_rating")
 
     # Retrieves all the certifications from the "Certifications" tab
     def getCertifications(self):
@@ -348,21 +409,28 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
+        numDiscounted = 0
+        discounted = []
+
         # Expand to get all reviews
-        self.driver.find_element(By.CLASS_NAME, "profile-reviews-btn-top").click()
+        self.driver.find_element(
+            By.CLASS_NAME,
+            "profile-reviews-btn-top").click()
 
         time.sleep(3)
 
         # wait = WebDriverWait(self.driver, 10)
 
         # Showing the maximum number of reviews possible per page
-        dropDownList = self.driver.find_elements(By.CLASS_NAME, "small-select")[-1]
+        dropDownList = self.driver.find_elements(
+            By.CLASS_NAME, "small-select")[-1]
         dropDownList.find_elements(By.TAG_NAME, "option")[-1].click()
 
         time.sleep(3)
 
         # Get the number of reviews given to this worker
-        self.numReviewsToOutput = self.driver.find_element_by_tag_name("ng-pluralize").text
+        self.numReviewsToOutput = self.driver.find_element_by_tag_name(
+            "ng-pluralize").text
         self.numReviews = int(self.numReviewsToOutput.split(" ")[0])
 
         done = False
@@ -376,49 +444,65 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Will loop through all review pages until every review has been seen
         while (not done):
             try:
-                emptyCheck = self.driver.find_element_by_class_name("user-review-empty")
+                emptyCheck = self.driver.find_element_by_class_name(
+                    "user-review-empty")
                 done = True
             except NoSuchElementException:
                 done = False
 
-
             # Finds the list of reviews
-            reviewList = self.driver.find_element(By.CLASS_NAME, "user-reviews")
+            reviewList = self.driver.find_element(
+                By.CLASS_NAME, "user-reviews")
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
             if (page == math.floor(self.numReviews / 100)):
                 reviews = reviews[:(self.numReviews % 100)]
 
             # Go through all the reviews on the current page
-            for i in range (len(reviews)):
+            for i in range(len(reviews)):
+                countReview = True
+                reasons = []
                 review = reviews[i]
 
                 # Gathering the score of the review out of 5.0
-                scoreElement = review.find_element(By.CLASS_NAME, "user-review-controls")
+                scoreElement = review.find_element(
+                    By.CLASS_NAME, "user-review-controls")
 
-                score = scoreElement.find_element(By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
+                score = scoreElement.find_element(
+                    By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
                 # Gathering the amount paid for that project
-                amountElement = review.find_element(By.CLASS_NAME, "user-review-price")
+                amountElement = review.find_element(
+                    By.CLASS_NAME, "user-review-price")
 
-                value = amountElement.find_element_by_class_name("ng-binding").text
+                value = amountElement.find_element_by_class_name(
+                    "ng-binding").text
                 amountPaid = value + " " + amountElement.text
 
+                if (amountPaid == " "):
+                    countReview = False
+                    reasons.append(0)
+
                 # Gets the review text
-                reviewText = review.find_element_by_tag_name("p").text.split('"')[1:][:-1][0]
+                reviewText = review.find_element_by_tag_name(
+                    "p").text.split('"')[1:][:-1][0]
 
                 # Gets the link to the project that the review is for
-                projectLink = review.find_element_by_class_name("user-review-title").get_attribute("href")
+                projectLink = review.find_element_by_class_name(
+                    "user-review-title").get_attribute("href")
 
-                if (links.get(projectLink) == None):
+                if (links.get(projectLink) is None):
                     links[projectLink] = True
                 else:
-                    duplicates += 1
-                    dupes.append(i + 1 + (page * 100))
-
+                    reasons.append(1)
 
                 # Temporary output of the extracted data
-                print("Review " + str(i + 1 + (page * 100)) + " / " + str(self.numReviewsToOutput))
+                print("Review " + str(i + 1 + (page * 100)) +
+                      " / " + str(self.numReviewsToOutput))
+                if (countReview == False):
+                    numDiscounted += 1
+                    report = [i + 1 + (page * 100)] + reasons
+                    discounted.append(report)
                 # print("Score: " + score)
                 # print("\nWith review of:\n" + reviewText)
                 # print("\nAmount paid: " + amountPaid)
@@ -426,17 +510,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # print("\n###########\n")
 
             # Checks if there are more pages of reviews to look at
-            pageCheck = self.driver.find_element_by_class_name("user-reviews-navMeta").text
+            pageCheck = self.driver.find_element_by_class_name(
+                "user-reviews-navMeta").text
             pageCheck = pageCheck.split(" ")
 
             areMorePages = pageCheck[3] != pageCheck[5]
 
             # If there are more pages of reviews, go and look at them
             if (areMorePages):
-                # Makes sure the 'next page' button is clicked if there are more pages of reviews to see
-                pageButtons = self.driver.find_element_by_class_name("user-reviews-pagination")
+                # Makes sure the 'next page' button is clicked if there are
+                # more pages of reviews to see
+                pageButtons = self.driver.find_element_by_class_name(
+                    "user-reviews-pagination")
                 page += 1
-                nextPageButton = pageButtons.find_elements_by_tag_name("li")[-2]
+                nextPageButton = pageButtons.find_elements_by_tag_name(
+                    "li")[-2]
                 nextPageButton.find_element_by_tag_name("a").click()
                 time.sleep(1.5)
             else:
@@ -446,12 +534,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Handles logging into the site
     def loginToFreelancer(self):
-        # The username and password for the throwaway account I created - Feel free to make your own
+        # The username and password for the throwaway account I created - Feel
+        # free to make your own
         username = "AnalysisProject"
         password = "Project!"
 
         # Launch the Selenium Firefox browser
-        # Use options.headless as False if you want the popup browser, True otherwise
+        # Use options.headless as False if you want the popup browser, True
+        # otherwise
         options = Options()
         options.headless = True
 
@@ -487,13 +577,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Close the program
         self.exit()
 
-    # Handles the user pressing enter, instead of clicking on the 'Fetch' button
+    # Handles the user pressing enter, instead of clicking on the 'Fetch'
+    # button
     def keyPressEvent(self, event):
         # The enter key number is 16777220
         ENTER_KEY = 16777220
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
             self.check()
+
 
 # Runs the application and launches the window
 app = QtWidgets.QApplication(sys.argv)
