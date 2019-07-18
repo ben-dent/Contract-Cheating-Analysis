@@ -14,6 +14,7 @@ Code is provided as-is under an MIT License
 import math
 import sqlite3 as lite
 import sys
+from datetime import datetime
 import time
 
 from PyQt5 import uic, QtWidgets
@@ -39,22 +40,62 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
+        self.dateToday = datetime.today().strftime('%d/%m/%y')
+
         self.profilesSeen = {}
         self.projectsSeen = {}
 
-        self.profileDetails = []
-
     def check(self):
+        self.databaseSetup()
         self.loginToFreelancer()
         # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
         # url = "https://www.freelancer.co.uk/u/LOSPOS77"
-        # url = "https://www.freelancer.co.uk/u/Djdesign"
-        url = "https://www.freelancer.co.uk/u/Maplegroupcom"
+        url = "https://www.freelancer.co.uk/u/Djdesign"
+        # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         self.getInformationFromBidderProfile(url)
         self.projectsToLookAt = []
 
+    # Creates the Qualifications table in the database, which will initially be empty
+    def createQualificationsTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Qualifications')
+        cur.execute('''CREATE TABLE Qualifications (
+        'QualificationID' INTEGER PRIMARY KEY,
+        'QualificationType' TEXT NOT NULL,
+        'User' TEXT NOT NULL,
+        'QualificationName' TEXT NOT NULL,
+        'ExtraInformation' TEXT,
+        FOREIGN KEY(User) REFERENCES Profiles(Username)
+        );''')
+
+        con.commit()
+
+    # Creates the Reviews table in the database, which will initially be empty
+    def createReviewsTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Reviews')
+        cur.execute('''CREATE TABLE Reviews (
+        'ReviewID' INTEGER PRIMARY KEY,
+        'Profile' TEXT NOT NULL,
+        'Score' INTEGER NOT NULL,
+        'AmountPaid' TEXT NOT NULL,
+        'DateScraped' TEXT NOT NULL,
+        'Date' TEXT NOT NULL,
+        'Country' TEXT NOT NULL,
+        'Notes' TEXT NOT NULL,
+        FOREIGN KEY(Profile) REFERENCES Profiles(Username)
+        );''')
+
+        con.commit()
+
     # Creates the Jobs table in the database, which will initially be empty
-    def createJobsDatabase(self):
+    def createJobsTable(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
@@ -63,8 +104,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''CREATE TABLE Jobs (
         'JobID' INTEGER PRIMARY KEY,
         'NumberOfBidders' INTEGER NOT NULL,
-        'AverageBidCost' INTEGER NOT NULL,
-        'FinalCost' INTEGER NOT NULL,
+        'AverageBidCost' TEXT NOT NULL,
+        'FinalCost' TEXT NOT NULL,
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL
         );''')
@@ -72,15 +113,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con.commit()
 
     # Creates the Profiles table in the database, which will initially be empty
-    def createProfilesDatabase(self):
+    def createProfilesTable(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
         cur.execute('DROP TABLE IF EXISTS Profiles')
         cur.execute('''CREATE TABLE Profiles (
-        'ProfileID' INTEGER PRIMARY KEY AUTOINCREMENT,
-        'AverageReview' REAL NOT NULL
+        'ProfileID' INTEGER PRIMARY KEY,
+        'Username' TEXT NOT NULL,
+        'NumReviews' INTEGER NOT NULL,
+        'AverageReview' REAL NOT NULL,
+        'HourlyRate' TEXT NOT NULL,
+        'EarningsPCT' REAL NOT NULL,
+        'Country' TEXT NOT NULL
         );''')
 
         con.commit()
@@ -92,22 +138,64 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con = lite.connect(dbName)
         cur = con.cursor()
 
-        # Checks if table exists
+        # Checks if tables exist and creates them if they do not
         cur.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Jobs'")
-        if (cur.fetchall() == 0):
-            self.createJobsDatabase()
+        if (len(cur.fetchall()) == 0):
+            self.createJobsTable()
 
         cur.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Profiles'")
-        if (cur.fetchall() == 0):
-            self.createProfilesDatabase()
+        if (len(cur.fetchall()) == 0):
+            self.createProfilesTable()
+
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Qualifications'")
+        if (len(cur.fetchall()) == 0):
+            self.createQualificationsTable()
+
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Reviews'")
+        if (len(cur.fetchall()) == 0):
+            self.createReviewsTable()
 
     # Will save profile details to the database
     def saveProfileDetails(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
+
+        cur.execute('''
+        INSERT INTO Profiles(Username, NumReviews, AverageReview, HourlyRate, EarningsPCT, Country) 
+        VALUES(?,?,?,?,?,?)''',
+        (self.username, self.numReviews, self.reviewAv, self.hourly, self.earningsPCT, self.profileCountry))
+
+        con.commit()
+
+    def saveQualificationDetails(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('''
+        INSERT INTO Qualifications(QualificationType, User, QualificationName, ExtraInformation) 
+        VALUES(?,?,?,?)''',
+        (self.qualificationType, self.username, self.qualName, self.extraInformation))
+
+        con.commit()
+
+    # Will save review details to the database
+    def saveReviewDetails(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('''
+        INSERT INTO Reviews(Profile, Score, AmountPaid, DateScraped, Date, Country, Notes) 
+        VALUES(?,?,?,?,?,?,?)''',
+        (self.username, self.score, self.amountPaid, self.dateToday, self.timePosted, self.reviewCountry, self.note))
+
+        con.commit()
 
     # Closes the window
     def exit(self):
@@ -305,21 +393,28 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.driver.get(url)
         time.sleep(3)
 
+        self.profilesSeen[url] = True
+
+        self.username = url.split("/")[-1].split("?")[0]
+
         # Get their list of certifications
         self.getCertifications()
 
         z = 1
 
+        self.hourly = self.driver.find_element_by_class_name("PageProfile-info-rate-value").text
+        self.profileCountry = self.driver.find_element_by_class_name("profile-location-flag").get_attribute("title")
+
         # Gets the profile description given by the bidder
-        profileDescription = self.driver.find_elements(
+        self.profileDescription = self.driver.find_elements(
             By.CLASS_NAME, "profile-about-description")[1].text
 
         # Getting their average review
-        reviewAv = self.driver.find_element_by_class_name(
+        self.reviewAv = self.driver.find_element_by_class_name(
             "Rating").get_attribute("data-star_rating")
 
         # Get their % of earnings in that category
-        earningsPCT = float(
+        self.earningsPCT = float(
             self.driver.find_element_by_class_name("Earnings-label").text) * 10
 
         # Get the qualifications they give
@@ -328,6 +423,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (len(qualificationTypes) > 0):
             for item in qualificationTypes:
                 sectionName = item.find_element_by_tag_name("h2").text
+                self.qualificationType = sectionName
                 locationTitle = ""
                 if (sectionName == "Experience"):
                     locationTitle = "Working at"
@@ -341,15 +437,39 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # print(sectionName + ":")
                 for qual in experienceItems:
-                    qualName = qual.find_element_by_class_name(
+                    self.qualName = qual.find_element_by_class_name(
                         "profile-experience-title").text
+                    self.extraInformation = "None"
+                    if (self.qualificationType == "Education"):
+                        byline = qual.find_element_by_class_name("profile-experience-byline").text
+                        qualDate = qual.find_element_by_class_name("profile-experience-date").text
+                        self.extraInformation = byline + ", " + qualDate
+
+                    elif (self.qualificationType == "Qualifications"):
+                        self.extraInformation = qual.find_element_by_tag_name("p").text
+
+                    elif (self.qualificationType == "Experience"):
+                        byline = qual.find_element_by_class_name("profile-experience-byline").text
+                        qualDate = qual.find_element_by_class_name("profile-experience-date").text
+                        description = qual.find_element_by_tag_name("p").text
+                        self.extraInformation = byline + ", " + qualDate + ", " + description
+
+                    elif (self.qualificationType == "Publications"):
+                        byline = qual.find_element_by_class_name("profile-experience-byline").text
+                        description = qual.find_element_by_tag_name("p").text
+                        self.extraInformation = byline + ", " + description
+
+                    self.saveQualificationDetails()
+
+                    a = 1
+
                     # print("\n" + qualName)
                     # print(locationTitle + ": " + qual.find_element_by_tag_name("span").text)
-                    try:
-                        description = qual.find_element_by_tag_name("p").text
-                        # print("\nDescription: " + description)
-                    except NoSuchElementException:
-                        hasDescription = False
+                    # try:
+                    #     description = qual.find_element_by_tag_name("p").text
+                    #     # print("\nDescription: " + description)
+                    # except NoSuchElementException:
+                    #     hasDescription = False
 
                 # print("\n#########\n")
 
@@ -433,6 +553,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
             "ng-pluralize").text
         self.numReviews = int(self.numReviewsToOutput.split(" ")[0])
 
+        self.saveProfileDetails()
+
         done = False
         page = 0
 
@@ -461,14 +583,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
             # Go through all the reviews on the current page
             for i in range(len(reviews)):
                 countReview = True
-                reasons = []
+                duplicate = False
+                sealed = False
                 review = reviews[i]
 
                 # Gathering the score of the review out of 5.0
                 scoreElement = review.find_element(
                     By.CLASS_NAME, "user-review-controls")
 
-                score = scoreElement.find_element(
+                self.score = scoreElement.find_element(
                     By.CLASS_NAME, "Rating").get_attribute("data-star_rating")
 
                 # Gathering the amount paid for that project
@@ -477,32 +600,48 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 value = amountElement.find_element_by_class_name(
                     "ng-binding").text
-                amountPaid = value + " " + amountElement.text
+                self.amountPaid = value + " " + amountElement.text
 
-                if (amountPaid == " "):
+                self.reviewCountry = review.find_element_by_class_name("user-review-flag").get_attribute("title")
+                self.timePosted = review.find_element_by_class_name("user-review-details").text.split(".")[1].lstrip()
+
+                if (self.amountPaid == " "):
                     countReview = False
-                    reasons.append(0)
+                    sealed = True
 
                 # Gets the review text
                 reviewText = review.find_element_by_tag_name(
                     "p").text.split('"')[1:][:-1][0]
 
                 # Gets the link to the project that the review is for
-                projectLink = review.find_element_by_class_name(
+                self.projectLink = review.find_element_by_class_name(
                     "user-review-title").get_attribute("href")
 
-                if (links.get(projectLink) is None):
-                    links[projectLink] = True
+                if (links.get(self.projectLink) is None):
+                    links[self.projectLink] = True
                 else:
-                    reasons.append(1)
+                    duplicate = True
 
                 # Temporary output of the extracted data
                 print("Review " + str(i + 1 + (page * 100)) +
                       " / " + str(self.numReviewsToOutput))
+
+                saveReview = True
+
+                self.note = "None"
+
                 if (countReview == False):
                     numDiscounted += 1
-                    report = [i + 1 + (page * 100)] + reasons
-                    discounted.append(report)
+                    if (sealed):
+                        self.note += "Sealed"
+
+                    if (duplicate):
+                        saveReview = False
+
+                if (saveReview):
+                    self.saveReviewDetails()
+
+                a = 1
                 # print("Score: " + score)
                 # print("\nWith review of:\n" + reviewText)
                 # print("\nAmount paid: " + amountPaid)
@@ -577,8 +716,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Close the program
         self.exit()
 
-    # Handles the user pressing enter, instead of clicking on the 'Fetch'
-    # button
+    # Handles the user pressing enter, instead of clicking on the 'Fetch'button
     def keyPressEvent(self, event):
         # The enter key number is 16777220
         ENTER_KEY = 16777220
