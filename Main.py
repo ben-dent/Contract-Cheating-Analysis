@@ -6,16 +6,15 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Add customer profile link to links to view - but in a different way
-# TODO: Implement handling of duplicates / missing price
 # TODO: Implement historic currency conversion
-# TODO: Implement saving information to DB
 
 import math
 import sqlite3 as lite
 import sys
 from datetime import datetime
 import time
+
+from bs4 import BeautifulSoup
 
 from PyQt5 import uic, QtWidgets
 from selenium import webdriver
@@ -36,24 +35,59 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.check)
+        self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
 
+        self.profilesSavedAlready = {}
+        self.projectsSavedAlready = {}
+        self.seenIDs = {}
+
         self.profilesSeen = {}
         self.projectsSeen = {}
 
-    def check(self):
+    # Ensures no duplicate entries in tables
+    def getSeen(self):
         self.databaseSetup()
-        self.loginToFreelancer()
-        # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
-        # url = "https://www.freelancer.co.uk/u/LOSPOS77"
-        url = "https://www.freelancer.co.uk/u/Djdesign"
-        # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
-        self.getInformationFromBidderProfile(url)
-        self.projectsToLookAt = []
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('SELECT URL, JobID FROM Jobs')
+        links = cur.fetchall()
+
+        if (len(links) > 0):
+            for link in links:
+                self.projectsSavedAlready[link[0]] = True
+                self.seenIDs[link[1]] = True
+
+        cur.execute('SELECT Username FROM Profiles')
+        users = cur.fetchall()
+
+        if (len(users) > 0):
+            for user in users:
+                self.profilesSavedAlready[LINK_PREFIX + "/u/" + user[0]] = True
+
+    def setUpProgram(self):
+        self.databaseSetup()
+        self.getSeen()
+        projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
+
+        for project in projects:
+            if (self.projectsSavedAlready.get(project) == None):
+                self.fetchDataNonLogin(project)
+
+        a = 1
+
+        # self.loginToFreelancer()
+        # # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
+        # # url = "https://www.freelancer.co.uk/u/LOSPOS77"
+        # url = "https://www.freelancer.co.uk/u/Djdesign"
+        # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
+        # self.getInformationFromBidderProfile(url)
+
 
     # Creates the Qualifications table in the database, which will initially be empty
     def createQualificationsTable(self):
@@ -103,6 +137,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('DROP TABLE IF EXISTS Jobs')
         cur.execute('''CREATE TABLE Jobs (
         'JobID' INTEGER PRIMARY KEY,
+        'URL' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -172,6 +207,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         con.commit()
 
+    # Will save qualification details to the database
     def saveQualificationDetails(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
@@ -194,6 +230,28 @@ class Main(QtWidgets.QMainWindow, mainUI):
         INSERT INTO Reviews(Profile, Score, AmountPaid, DateScraped, Date, Country, Notes) 
         VALUES(?,?,?,?,?,?,?)''',
         (self.username, self.score, self.amountPaid, self.dateToday, self.timePosted, self.reviewCountry, self.note))
+
+        con.commit()
+
+    # Will save job details to the database
+    def saveJobDetails(self, url):
+
+        if (not(self.awarded)):
+            self.winnerCountry = "None"
+            self.finalPrice = "None"
+
+        if (self.numFreelancers == 0):
+            self.averagePrice = "None"
+            self.finalPrice = "None"
+
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('''
+        INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, CountryOfPoster, CountryOfWinner) 
+        VALUES(?, ?,?,?,?,?,?)''',
+        (self.projectID, url, self.numFreelancers, self.averagePrice, self.finalPrice, self.customerCountry, self.winnerCountry))
 
         con.commit()
 
@@ -222,25 +280,24 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.customerProfileLink.split("@")[1]
 
     # Fetching all the data that requires a login first
-    def fetchDataWithLogin(self, url):
-        # Open the project page
-        self.driver.get(url)
-        time.sleep(4)
-
-        # Get the profile link for the customer who posted the task (if it
-        # shows it to you)
-        if (self.driver.current_url.split("/")[-1] == "reviews"):
-            self.getCustomerProfileLink()
-            print("Gathered customer profile link")
-        else:
-            print("Could not gather customer profile link")
+    def fetchDataWithLogin(self):
+        profileLinks = list(self.profilesSeen.keys())[:2]
+        for profile in profileLinks:
+            self.getInformationFromBidderProfile(profile)
 
     # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
-        # Checking if the user entered a valid URL
-        try:
-            r = requests.get(url)
-            self.soup = BeautifulSoup(r.content, "html.parser")
+        r = requests.get(url)
+        self.soup = BeautifulSoup(r.content, "html.parser")
+
+        self.projectID = self.soup.find_all(
+            "p", {"class": "PageProjectViewLogout-detail-tags"}
+        )[2].text.split("#")[-1]
+
+        if (self.seenIDs.get(self.projectID) == None):
+
+            self.seenIDs[self.projectID] = True
+            print("\n" + url)
 
             # Checking if the given page is an archived page
             self.finishedType = self.soup.find(
@@ -251,6 +308,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 c for c in self.finishedType if c.isalnum())
 
             self.archived = False
+
+            print(self.finishedType)
 
             # If the project is archived then the response will definitely be
             # one of these
@@ -263,6 +322,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.biddersInfo = self.soup.find_all("h2")
             self.biddersAndPriceFind = self.biddersInfo[0]
 
+            if (self.finishedType == "InProgress"):
+                if (self.soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"}) != None):
+                    self.biddersAndPriceFind = self.biddersInfo[1]
+
             self.awarded = False
 
             # Checks if the project was awarded to anyone
@@ -272,6 +335,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # Makes sure the bidding info is correct as archived pages use
                 # a slightly different format
                 self.biddersAndPriceFind = self.biddersInfo[1]
+
+                # self.winner = LINK_PREFIX + self.soup.find(
+                #     "a", {"class": "FreelancerInfo-username"}).get("href")
+                self.winnerCountry = self.soup.find(
+                    "span", {"class": "usercard-flag"}).get("title")
 
                 # Retrieving the final price for the task if we are looking at
                 # a completed project in the archives
@@ -288,17 +356,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
             # Gets the information about the bidders
             self.getBiddersInfo()
 
-        except requests.exceptions.MissingSchema as e:
-            # If an entered URL is not valid, it will show an error and clear
-            # the inputs
-            QtWidgets.QMessageBox.warning(
-                self,
-                "Invalid entry",
-                "Please enter a valid URL!",
-                QtWidgets.QMessageBox.Ok,
-                QtWidgets.QMessageBox.Ok)
-            self.edtURL.setText("")
-            self.edtURL.setFocus()
+            self.saveJobDetails(url)
+            a = 1
 
     # Retrieving the country of the customer
     def getCustomerCountry(self):
@@ -315,7 +374,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.customerCountry = countryParts.split("\n")[0]
                 break
 
-        print("Customer country: " + self.customerCountry + "\n")
+        print("\nCustomer country: " + self.customerCountry + "\n")
 
     # Gets all information about the bidders then calls getBiddersCountries to
     # get their locations
@@ -326,6 +385,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Adding each link to the bidder profiles to the list
         bidderLinks = self.soup.find_all(
             "a", {"class": "FreelancerInfo-username"})
+
         for each in bidderLinks:
             self.bidderProfileLinks.append(LINK_PREFIX + each.get("href"))
 
@@ -347,6 +407,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 print("No one was awarded this project\n")
 
             self.getBiddersCountries()
+
+            for profile in self.bidderProfileLinks:
+                if (self.profilesSeen.get(profile) == None):
+                    self.profilesSeen[profile] = True
 
         else:
             print("No bids yet")
@@ -530,7 +594,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
         numDiscounted = 0
-        discounted = []
 
         # Expand to get all reviews
         self.driver.find_element(
@@ -669,6 +732,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
             else:
                 done = True
 
+                for project in (list(links.keys())):
+                    if self.projectsSeen.get(project) == None:
+                        self.projectsSeen[project] = True
+
+
         # print(str(duplicates) + " duplicates")
 
     # Handles logging into the site
@@ -722,7 +790,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         ENTER_KEY = 16777220
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
-            self.check()
+            self.setUpProgram()
 
 
 # Runs the application and launches the window
