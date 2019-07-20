@@ -9,7 +9,6 @@ Code is provided as-is under an MIT License
 # TODO: Implement historic currency conversion
 
 import math
-import sqlite3 as lite
 import sys
 from datetime import datetime
 import time
@@ -23,6 +22,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 
 from Crawler import *
+from DataAnalysis import *
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
 
@@ -47,6 +47,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.profilesSeen = {}
         self.projectsSeen = {}
+
+        # Defines a dictionary to store the number of bidders from each country
+        # that has a bidder
+        self.countriesOfBidders = {}
 
     # Ensures no duplicate entries in tables
     def getSeen(self):
@@ -79,6 +83,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.projectsSavedAlready.get(project) == None):
                 self.fetchDataNonLogin(project)
 
+        print(len(self.countriesOfBidders.keys()))
+
+        plotBarChartOfBidderCountries(self.countriesOfBidders)
         a = 1
 
         # self.loginToFreelancer()
@@ -420,10 +427,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Retrieves all listed countries of the bidders
         self.bidderCountries = self.soup.find_all(
             "span", {"class": "FreelancerInfo-flag"})
-
-        # Defines a dictionary to store the number of bidders from each country
-        # that has a bidder
-        self.countriesOfBidders = {}
 
         # Saving the locations of bidders and the number from that country into
         # the dictionary
