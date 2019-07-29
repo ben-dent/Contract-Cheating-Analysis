@@ -1,25 +1,8 @@
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
-import sqlite3 as lite
 import pycountry_convert as pc
-import time
 
-
-def getData():
-    db = "Test.db"
-    con = lite.connect(db)
-    cur = con.cursor()
-
-    cur.execute('SELECT TestID, TestText FROM Test')
-    results = cur.fetchall()
-
-    dict = {}
-
-    for pair in results:
-        dict[pair[1]] = pair[0]
-
-    plotBarChartsOfBidderCountries(dict)
-
+# Generates multiple windows of bar charts to display the countries of bidders
 def plotBarChartsOfBidderCountries(countryValues):
     continents = {
         'NA': 'North America',
@@ -57,9 +40,9 @@ def plotBarChartsOfBidderCountries(countryValues):
 
         countryData.update({continent_code : [continentCountries, continentValues]})
 
-    conts = list(countryData.keys())
+    continentNames = list(countryData.keys())
 
-    for name in conts:
+    for name in continentNames:
         data = countryData.get(name)
 
         if (data != [[], []]):
@@ -91,6 +74,3 @@ def plotBarChartsOfBidderCountries(countryValues):
             plt.savefig(imageName, bbox_inches='tight', dpi=100)
 
     plt.show()
-
-            # imageName = "image" + continent_name + ".png"
-            # plt.savefig(imageName, bbox_inches='tight', dpi=100)
