@@ -95,7 +95,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         # self.getInformationFromBidderProfile(url)
 
-
     # Creates the Qualifications table in the database, which will initially be empty
     def createQualificationsTable(self):
         dbName = "JobDetails.db"
@@ -173,6 +172,21 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         con.commit()
 
+    # Creates the Bids table in the database, which will initially be empty
+    def createBidsTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Bids')
+        cur.execute('''CREATE TABLE Bids (
+        'BidID' INTEGER PRIMARY KEY,
+        'JobID' INTEGER NOT NULL,
+        'Country' TEXT NOT NULL
+        );''')
+
+        con.commit()
+
     # Sets up the database. Calls the createDatabase function if the table
     # doesn't exist yet
     def databaseSetup(self):
@@ -201,6 +215,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (len(cur.fetchall()) == 0):
             self.createReviewsTable()
 
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Bids'")
+        if (len(cur.fetchall()) == 0):
+            self.createBidsTable()
+
     # Will save profile details to the database
     def saveProfileDetails(self):
         dbName = "JobDetails.db"
@@ -211,6 +230,19 @@ class Main(QtWidgets.QMainWindow, mainUI):
         INSERT INTO Profiles(Username, NumReviews, AverageReview, HourlyRate, EarningsPCT, Country) 
         VALUES(?,?,?,?,?,?)''',
         (self.username, self.numReviews, self.reviewAv, self.hourly, self.earningsPCT, self.profileCountry))
+
+        con.commit()
+
+    # Will save bid details to the database
+    def saveBidDetails(self, jobID, country):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('''
+        INSERT INTO Bids(JobID, Country)
+        VALUES(?,?)''',
+        (jobID, country))
 
         con.commit()
 
@@ -445,6 +477,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Updating the dictionary with
             self.countriesOfBidders.update({country: num})
+            self.saveBidDetails(self.projectID, country)
 
         # Temporary outputting of the dictionary
         print("Countries of bidders: ")

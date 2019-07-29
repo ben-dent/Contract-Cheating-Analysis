@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import sqlite3 as lite
 import pycountry_convert as pc
+import time
 
 
 def getData():
@@ -59,7 +60,6 @@ def plotBarChartsOfBidderCountries(countryValues):
     conts = list(countryData.keys())
 
     for name in conts:
-        # name = "EU"
         data = countryData.get(name)
 
         if (data != [[], []]):
@@ -77,11 +77,20 @@ def plotBarChartsOfBidderCountries(countryValues):
             plt.xticks(yPos, countries)
             plt.yticks(yTickVals)
 
-            plt.tight_layout()
-
             plt.ylabel('Number')
             continent_name = continents.get(name)
             plt.title(continent_name)
 
-            plt.show()
-            # plt.savefig("image.png", bbox_inches='tight', dpi=100)
+            fig_size = plt.rcParams["figure.figsize"]
+            fig_size[0] = 10
+            plt.rcParams["figure.figsize"] = fig_size
+
+            plt.tight_layout()
+
+            imageName = "image" + continent_name + ".png"
+            plt.savefig(imageName, bbox_inches='tight', dpi=100)
+
+    plt.show()
+
+            # imageName = "image" + continent_name + ".png"
+            # plt.savefig(imageName, bbox_inches='tight', dpi=100)
