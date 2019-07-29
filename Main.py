@@ -76,7 +76,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def setUpProgram(self):
         self.databaseSetup()
         self.getSeen()
-        projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
+        # projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
+        projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-22/")
 
         for project in projects:
             if (self.projectsSavedAlready.get(project) == None):
@@ -286,12 +287,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con = lite.connect(dbName)
         cur = con.cursor()
 
-        cur.execute('''
-        INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, CountryOfPoster, CountryOfWinner) 
-        VALUES(?, ?,?,?,?,?,?)''',
-        (self.projectID, url, self.numFreelancers, self.averagePrice, self.finalPrice, self.customerCountry, self.winnerCountry))
+        try:
+            cur.execute('''
+            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, CountryOfPoster, CountryOfWinner) 
+            VALUES(?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.numFreelancers, self.averagePrice, self.finalPrice,
+                         self.customerCountry, self.winnerCountry))
 
-        con.commit()
+            con.commit()
+        except lite.IntegrityError:
+            b = 1
 
     # Closes the window
     def exit(self):
@@ -330,7 +335,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.projectID = self.soup.find_all(
             "p", {"class": "PageProjectViewLogout-detail-tags"}
-        )[2].text.split("#")[-1]
+        )[-1].text.split("#")[-1]
 
         if (self.seenIDs.get(self.projectID) == None):
 
@@ -464,6 +469,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         for each in self.bidderCountries:
             # Gets the country of the bidder
             country = each.contents[1].get("title")
+            if (country == "Palestinian Territory"):
+                country = "Palestine"
 
             num = 1
 

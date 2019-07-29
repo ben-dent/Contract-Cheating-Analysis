@@ -20,7 +20,7 @@ Make sure you have Python installed. It can be found here:
 
 https://www.python.org
 
-You will also need PyPi, which is usually installed by default with Python on version 3.4 onwars.
+You will also need PyPi, which is usually installed by default with Python on version 3.4 onwards.
 If you need to install it:
 
 **Debian/Ubuntu:**

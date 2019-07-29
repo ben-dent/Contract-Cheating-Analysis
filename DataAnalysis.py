@@ -78,7 +78,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
             plt.tight_layout()
 
-            imageName = "image" + continent_name + ".png"
+            imageName = "image" + ''.join(char for char in continent_name if char.isalnum()) + ".png"
             plt.savefig(imageName, bbox_inches='tight', dpi=100)
 
     plt.show()
