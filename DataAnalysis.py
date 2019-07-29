@@ -5,6 +5,7 @@ import pycountry_convert as pc
 
 # Generates multiple windows of bar charts to display the countries of bidders - grouped by continent
 def plotBarChartsOfBidderCountries(countryValues):
+    # Dictionary containing continent codes and continent names
     continents = {
         'NA': 'North America',
         'EU': 'Europe',
@@ -14,6 +15,7 @@ def plotBarChartsOfBidderCountries(countryValues):
         'AF': 'Africa'
     }
 
+    # Dictionary that will hold the data for each country
     countryData = {
         'NA': [[], []],
         'EU': [[], []],
@@ -23,9 +25,12 @@ def plotBarChartsOfBidderCountries(countryValues):
         'AF': [[], []]
     }
 
+    # Gets all the countries and the number of bidders from each country
     countries = list(countryValues.keys())
     values = list(countryValues.values())
 
+    # Populating the countryData dictionary with the data from the countries and values lists
+    # Grouped by continent
     for i in range(len(countries)):
         country = countries[i]
         country_code = pc.country_name_to_country_alpha2(country, cn_name_format="default")
@@ -43,6 +48,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     continentNames = list(countryData.keys())
 
+    # Plots a graph for each continent
     for name in continentNames:
         data = countryData.get(name)
 
@@ -65,6 +71,7 @@ def plotBarChartsOfBidderCountries(countryValues):
             continent_name = continents.get(name)
             plt.title(continent_name)
 
+            # Resizing the graphs to fit in the window
             fig_size = plt.rcParams["figure.figsize"]
             fig_size[0] = 10
             plt.rcParams["figure.figsize"] = fig_size
