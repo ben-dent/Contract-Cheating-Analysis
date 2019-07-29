@@ -85,7 +85,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         print(len(self.countriesOfBidders.keys()))
 
-        plotBarChartOfBidderCountries(self.countriesOfBidders)
+        plotBarChartsOfBidderCountries(self.countriesOfBidders)
         a = 1
 
         # self.loginToFreelancer()

@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import sqlite3 as lite
+import pycountry_convert as pc
 
 
 def getData():
@@ -16,27 +17,71 @@ def getData():
     for pair in results:
         dict[pair[1]] = pair[0]
 
-    plotBarChartOfBidderCountries(dict)
+    plotBarChartsOfBidderCountries(dict)
 
-def plotBarChartOfBidderCountries(countryValues):
-    countries = countryValues.keys()
-    values = countryValues.values()
+def plotBarChartsOfBidderCountries(countryValues):
+    continents = {
+        'NA': 'North America',
+        'EU': 'Europe',
+        'SA': 'South America',
+        'AS': 'Asia',
+        'OC': 'Oceania',
+        'AF': 'Africa'
+    }
 
-    yPos = np.arange(len(countries))
+    countryData = {
+        'NA': [[], []],
+        'EU': [[], []],
+        'SA': [[], []],
+        'AS': [[], []],
+        'OC': [[], []],
+        'AF': [[], []]
+    }
 
-    yTickVals = np.arange(max(values) + 1)
+    countries = list(countryValues.keys())
+    values = list(countryValues.values())
 
-    fig = plt.figure(figsize=(30,10))
-    fig.canvas.set_window_title("Countries of bidders")
+    for i in range(len(countries)):
+        country = countries[i]
+        country_code = pc.country_name_to_country_alpha2(country, cn_name_format="default")
 
-    plt.bar(yPos, values, align='center', alpha=0.5)
-    plt.xticks(yPos, countries)
-    plt.yticks(yTickVals)
+        continent_code = pc.country_alpha2_to_continent_code(country_code)
+        valuesFromContinent = countryData.get(continent_code)
 
-    plt.tight_layout()
+        continentCountries = valuesFromContinent[0]
+        continentCountries.append(country)
 
-    plt.ylabel('Number')
-    plt.title('Countries of bidders')
+        continentValues = valuesFromContinent[1]
+        continentValues.append(values[i])
 
-    plt.show()
-    plt.savefig("image.png", bbox_inches='tight', dpi=100)
+        countryData.update({continent_code : [continentCountries, continentValues]})
+
+    conts = list(countryData.keys())
+
+    for name in conts:
+        # name = "EU"
+        data = countryData.get(name)
+
+        if (data != [[], []]):
+            countries = data[0]
+            values = data[1]
+
+            yPos = np.arange(len(countries))
+
+            yTickVals = np.arange(max(values) + 1)
+
+            fig = plt.figure()
+            fig.canvas.set_window_title("Countries of bidders")
+
+            plt.bar(yPos, values, align='center', alpha=0.5)
+            plt.xticks(yPos, countries)
+            plt.yticks(yTickVals)
+
+            plt.tight_layout()
+
+            plt.ylabel('Number')
+            continent_name = continents.get(name)
+            plt.title(continent_name)
+
+            plt.show()
+            # plt.savefig("image.png", bbox_inches='tight', dpi=100)
