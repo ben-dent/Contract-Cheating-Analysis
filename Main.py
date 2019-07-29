@@ -9,11 +9,10 @@ Code is provided as-is under an MIT License
 # TODO: Implement historic currency conversion
 
 import math
+import sqlite3 as lite
 import sys
-from datetime import datetime
 import time
-
-from bs4 import BeautifulSoup
+from datetime import datetime
 
 from PyQt5 import uic, QtWidgets
 from selenium import webdriver

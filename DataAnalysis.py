@@ -2,7 +2,8 @@ import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import pycountry_convert as pc
 
-# Generates multiple windows of bar charts to display the countries of bidders
+
+# Generates multiple windows of bar charts to display the countries of bidders - grouped by continent
 def plotBarChartsOfBidderCountries(countryValues):
     continents = {
         'NA': 'North America',
