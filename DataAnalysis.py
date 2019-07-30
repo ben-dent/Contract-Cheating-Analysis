@@ -2,10 +2,24 @@ import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import pycountry_convert as pc
 import sqlite3 as lite
+from datetime import datetime
+from forex_python.converter import CurrencyRates
 
 # TODO: Fix x axis label spacing
 # TODO: Implement saving to CSV
 
+# Converts the currency to USD at the historic rate
+def convertCurrency(currency, amount, week, year):
+    c = CurrencyRates()
+
+    week = str(year) + "-W" + str(week)
+    date = datetime.strptime(week + '-1', "%Y-W%W-%w")
+
+    dollarAmount = c.get_rate(currency, 'USD', date) * amount
+
+    return(dollarAmount)
+
+# Retrieves saved details to plot
 def plotFromDatabase():
     db = "JobDetails.db"
     con = lite.connect(db)
@@ -143,5 +157,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
 def saveDataToDatabase(countryValues):
     file = 'CountryData.csv'
+
+print(convertCurrency('CAD', 30, 5, 2019))
 
 # plotFromDatabase()

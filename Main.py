@@ -11,7 +11,6 @@ Code is provided as-is under an MIT License
 import math
 import sys
 import time
-from datetime import datetime
 
 from PyQt5 import uic, QtWidgets
 from selenium import webdriver
