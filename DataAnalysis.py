@@ -144,4 +144,4 @@ def plotBarChartsOfBidderCountries(countryValues):
 def saveDataToDatabase(countryValues):
     file = 'CountryData.csv'
 
-plotFromDatabase()
+# plotFromDatabase()

@@ -7,7 +7,6 @@ Code is provided as-is under an MIT License
 '''
 
 # TODO: Implement historic currency conversion
-# TODO: Implement saving username of bidders
 
 import math
 import sys
@@ -182,7 +181,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''CREATE TABLE Bids (
         'BidID' INTEGER PRIMARY KEY,
         'JobID' INTEGER NOT NULL,
-        'Country' TEXT NOT NULL
+        'Country' TEXT NOT NULL,
+        'User' TEXT NOT NULL
         );''')
 
         con.commit()
@@ -234,15 +234,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con.commit()
 
     # Will save bid details to the database
-    def saveBidDetails(self, jobID, country):
+    def saveBidDetails(self, jobID, country, user):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
         cur.execute('''
-        INSERT INTO Bids(JobID, Country)
-        VALUES(?,?)''',
-        (jobID, country))
+        INSERT INTO Bids(JobID, Country, User)
+        VALUES(?,?,?)''',
+                    (jobID, country, user))
 
         con.commit()
 
@@ -429,6 +429,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         bidderLinks = self.soup.find_all(
             "a", {"class": "FreelancerInfo-username"})
 
+        self.users = [link.text for link in bidderLinks]
+
         for each in bidderLinks:
             self.bidderProfileLinks.append(LINK_PREFIX + each.get("href"))
 
@@ -466,9 +468,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Saving the locations of bidders and the number from that country into
         # the dictionary
-        for each in self.bidderCountries:
+        for i in range(len(self.bidderCountries)):
+            location = self.bidderCountries[i]
             # Gets the country of the bidder
-            country = each.contents[1].get("title")
+            country = location.contents[1].get("title")
             if (country == "Palestinian Territory"):
                 country = "Palestine"
 
@@ -483,7 +486,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Updating the dictionary with
             self.countriesOfBidders.update({country: num})
-            self.saveBidDetails(self.projectID, country)
+            self.saveBidDetails(self.projectID, country, self.users[i])
 
         # Temporary outputting of the dictionary
         print("Countries of bidders: ")
