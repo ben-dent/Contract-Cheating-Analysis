@@ -1,7 +1,28 @@
 import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import pycountry_convert as pc
+import sqlite3 as lite
 
+
+def plotFromDatabase():
+    db = "JobDetails.db"
+    con = lite.connect(db)
+    cur = con.cursor()
+
+    cur.execute('SELECT Country FROM Bids')
+
+    results = cur.fetchall()
+    countries = {}
+
+    for item in results:
+        country = item[0]
+        n = 1
+        if (countries.get(country) != None):
+            n = countries.get(country) + 1
+
+        countries.update({country: n})
+
+    plotBarChartsOfBidderCountries(countries)
 
 # Generates multiple windows of bar charts to display the countries of bidders - grouped by continent
 def plotBarChartsOfBidderCountries(countryValues):
@@ -23,6 +44,15 @@ def plotBarChartsOfBidderCountries(countryValues):
         'AS': [[], []],
         'OC': [[], []],
         'AF': [[], []]
+    }
+
+    continentPlotData = {
+        'North America': 0,
+        'Europe': 0,
+        'South America': 0,
+        'Asia': 0,
+        'Oceania': 0,
+        'Africa': 0
     }
 
     # Gets all the countries and the number of bidders from each country
@@ -56,16 +86,19 @@ def plotBarChartsOfBidderCountries(countryValues):
             countries = data[0]
             values = data[1]
 
+            nameOfContinent = continents.get(name)
+            continentPlotData.update({nameOfContinent: sum(values)})
+
             yPos = np.arange(len(countries))
 
-            yTickVals = np.arange(max(values) + 1)
+            fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
 
-            fig = plt.figure()
             fig.canvas.set_window_title("Countries of bidders")
 
-            plt.bar(yPos, values, align='center', alpha=0.5)
             plt.xticks(yPos, countries)
-            plt.yticks(yTickVals)
+
+            ax.bar(yPos, values, align='center', alpha=0.5)
+            ax.yaxis.set_major_locator(plt.MaxNLocator(20))
 
             plt.ylabel('Number')
             continent_name = continents.get(name)
@@ -81,4 +114,30 @@ def plotBarChartsOfBidderCountries(countryValues):
             imageName = "image" + ''.join(char for char in continent_name if char.isalnum()) + ".png"
             plt.savefig(imageName, bbox_inches='tight', dpi=100)
 
+    yPos = np.arange(len(continentPlotData))
+    vals = list(continentPlotData.values())
+
+    fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
+    fig.canvas.set_window_title("Continents")
+
+    ax.bar(yPos, vals, align='center', alpha=0.5)
+
+    plt.xticks(yPos, list(continentPlotData.keys()))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(20))
+
+    plt.ylabel('Number')
+    plt.title("Continents")
+
+    # Resizing the graphs to fit in the window
+    fig_size = plt.rcParams["figure.figsize"]
+    fig_size[0] = 10
+    plt.rcParams["figure.figsize"] = fig_size
+
+    plt.tight_layout()
+
+    plt.savefig("imageContinents", bbox_inches='tight', dpi=100)
+
     plt.show()
+
+
+plotFromDatabase()

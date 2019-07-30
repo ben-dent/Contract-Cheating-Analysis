@@ -9,7 +9,6 @@ Code is provided as-is under an MIT License
 # TODO: Implement historic currency conversion
 
 import math
-import sqlite3 as lite
 import sys
 import time
 from datetime import datetime
