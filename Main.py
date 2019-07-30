@@ -75,7 +75,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.databaseSetup()
         self.getSeen()
         # projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
-        projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-22/")
+        url = "https://www.freelancer.co.uk/archives/essay-writing/2019-22/"
+        pageTime = url.split("/")[-2].split("-")
+        self.year = int(pageTime[0])
+        self.week = int(pageTime[1])
+        projects = getAllTheRelevantLinks(url)
 
         for project in projects:
             if (self.projectsSavedAlready.get(project) == None):
@@ -145,6 +149,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
+        'ConvertedFinalCost' TEXT NOT NULL,
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL
         );''')
@@ -277,10 +282,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (not(self.awarded)):
             self.winnerCountry = "None"
             self.finalPrice = "None"
+            self.convertedPrice = "None"
 
         if (self.numFreelancers == 0):
             self.averagePrice = "None"
             self.finalPrice = "None"
+            self.convertedPrice = "None"
 
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
@@ -288,10 +295,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, CountryOfPoster, CountryOfWinner) 
-            VALUES(?,?,?,?,?,?,?)''',
+            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, ConvertedFinalCost, CountryOfPoster, CountryOfWinner) 
+            VALUES(?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.numFreelancers, self.averagePrice, self.finalPrice,
-                         self.customerCountry, self.winnerCountry))
+                         self.convertedPrice, self.customerCountry, self.winnerCountry))
 
             con.commit()
         except lite.IntegrityError:
@@ -447,6 +454,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             if (self.awarded):
                 print("The final price was: " + self.finalPrice + "\n")
+                currencySplit = self.finalPrice.split()
+                currency = currencySplit[1]
+                amount = ''.join(c for c in currencySplit[0] if c.isalnum())
+                self.convertedPrice = "$" + str(round(convertCurrency(currency, amount, self.week, self.year), 2))
             else:
                 print("No one was awarded this project\n")
 

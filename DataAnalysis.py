@@ -15,7 +15,7 @@ def convertCurrency(currency, amount, week, year):
     week = str(year) + "-W" + str(week)
     date = datetime.strptime(week + '-1', "%Y-W%W-%w")
 
-    dollarAmount = c.get_rate(currency, 'USD', date) * amount
+    dollarAmount = c.get_rate(currency, 'USD', date) * float(amount)
 
     return(dollarAmount)
 
