@@ -3,6 +3,8 @@ import numpy as np
 import pycountry_convert as pc
 import sqlite3 as lite
 
+# TODO: Fix x axis label spacing
+# TODO: Implement saving to CSV
 
 def plotFromDatabase():
     db = "JobDetails.db"
@@ -98,7 +100,7 @@ def plotBarChartsOfBidderCountries(countryValues):
             plt.xticks(yPos, countries)
 
             ax.bar(yPos, values, align='center', alpha=0.5)
-            ax.yaxis.set_major_locator(plt.MaxNLocator(20))
+            ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
 
             plt.ylabel('Number')
             continent_name = continents.get(name)
@@ -123,7 +125,7 @@ def plotBarChartsOfBidderCountries(countryValues):
     ax.bar(yPos, vals, align='center', alpha=0.5)
 
     plt.xticks(yPos, list(continentPlotData.keys()))
-    ax.yaxis.set_major_locator(plt.MaxNLocator(20))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
 
     plt.ylabel('Number')
     plt.title("Continents")
@@ -139,5 +141,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
+def saveDataToDatabase(countryValues):
+    file = 'CountryData.csv'
 
 plotFromDatabase()

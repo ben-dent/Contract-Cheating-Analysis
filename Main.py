@@ -7,6 +7,7 @@ Code is provided as-is under an MIT License
 '''
 
 # TODO: Implement historic currency conversion
+# TODO: Implement saving username of bidders
 
 import math
 import sys
