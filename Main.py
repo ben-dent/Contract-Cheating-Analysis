@@ -96,7 +96,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # plotBarChartsOfBidderCountries(self.winnerCountries)
         # plotBarChartsOfBidderCountries(self.countriesOfBidders)
-        a = 1
+        print("\nDone\n")
+        # a = 1
 
         # self.loginToFreelancer()
         # # url = "https://www.freelancer.co.uk/u/brkbkrcgl"
@@ -164,6 +165,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Profile' TEXT NOT NULL,
         'Score' INTEGER NOT NULL,
         'AmountPaid' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL,
         'DateScraped' TEXT NOT NULL,
         'Date' TEXT NOT NULL,
         'Country' TEXT NOT NULL,
@@ -317,9 +319,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur = con.cursor()
 
         cur.execute('''
-        INSERT INTO Reviews(Profile, Score, AmountPaid, DateScraped, Date, Country, Notes) 
-        VALUES(?,?,?,?,?,?,?)''',
-        (self.username, self.score, self.amountPaid, self.dateToday, self.timePosted, self.reviewCountry, self.note))
+        INSERT INTO Reviews(Profile, Score, AmountPaid, Currency, DateScraped, Date, Country, Notes) 
+        VALUES(?,?,?,?,?,?,?,?)''',
+        (self.username, self.score, self.amountPaid, self.currency, self.dateToday,
+         self.timePosted, self.reviewCountry, self.note))
 
         con.commit()
 
@@ -815,6 +818,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 value = amountElement.find_element_by_class_name(
                     "ng-binding").text
                 self.amountPaid = value + " " + amountElement.text
+
+                if(len(self.amountPaid.split()) == 3):
+                    self.amountPaid = amountElement.text
+
+                self.currency = self.amountPaid.split()[1]
+                self.amountPaid = self.amountPaid.split()[0]
 
                 self.reviewCountry = review.find_element_by_class_name("user-review-flag").get_attribute("title")
                 self.timePosted = review.find_element_by_class_name("user-review-details").text.split(".")[1].lstrip()
