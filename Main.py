@@ -282,7 +282,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''
         INSERT INTO Profiles(Username, NumReviews, AverageReview, HourlyRate, EarningsPCT, Country) 
         VALUES(?,?,?,?,?,?)''',
-        (self.username, self.numReviews, self.reviewAv, self.hourly, self.earningsPCT, self.profileCountry))
+                    (self.username, self.numReviews, self.reviewAv, self.hourly, self.earningsPCT, self.profileCountry))
 
         con.commit()
 
@@ -308,7 +308,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''
         INSERT INTO Qualifications(QualificationType, User, QualificationName, ExtraInformation) 
         VALUES(?,?,?,?)''',
-        (self.qualificationType, self.username, self.qualName, self.extraInformation))
+                    (self.qualificationType, self.username, self.qualName, self.extraInformation))
 
         con.commit()
 
@@ -321,15 +321,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''
         INSERT INTO Reviews(Profile, Score, AmountPaid, Currency, DateScraped, Date, Country, Notes) 
         VALUES(?,?,?,?,?,?,?,?)''',
-        (self.username, self.score, self.amountPaid, self.currency, self.dateToday,
-         self.timePosted, self.reviewCountry, self.note))
+                    (self.username, self.score, self.amountPaid, self.currency, self.dateToday,
+                     self.timePosted, self.reviewCountry, self.note))
 
         con.commit()
 
     # Will save job details to the database
     def saveJobDetails(self, url):
 
-        if (not(self.awarded)):
+        if (not (self.awarded)):
             self.winnerCountry = "None"
             self.priceAmount = "None"
             self.convertedPrice = "None"
@@ -393,7 +393,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.customerProfileLink = self.driver.find_elements(
             By.CLASS_NAME, "NativeElement.ng-star-inserted")[10].text
         self.customerProfileLink = LINK_PREFIX + "/u/" + \
-            self.customerProfileLink.split("@")[1]
+                                   self.customerProfileLink.split("@")[1]
 
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self):
@@ -472,7 +472,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.currency = split[1]
                 self.time = split[3] + " " + split[4]
 
-
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all(
                 "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
@@ -520,7 +519,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Check if anyone has bid on the job yet
         if (self.biddersAndPriceFind.text.split("Need to")
-                [0] == self.biddersAndPriceFind.text):
+        [0] == self.biddersAndPriceFind.text):
             division = self.biddersAndPriceFind.text.split(" ")
 
             self.numFreelancers = division[0]
@@ -819,14 +818,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     "ng-binding").text
                 self.amountPaid = value + " " + amountElement.text
 
-                if(len(self.amountPaid.split()) == 3):
+                if (len(self.amountPaid.split()) == 3):
                     self.amountPaid = amountElement.text
 
                 self.currency = self.amountPaid.split()[1]
                 self.amountPaid = self.amountPaid.split()[0]
 
                 self.reviewCountry = review.find_element_by_class_name("user-review-flag").get_attribute("title")
-                self.timePosted = review.find_element_by_class_name("user-review-details").text.split(".")[1].lstrip()
+                self.timePosted = ' '.join(review.find_element_by_class_name("user-review-details").text.split(".")[
+                                      -2].lstrip().split()[-3:])
 
                 if (self.amountPaid == " "):
                     countReview = False
@@ -895,7 +895,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 for project in (list(links.keys())):
                     if self.projectsSeen.get(project) == None:
                         self.projectsSeen[project] = True
-
 
         # print(str(duplicates) + " duplicates")
 
