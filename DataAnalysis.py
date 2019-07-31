@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import pycountry_convert as pc
 import sqlite3 as lite
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from forex_python.converter import CurrencyRates
 import csv
 
@@ -23,6 +23,33 @@ def convertCurrency(currency, amount, week, year):
         return split[0]
 
     return(dollarAmount)
+
+def daterange(startDate, endDate):
+    for n in range(int ((endDate - startDate).days)):
+        yield startDate + timedelta(n)
+
+def calculateYearlyAverage(currency, amount, year):
+    c = CurrencyRates()
+    total = 0
+    n = 0
+
+    startDate = date(year, 1, 1)
+    endDate = date(year + 1, 1, 1)
+
+    for singleDate in daterange(startDate, endDate):
+        total += c.get_rate(currency, 'USD', singleDate)
+        n += 1
+
+    average = total / n
+
+    dollarAmount = average * float(amount)
+    dollarAmount = '%.2f' % dollarAmount
+
+    split = dollarAmount.split('.')
+    if (int(split[1]) == 0):
+        return split[0]
+
+    return (dollarAmount)
 
 # Retrieves saved details to plot
 def plotFromDatabase():
@@ -175,3 +202,4 @@ def saveDataToCSV(data):
 
 
 # plotFromDatabase()
+print(calculateYearlyAverage('GBP', 50, 2018))

@@ -6,7 +6,7 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Split FinalCost into price, currency and time columns - Jobs
+# TODO: Implement historic currency conversion in Reviews table
 # TODO: Add export existing data to CSV option
 
 import math
