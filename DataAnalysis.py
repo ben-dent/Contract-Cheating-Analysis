@@ -16,6 +16,11 @@ def convertCurrency(currency, amount, week, year):
     date = datetime.strptime(week + '-1', "%Y-W%W-%w")
 
     dollarAmount = c.get_rate(currency, 'USD', date) * float(amount)
+    dollarAmount = '%.2f' % dollarAmount
+
+    split = dollarAmount.split('.')
+    if (int(split[1]) == 0):
+        return split[0]
 
     return(dollarAmount)
 
@@ -154,7 +159,6 @@ def plotBarChartsOfBidderCountries(countryValues):
     plt.savefig("imageContinents", bbox_inches='tight', dpi=100)
 
     plt.show()
-
 
 # Saving values from the database to a CSV file
 def saveDataToCSV(data):

@@ -7,7 +7,6 @@ Code is provided as-is under an MIT License
 '''
 
 # TODO: Split FinalCost into price, currency and time columns - Jobs
-# TODO: Add year and week columns - Jobs
 # TODO: Add export existing data to CSV option
 
 import math
@@ -47,6 +46,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.profilesSeen = {}
         self.projectsSeen = {}
+
+        self.finalPrices = []
 
         self.winnerProfiles = []
         self.winnerCountries = {}
@@ -325,12 +326,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         if (not(self.awarded)):
             self.winnerCountry = "None"
-            self.finalPrice = "None"
+            self.priceAmount = "None"
             self.convertedPrice = "None"
 
         if (self.numFreelancers == 0):
             self.averagePrice = "None"
-            self.finalPrice = "None"
+            self.priceAmount = "None"
             self.convertedPrice = "None"
 
         dbName = "JobDetails.db"
@@ -441,6 +442,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             self.awarded = False
 
+            # Retrieving the final price for the task if we are looking at
+            # a completed project in the archives
+            self.finalPrice = self.soup.find(
+                "div", {"class": "FreelancerInfo-price"}).text
+
             # Checks if the project was awarded to anyone
             if (self.archived and self.finishedType == "Completed"):
                 self.awarded = True
@@ -454,10 +460,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.winnerCountry = self.soup.find(
                     "span", {"class": "usercard-flag"}).get("title")
 
-                # Retrieving the final price for the task if we are looking at
-                # a completed project in the archives
-                self.finalPrice = self.soup.find(
-                    "div", {"class": "FreelancerInfo-price"}).text
+                self.finalPrices.append(self.finalPrice)
 
                 split = self.finalPrice.split()
                 self.priceAmount = split[0]
@@ -522,17 +525,19 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 " freelancers who are bidding an average of " +
                 self.averagePrice)
 
+            currencySplit = self.finalPrice.split()
+
             if (self.awarded):
                 print("The final price was: " + self.finalPrice + "\n")
                 winnerProfile = LINK_PREFIX + bidderLinks[0].get("href")
                 self.winnerProfiles.append(winnerProfile)
-                currencySplit = self.finalPrice.split()
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
-                self.convertedPrice = "$" + str(round(convertCurrency(currency, amount, self.week, self.year), 2))
+                self.convertedPrice = "$" + convertCurrency(currency, amount, self.week, self.year)
                 self.saveWinnerDetails(self.projectID, url, self.users[0])
 
             else:
+                self.currency = currencySplit[1]
                 print("No one was awarded this project\n")
 
             self.getBiddersCountries()
