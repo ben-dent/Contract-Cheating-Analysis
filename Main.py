@@ -92,10 +92,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.projectsSavedAlready.get(project) == None):
                 self.fetchDataNonLogin(project)
 
-        # self.lookAtWinnerProfiles()
+        self.lookAtWinnerProfiles()
 
         # plotBarChartsOfBidderCountries(self.winnerCountries)
-        plotBarChartsOfBidderCountries(self.countriesOfBidders)
+        # plotBarChartsOfBidderCountries(self.countriesOfBidders)
         a = 1
 
         # self.loginToFreelancer()
@@ -110,8 +110,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
+        print('\nLogging in...\n')
+        self.loginToFreelancer()
         for profileLink in self.winnerProfiles:
-            if (self.profilesSavedAlready.get(profileLink) is not None):
+            if (self.profilesSavedAlready.get(profileLink) is None):
                 self.getInformationFromBidderProfile(profileLink)
                 self.profilesSavedAlready.update({profileLink: True})
 
@@ -733,9 +735,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # Add to qualification dictionary
         for qual in certs:
-            name = qual.find_element_by_class_name("skill-exam-link").text
-            score = qual.find_element_by_class_name("skill-exam-value").text
-            self.certsDict[name] = score
+            try:
+                name = qual.find_element_by_class_name("skill-exam-link").text
+                score = qual.find_element_by_class_name("skill-exam-value").text
+                self.certsDict[name] = score
+            except NoSuchElementException:
+                g = 1
 
     # Retrieves details on the reviews on the given bidder profile
     def getReviewDetails(self):
