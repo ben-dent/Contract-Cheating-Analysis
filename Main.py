@@ -37,6 +37,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
+        self.btnSaveCSV.clicked.connect(self.exportAsCSV)
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
 
@@ -102,6 +103,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # url = "https://www.freelancer.co.uk/u/Djdesign"
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         # self.getInformationFromBidderProfile(url)
+
+    def exportAsCSV(self):
+        print("Hello")
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
@@ -176,6 +180,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''CREATE TABLE Jobs (
         'JobID' INTEGER PRIMARY KEY,
         'URL' TEXT NOT NULL,
+        'Title' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -334,12 +339,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost,
+            INSERT INTO Jobs(JobID, URL, Title, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.numFreelancers, self.averagePrice, self.priceAmount,
-                         self.currency, self.time, self.convertedPrice, self.customerCountry, self.winnerCountry,
-                         self.year, self.week))
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.numFreelancers, self.averagePrice,
+                         self.priceAmount, self.currency, self.time, self.convertedPrice, self.customerCountry,
+                         self.winnerCountry, self.year, self.week))
 
             con.commit()
         except lite.IntegrityError:
@@ -403,6 +408,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             self.seenIDs[self.projectID] = True
             print("\n" + url)
+
+            self.projectTitle = self.soup.find(
+                "h1", {"class": "PageProjectViewLogout-header-title"}).text
 
             # Checking if the given page is an archived page
             self.finishedType = self.soup.find(

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>200</width>
-    <height>200</height>
+       <width>300</width>
+       <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,9 @@
    <widget class="QPushButton" name="btnFetch">
     <property name="geometry">
      <rect>
-      <x>47</x>
+         <x>50</x>
       <y>20</y>
-      <width>110</width>
+         <width>200</width>
       <height>32</height>
      </rect>
     </property>
@@ -30,9 +30,9 @@
    <widget class="QPushButton" name="btnExit">
     <property name="geometry">
      <rect>
-      <x>47</x>
-      <y>120</y>
-      <width>110</width>
+         <x>50</x>
+         <y>170</y>
+         <width>200</width>
       <height>32</height>
      </rect>
     </property>
@@ -43,9 +43,9 @@
    <widget class="QPushButton" name="btnCloseBrowser">
     <property name="geometry">
      <rect>
-      <x>47</x>
+         <x>50</x>
       <y>70</y>
-      <width>113</width>
+         <width>200</width>
       <height>32</height>
      </rect>
     </property>
@@ -53,13 +53,26 @@
      <string>Close Browser</string>
     </property>
    </widget>
+      <widget class="QPushButton" name="btnSaveCSV">
+          <property name="geometry">
+              <rect>
+                  <x>50</x>
+                  <y>120</y>
+                  <width>200</width>
+                  <height>32</height>
+              </rect>
+          </property>
+          <property name="text">
+              <string>Export saved data as CSV</string>
+          </property>
+      </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>200</width>
+        <width>300</width>
      <height>22</height>
     </rect>
    </property>
