@@ -6,7 +6,9 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Implement going through profiles of winners
+# TODO: Split FinalCost into price, currency and time columns - Jobs
+# TODO: Add year and week columns - Jobs
+# TODO: Add export existing data to CSV option
 
 import math
 import sys
@@ -88,7 +90,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.projectsSavedAlready.get(project) == None):
                 self.fetchDataNonLogin(project)
 
-        self.lookAtWinnerProfiles()
+        # self.lookAtWinnerProfiles()
 
         # plotBarChartsOfBidderCountries(self.winnerCountries)
         plotBarChartsOfBidderCountries(self.countriesOfBidders)
@@ -108,6 +110,22 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.getInformationFromBidderProfile(profileLink)
                 self.profilesSavedAlready.update({profileLink: True})
 
+    # Creates the Winners table in the database, which will initially be empty
+    def createWinnersTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS Winners')
+        cur.execute('''CREATE TABLE Winners (
+        'JobID' INTEGER PRIMARY KEY,
+        'JobURL' TEXT NOT NULL,
+        'Username' TEXT NOT NULL,
+        'ProfileURL' TEXT NOT NULL,
+        FOREIGN KEY (JobID) REFERENCES Jobs(JobID)
+        );''')
+
+        con.commit()
 
     # Creates the Qualifications table in the database, which will initially be empty
     def createQualificationsTable(self):
@@ -161,9 +179,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL,
+        'Time' TEXT NOT NULL,
         'ConvertedFinalCost' TEXT NOT NULL,
         'CountryOfPoster' TEXT NOT NULL,
-        'CountryOfWinner' TEXT NOT NULL
+        'CountryOfWinner' TEXT NOT NULL,
+        'Year' INTEGER NOT NULL,
+        'Week' INTEGER NOT NULL
         );''')
 
         con.commit()
@@ -236,6 +258,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (len(cur.fetchall()) == 0):
             self.createBidsTable()
 
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='Winners'")
+        if (len(cur.fetchall()) == 0):
+            self.createWinnersTable()
+
     # Will save profile details to the database
     def saveProfileDetails(self):
         dbName = "JobDetails.db"
@@ -307,14 +334,31 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost, ConvertedFinalCost, CountryOfPoster, CountryOfWinner) 
-            VALUES(?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.numFreelancers, self.averagePrice, self.finalPrice,
-                         self.convertedPrice, self.customerCountry, self.winnerCountry))
+            INSERT INTO Jobs(JobID, URL, NumberOfBidders, AverageBidCost, FinalCost,
+            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.numFreelancers, self.averagePrice, self.priceAmount,
+                         self.currency, self.time, self.convertedPrice, self.customerCountry, self.winnerCountry,
+                         self.year, self.week))
 
             con.commit()
         except lite.IntegrityError:
             b = 1
+
+    # Will save winner details to the database
+    def saveWinnerDetails(self, jobID, url, user):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        profileURL = LINK_PREFIX + "/u/" + user
+
+        cur.execute('''
+        INSERT INTO Winners(JobID, JobURL, Username, ProfileURL) 
+        VALUES(?,?,?,?)''',
+                    (jobID, url, user, profileURL))
+
+        con.commit()
 
     # Closes the window
     def exit(self):
@@ -407,6 +451,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.finalPrice = self.soup.find(
                     "div", {"class": "FreelancerInfo-price"}).text
 
+                split = self.finalPrice.split()
+                self.priceAmount = split[0]
+                self.currency = split[1]
+                self.time = split[3] + " " + split[4]
+
+
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all(
                 "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
@@ -415,7 +465,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.getCustomerCountry()
 
             # Gets the information about the bidders
-            self.getBiddersInfo()
+            self.getBiddersInfo(url)
 
             self.saveJobDetails(url)
             a = 1
@@ -439,7 +489,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Gets all information about the bidders then calls getBiddersCountries to
     # get their locations
-    def getBiddersInfo(self):
+    def getBiddersInfo(self, url):
         # A list for the links to the bidders' profiles
         self.bidderProfileLinks = []
 
@@ -472,6 +522,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
                 self.convertedPrice = "$" + str(round(convertCurrency(currency, amount, self.week, self.year), 2))
+                self.saveWinnerDetails(self.projectID, url, self.users[0])
+
             else:
                 print("No one was awarded this project\n")
 
