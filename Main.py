@@ -6,7 +6,7 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Implement historic currency conversion
+# TODO: Implement going through profiles of winners
 
 import math
 import sys
@@ -44,6 +44,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.profilesSeen = {}
         self.projectsSeen = {}
+
+        self.winnerProfiles = []
+        self.winnerCountries = {}
 
         # Defines a dictionary to store the number of bidders from each country
         # that has a bidder
@@ -85,8 +88,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (self.projectsSavedAlready.get(project) == None):
                 self.fetchDataNonLogin(project)
 
-        print(len(self.countriesOfBidders.keys()))
+        self.lookAtWinnerProfiles()
 
+        # plotBarChartsOfBidderCountries(self.winnerCountries)
         plotBarChartsOfBidderCountries(self.countriesOfBidders)
         a = 1
 
@@ -96,6 +100,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # url = "https://www.freelancer.co.uk/u/Djdesign"
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         # self.getInformationFromBidderProfile(url)
+
+    # Gets all the information from the profiles of the winners
+    def lookAtWinnerProfiles(self):
+        for profileLink in self.winnerProfiles:
+            if (self.profilesSavedAlready.get(profileLink) is not None):
+                self.getInformationFromBidderProfile(profileLink)
+                self.profilesSavedAlready.update({profileLink: True})
+
 
     # Creates the Qualifications table in the database, which will initially be empty
     def createQualificationsTable(self):
@@ -454,6 +466,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             if (self.awarded):
                 print("The final price was: " + self.finalPrice + "\n")
+                winnerProfile = LINK_PREFIX + bidderLinks[0].get("href")
+                self.winnerProfiles.append(winnerProfile)
                 currencySplit = self.finalPrice.split()
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
@@ -494,7 +508,19 @@ class Main(QtWidgets.QMainWindow, mainUI):
             if (result is not None):
                 num = result + 1
 
-            # Updating the dictionary with
+            if ((i == 0) and (self.awarded)):
+                winnerNum = 1
+
+                # Checks if the country is already in the dictionary
+                winnerResult = self.winnerCountries.get(country)
+
+                # Incrementing value if country already in dictionary
+                if (winnerResult is not None):
+                    winnerNum = winnerResult + 1
+
+                self.winnerCountries.update({country: num})
+
+            # Updating the dictionary with the country data
             self.countriesOfBidders.update({country: num})
             self.saveBidDetails(self.projectID, country, self.users[i])
 

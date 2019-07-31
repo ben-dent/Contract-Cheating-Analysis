@@ -4,8 +4,8 @@ import pycountry_convert as pc
 import sqlite3 as lite
 from datetime import datetime
 from forex_python.converter import CurrencyRates
+import csv
 
-# TODO: Fix x axis label spacing
 # TODO: Implement saving to CSV
 
 # Converts the currency to USD at the historic rate
@@ -111,7 +111,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
             fig.canvas.set_window_title("Countries of bidders")
 
-            plt.xticks(yPos, countries)
+            plt.xticks(yPos, sorted(countries), rotation='vertical')
 
             ax.bar(yPos, values, align='center', alpha=0.5)
             ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
@@ -138,7 +138,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     ax.bar(yPos, vals, align='center', alpha=0.5)
 
-    plt.xticks(yPos, list(continentPlotData.keys()))
+    plt.xticks(yPos, sorted(list(continentPlotData.keys())), rotation='vertical')
     ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
 
     plt.ylabel('Number')
@@ -155,9 +155,19 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
-def saveDataToDatabase(countryValues):
+
+# Saving values from the database to a CSV file
+def saveDataToCSV(data):
+    db = "JobDetails.db"
+    con = lite.connect(db)
+    cur = con.cursor()
+
     file = 'CountryData.csv'
 
-print(convertCurrency('CAD', 30, 5, 2019))
+    with open(file, 'a', newline='') as fp:
+        a = csv.writer(fp, delimeter=',')
+        data = [data]
+        a.writerows(data)
+
 
 # plotFromDatabase()
