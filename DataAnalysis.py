@@ -3,6 +3,8 @@ import numpy as np
 import pycountry_convert as pc
 import sqlite3 as lite
 from datetime import datetime, date, timedelta
+from dateutil.relativedelta import relativedelta
+from calendar import monthrange
 from forex_python.converter import CurrencyRates
 import csv
 
@@ -24,17 +26,10 @@ def convertCurrency(currency, amount, week, year):
 
     return(dollarAmount)
 
-def daterange(startDate, endDate):
-    for n in range(int ((endDate - startDate).days)):
-        yield startDate + timedelta(n)
-
-def calculateYearlyAverage(currency, amount, year):
+def getAverage(currency, startDate, endDate, amount):
     c = CurrencyRates()
     total = 0
     n = 0
-
-    startDate = date(year, 1, 1)
-    endDate = date(year + 1, 1, 1)
 
     for singleDate in daterange(startDate, endDate):
         total += c.get_rate(currency, 'USD', singleDate)
@@ -50,6 +45,41 @@ def calculateYearlyAverage(currency, amount, year):
         return split[0]
 
     return (dollarAmount)
+
+def calculateWeeklyAverage(currency, amount, week, year):
+    c = CurrencyRates()
+    total = 0
+    n = 0
+
+    week = str(year) + "-W" + str(week)
+
+    startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
+    endDate = startDate + timedelta(days=6)
+
+    return convertCurrency(currency, startDate, endDate, amount)
+
+def calculateMonthlyAverage(currency, amount, monthsAgo, year):
+    today = date.today()
+    month = (today + relativedelta(months=-monthsAgo)).month
+
+    startDate = date(year, month, 1)
+    endDate = date(year, month, monthrange(year, month)[1])
+
+    return convertCurrency(currency, startDate, endDate, amount)
+
+def daterange(startDate, endDate):
+    for n in range(int ((endDate - startDate).days)):
+        yield startDate + timedelta(n)
+
+def calculateYearlyAverage(currency, amount, year):
+    c = CurrencyRates()
+    total = 0
+    n = 0
+
+    startDate = date(year, 1, 1)
+    endDate = date(year + 1, 1, 1)
+
+    return convertCurrency(currency, startDate, endDate, amount)
 
 # Retrieves saved details to plot
 def plotFromDatabase():
@@ -202,4 +232,5 @@ def saveDataToCSV(data):
 
 
 # plotFromDatabase()
-print(calculateYearlyAverage('GBP', 50, 2018))
+# print(calculateYearlyAverage('GBP', 50, 2018))
+print(calculateWeeklyAverage('GBP', 50, 3, 2019))
