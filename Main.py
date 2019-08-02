@@ -6,7 +6,9 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Implement historic currency conversion in Reviews table
+# TODO: Add JobID, URL to Reviews
+# TODO: Save job descriptions
+# TODO: Find some way of filtering relevant projects from reviews
 # TODO: Add export existing data to CSV option
 
 import math
