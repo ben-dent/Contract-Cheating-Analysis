@@ -10,12 +10,19 @@ import csv
 
 # TODO: Implement saving to CSV
 
-# Converts the currency to USD at the historic rate
-def convertCurrency(currency, amount, week, year):
-    c = CurrencyRates()
 
+def convertCurrencyWithYear(currency, amount, week, year):
     week = str(year) + "-W" + str(week)
-    date = datetime.strptime(week + '-1', "%Y-W%W-%w")
+
+    startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
+    endDate = startDate + timedelta(days=6)
+
+    return getAverage(currency, startDate, endDate, amount)
+
+
+# Converts the currency to USD at the historic rate
+def convertCurrency(currency, amount, date):
+    c = CurrencyRates()
 
     dollarAmount = c.get_rate(currency, 'USD', date) * float(amount)
     dollarAmount = '%.2f' % dollarAmount
@@ -46,40 +53,38 @@ def getAverage(currency, startDate, endDate, amount):
 
     return (dollarAmount)
 
-def calculateWeeklyAverage(currency, amount, week, year):
-    c = CurrencyRates()
-    total = 0
-    n = 0
+def calculateWeeklyAverage(currency, amount, weeksAgo):
+    today = date.today()
+    newDay = (today + relativedelta(weeks=-weeksAgo))
 
-    week = str(year) + "-W" + str(week)
+    week = newDay.isocalendar()[1]
 
-    startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
+    # startDate = datetime.strptime(str(week) + '-1', "%Y-W%W-%w")
+    startDate = newDay
     endDate = startDate + timedelta(days=6)
 
-    return convertCurrency(currency, startDate, endDate, amount)
+    return getAverage(currency, startDate, endDate, amount)
 
-def calculateMonthlyAverage(currency, amount, monthsAgo, year):
+def calculateMonthlyAverage(currency, amount, monthsAgo):
     today = date.today()
-    month = (today + relativedelta(months=-monthsAgo)).month
+    newDay = (today + relativedelta(months=-monthsAgo))
+    month = newDay.month
+    year = newDay.year
 
     startDate = date(year, month, 1)
     endDate = date(year, month, monthrange(year, month)[1])
 
-    return convertCurrency(currency, startDate, endDate, amount)
+    return getAverage(currency, startDate, endDate, amount)
 
 def daterange(startDate, endDate):
     for n in range(int ((endDate - startDate).days)):
         yield startDate + timedelta(n)
 
 def calculateYearlyAverage(currency, amount, year):
-    c = CurrencyRates()
-    total = 0
-    n = 0
-
     startDate = date(year, 1, 1)
     endDate = date(year + 1, 1, 1)
 
-    return convertCurrency(currency, startDate, endDate, amount)
+    return getAverage(currency, startDate, endDate, amount)
 
 # Retrieves saved details to plot
 def plotFromDatabase():
@@ -229,8 +234,3 @@ def saveDataToCSV(data):
         a = csv.writer(fp, delimeter=',')
         data = [data]
         a.writerows(data)
-
-
-# plotFromDatabase()
-# print(calculateYearlyAverage('GBP', 50, 2018))
-print(calculateWeeklyAverage('GBP', 50, 3, 2019))

@@ -166,6 +166,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Score' INTEGER NOT NULL,
         'AmountPaid' TEXT NOT NULL,
         'Currency' TEXT NOT NULL,
+        'ConvertedCurrency' TEXT NOT NULL,
         'DateScraped' TEXT NOT NULL,
         'Date' TEXT NOT NULL,
         'Country' TEXT NOT NULL,
@@ -318,10 +319,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con = lite.connect(dbName)
         cur = con.cursor()
 
+        if (self.convertedCurrency == -1):
+            self.convertedCurrency = "None"
+
         cur.execute('''
-        INSERT INTO Reviews(Profile, Score, AmountPaid, Currency, DateScraped, Date, Country, Notes) 
-        VALUES(?,?,?,?,?,?,?,?)''',
-                    (self.username, self.score, self.amountPaid, self.currency, self.dateToday,
+        INSERT INTO Reviews(Profile, Score, AmountPaid, Currency, ConvertedCurrency, DateScraped, Date, Country, Notes) 
+        VALUES(?,?,?,?,?,?,?,?,?)''',
+                    (self.username, self.score, self.amountPaid, self.currency, self.convertedCurrency, self.dateToday,
                      self.timePosted, self.reviewCountry, self.note))
 
         con.commit()
@@ -537,7 +541,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.winnerProfiles.append(winnerProfile)
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
-                self.convertedPrice = "$" + convertCurrency(currency, amount, self.week, self.year)
+                self.convertedPrice = "$" + convertCurrencyWithYear(currency, amount, self.week, self.year)
                 self.saveWinnerDetails(self.projectID, url, self.users[0])
 
             else:
@@ -828,9 +832,26 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.timePosted = ' '.join(review.find_element_by_class_name("user-review-details").text.split(".")[
                                       -2].lstrip().split()[-3:])
 
+                self.convertedCurrency = -1
+
                 if (self.amountPaid == " "):
                     countReview = False
                     sealed = True
+                else:
+                    valuePaid = float(''.join(c for c in self.amountPaid if c.isalnum() or c == '.'))
+                    timeSplit = self.timePosted.split()
+                    timeFrame = timeSplit[1]
+                    timeAmount = int(timeSplit[0])
+
+                    if ((timeFrame == 'month') or (timeFrame == 'months')):
+                        self.convertedCurrency = calculateMonthlyAverage(self.currency, valuePaid, timeAmount)
+                    elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+                        self.convertedCurrency = calculateWeeklyAverage(self.currency, valuePaid, timeAmount)
+                    elif ((timeFrame == 'year') or (timeFrame == 'years')):
+                        self.convertedCurrency = calculateYearlyAverage(self.currency, valuePaid, date.today().year - timeAmount)
+                    elif((timeFrame == 'day') or (timeFrame == 'days')):
+                        dateToConvert = date.today() - relativedelta(days=timeAmount)
+                        self.convertedCurrency = convertCurrency(self.currency, valuePaid, dateToConvert)
 
                 # Gets the review text
                 reviewText = review.find_element_by_tag_name(
