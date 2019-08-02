@@ -58,6 +58,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # that has a bidder
         self.countriesOfBidders = {}
 
+        self.numOn = 1
+
     # Ensures no duplicate entries in tables
     def getSeen(self):
         self.databaseSetup()
@@ -115,7 +117,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def lookAtWinnerProfiles(self):
         print('\nLogging in...\n')
         self.loginToFreelancer()
-        for profileLink in self.winnerProfiles:
+        for i in range(len(self.winnerProfiles)):
+            profileLink = self.winnerProfiles[i]
+            self.numOn = i + 1
             if (self.profilesSavedAlready.get(profileLink) is None):
                 self.getInformationFromBidderProfile(profileLink)
                 self.profilesSavedAlready.update({profileLink: True})
@@ -203,6 +207,31 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         con.commit()
 
+    # Creates the JobsHourly table in the database, which will initially be empty
+    def createJobsHourlyTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS JobsHourly')
+        cur.execute('''CREATE TABLE JobsHourly (
+        'JobID' INTEGER PRIMARY KEY,
+        'URL' TEXT NOT NULL,
+        'Title' TEXT NOT NULL,
+        'NumberOfBidders' INTEGER NOT NULL,
+        'AverageBidCost' TEXT NOT NULL,
+        'FinalCost' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL,
+        'Time' TEXT NOT NULL,
+        'ConvertedFinalCost' TEXT NOT NULL,
+        'CountryOfPoster' TEXT NOT NULL,
+        'CountryOfWinner' TEXT NOT NULL,
+        'Year' INTEGER NOT NULL,
+        'Week' INTEGER NOT NULL
+        );''')
+
+        con.commit()
+
     # Creates the Profiles table in the database, which will initially be empty
     def createProfilesTable(self):
         dbName = "JobDetails.db"
@@ -250,6 +279,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Jobs'")
         if (len(cur.fetchall()) == 0):
             self.createJobsTable()
+
+        # Checks if tables exist and creates them if they do not
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='JobsHourly'")
+        if (len(cur.fetchall()) == 0):
+            self.createJobsHourlyTable()
 
         cur.execute(
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Profiles'")
@@ -352,6 +387,36 @@ class Main(QtWidgets.QMainWindow, mainUI):
         try:
             cur.execute('''
             INSERT INTO Jobs(JobID, URL, Title, NumberOfBidders, AverageBidCost, FinalCost,
+            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.numFreelancers, self.averagePrice,
+                         self.priceAmount, self.currency, self.time, self.convertedPrice, self.customerCountry,
+                         self.winnerCountry, self.year, self.week))
+
+            con.commit()
+        except lite.IntegrityError:
+            b = 1
+
+    # Will save job details to the database
+    def saveJobHourlyDetails(self, url):
+
+        if (not (self.awarded)):
+            self.winnerCountry = "None"
+            self.priceAmount = "None"
+            self.convertedPrice = "None"
+
+        if (self.numFreelancers == 0):
+            self.averagePrice = "None"
+            self.priceAmount = "None"
+            self.convertedPrice = "None"
+
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        try:
+            cur.execute('''
+            INSERT INTO JobsHourly(JobID, URL, Title, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.projectTitle, self.numFreelancers, self.averagePrice,
@@ -488,7 +553,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
             # Gets the information about the bidders
             self.getBiddersInfo(url)
 
-            self.saveJobDetails(url)
+            avPriceCheck = self.averagePrice.split("/hour")[0]
+
+            if (avPriceCheck == self.averagePrice):
+                self.saveJobDetails(url)
+            else:
+                self.averagePrice = avPriceCheck
+                self.saveJobHourlyDetails(url)
+
             a = 1
 
     # Retrieving the country of the customer
@@ -832,7 +904,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 self.reviewCountry = review.find_element_by_class_name("user-review-flag").get_attribute("title")
                 self.timePosted = ' '.join(review.find_element_by_class_name("user-review-details").text.split(".")[
-                                      -2].lstrip().split()[-3:])
+                                               -2].lstrip().split()[-3:])
 
                 self.convertedCurrency = -1
 
@@ -840,7 +912,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     countReview = False
                     sealed = True
                 else:
-                    valuePaid = float(''.join(c for c in self.amountPaid if c.isalnum() or c == '.'))
+                    valuePaid = float(''.join(c for c in self.amountPaid if c.isnumeric() or c == '.'))
                     timeSplit = self.timePosted.split()
                     timeFrame = timeSplit[1]
                     timeAmount = int(timeSplit[0])
@@ -850,8 +922,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
                         self.convertedCurrency = calculateWeeklyAverage(self.currency, valuePaid, timeAmount)
                     elif ((timeFrame == 'year') or (timeFrame == 'years')):
-                        self.convertedCurrency = calculateYearlyAverage(self.currency, valuePaid, date.today().year - timeAmount)
-                    elif((timeFrame == 'day') or (timeFrame == 'days')):
+                        self.convertedCurrency = calculateYearlyAverage(self.currency, valuePaid,
+                                                                        date.today().year - timeAmount)
+                    elif ((timeFrame == 'day') or (timeFrame == 'days')):
                         dateToConvert = date.today() - relativedelta(days=timeAmount)
                         self.convertedCurrency = convertCurrency(self.currency, valuePaid, dateToConvert)
 
@@ -869,7 +942,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     duplicate = True
 
                 # Temporary output of the extracted data
-                print("Review " + str(i + 1 + (page * 100)) +
+                print("Profile " + str(self.numOn) + " / " + str(len(self.winnerProfiles)) + " - Review " + str(
+                    i + 1 + (page * 100)) +
                       " / " + str(self.numReviewsToOutput))
 
                 saveReview = True
