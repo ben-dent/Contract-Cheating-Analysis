@@ -168,6 +168,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('DROP TABLE IF EXISTS Reviews')
         cur.execute('''CREATE TABLE Reviews (
         'ReviewID' INTEGER PRIMARY KEY,
+        'ProjectURL' TEXT NOT NULL,
         'Profile' TEXT NOT NULL,
         'Score' INTEGER NOT NULL,
         'AmountPaid' TEXT NOT NULL,
@@ -360,10 +361,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.convertedCurrency = "None"
 
         cur.execute('''
-        INSERT INTO Reviews(Profile, Score, AmountPaid, Currency, ConvertedCurrency, DateScraped, Date, Country, Notes) 
-        VALUES(?,?,?,?,?,?,?,?,?)''',
-                    (self.username, self.score, self.amountPaid, self.currency, self.convertedCurrency, self.dateToday,
-                     self.timePosted, self.reviewCountry, self.note))
+        INSERT INTO Reviews(Profile, ProjectURL, Score, AmountPaid, Currency, ConvertedCurrency, 
+        DateScraped, Date, Country, Notes) 
+        VALUES(?,?,?,?,?,?,?,?,?,?)''',
+                    (
+                    self.username, self.projectLink, self.score, self.amountPaid, self.currency, self.convertedCurrency,
+                    self.dateToday,
+                    self.timePosted, self.reviewCountry, self.note))
 
         con.commit()
 
