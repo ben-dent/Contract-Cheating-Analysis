@@ -7,14 +7,16 @@ It contains one constant and one function:
 
 LINK_PREFIX
 ^^^^^^^^^^^^^^^
-.. code-block::python
+.. code-block:: python
+
     LINK_PREFIX = "https://www.freelancer.co.uk"
 
 This constant is used to avoid having to type out the same url multiple times.
 
 getAllTheRelevantLinks
 ^^^^^^^^^^^^^^^^^^^^^^
-.. code::python
+.. code:: python
+
    getAllTheRelevantLinks(url)
 
 This function takes a single parameter, the URL of a week in the project archive of the Freelancer site.
