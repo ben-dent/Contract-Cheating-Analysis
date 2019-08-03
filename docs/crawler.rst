@@ -7,8 +7,8 @@ It contains one constant and one function:
 
 LINK_PREFIX
 ^^^^^^^^^^^^^^^
-
-    ``LINK_PREFIX = "https://www.freelancer.co.uk"``
+::
+    LINK_PREFIX = "https://www.freelancer.co.uk"
 
 This constant is used to avoid having to type out the same url multiple times.
 
