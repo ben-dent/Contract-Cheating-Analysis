@@ -118,6 +118,8 @@ It takes 3 arguments:
 
 | - *year* This is an integer that contains the desired year for which to get an average
 
+Analysis
+^^^^^^^^^
 *plotBarChartsOfBidderCountries*
 -------------------------------
 .. code-block:: python
