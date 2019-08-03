@@ -39,7 +39,8 @@ templates_path = ['_templates']
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
 language = 'Python'
-pygments_style = 'python'
+highlight_language = 'python3'
+# pygments_style = 'python'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
