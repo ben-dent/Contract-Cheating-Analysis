@@ -40,7 +40,7 @@ Next, install all project requirements by executing:
 
     pip install -r requirements.txt
 
-OR
+OR:
 ::
 
     pip3 install -r requirements.txt
