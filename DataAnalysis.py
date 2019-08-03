@@ -32,6 +32,11 @@ def convertCurrencyWithYear(currency, amount, week, year):
 
     return getAverage(currency, startDate, endDate, amount)
 
+
+def daterange(startDate, endDate):
+    for n in range(int((endDate - startDate).days)):
+        yield startDate + timedelta(n)
+
 def getAverage(currency, startDate, endDate, amount):
     c = CurrencyRates()
     total = 0
@@ -74,10 +79,6 @@ def calculateMonthlyAverage(currency, amount, monthsAgo):
     endDate = date(year, month, monthrange(year, month)[1])
 
     return getAverage(currency, startDate, endDate, amount)
-
-def daterange(startDate, endDate):
-    for n in range(int ((endDate - startDate).days)):
-        yield startDate + timedelta(n)
 
 def calculateYearlyAverage(currency, amount, year):
     startDate = date(year, 1, 1)
