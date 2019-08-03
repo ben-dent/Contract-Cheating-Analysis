@@ -25,7 +25,7 @@ It takes 3 arguments:
 
 | - *date*: This is a ``date`` object from the ``datetime`` Python library that is the date to use for historic conversion
 
-convertCurrencyWithYear
+*convertCurrencyWithYear*
 -------------------------
 .. code-block:: python
 
@@ -42,7 +42,7 @@ It takes 4 arguments:
 
 | - *year* This is an integer that contains the year to use for historic conversion
 
-dateRange
+*dateRange*
 ----------
 .. code-block:: python
 
@@ -56,7 +56,7 @@ It takes 2 arguments:
 | - *endDate*: This is a ``date`` object from the ``datetime`` Python library that is the end date to use for the range
 
 
-getAverage
+*getAverage*
 -----------
 .. code-block:: python
 
@@ -73,7 +73,7 @@ It takes 4 arguments
 
 | - *amount*: This is a float that contains the amount of the currency to be converted
 
-calculateWeeklyAverage
+*calculateWeeklyAverage*
 ------------------------
 .. code-block:: python
 
@@ -88,7 +88,7 @@ It takes 3 arguments:
 
 | - *weeksAgo* This is an integer that contains the number of weeks since the desired week
 
-calculateMonthlyAverage
+*calculateMonthlyAverage*
 ------------------------
 .. code-block:: python
 
@@ -103,7 +103,7 @@ It takes 3 arguments:
 
 | - *monthsAgo* This is an integer that contains the number of months since the desired month
 
-calculateYearlyAverage
+*calculateYearlyAverage*
 ------------------------
 .. code-block:: python
 
@@ -118,7 +118,7 @@ It takes 3 arguments:
 
 | - *year* This is an integer that contains the desired year for which to get an average
 
-plotBarChartsOfBidderCountries
+*plotBarChartsOfBidderCountries*
 -------------------------------
 .. code-block:: python
 
@@ -130,7 +130,7 @@ It takes 1 argument:
 | - *countryValues*: This is a dictionary of country names (Strings) to integers containing the number of bidders from that country. It also produces graphs by continent.
 
 
-plotFromDatabase
+*plotFromDatabase*
 -----------------
 
 .. code-block:: python
@@ -139,7 +139,7 @@ plotFromDatabase
 
 This function reads in data from the program database and will produce graphs from it by calling *plotBarChartsOfBidderCountries*
 
-saveDataToCSV
+*saveDataToCSV*
 --------------
 .. code-block:: python
 

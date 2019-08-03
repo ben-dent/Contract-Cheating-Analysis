@@ -5,7 +5,7 @@ This is a Python file that carries out the web crawling in the program.
 
 It contains one constant and one function:
 
-LINK_PREFIX
+*LINK_PREFIX*
 ^^^^^^^^^^^^^^^
 .. code-block:: python
 
@@ -13,7 +13,7 @@ LINK_PREFIX
 
 This constant is used to avoid having to type out the same url multiple times.
 
-getAllTheRelevantLinks
+*getAllTheRelevantLinks*
 ^^^^^^^^^^^^^^^^^^^^^^
 .. code-block:: python
 
