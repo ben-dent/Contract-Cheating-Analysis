@@ -17,4 +17,4 @@ getAllTheRelevantLinks
 
     getAllTheRelevantLinks(url)
 
-This function takes a single parameter, the url of a week in the project archive of the Freelancer site
+This function takes a single parameter, the URL of a week in the project archive of the Freelancer site
