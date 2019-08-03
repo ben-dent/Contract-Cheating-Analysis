@@ -1,9 +1,19 @@
 Contract Cheating Analysis - Documentation
 ======================================================
 
+About
+======================================================
+
+This project allows for automated analysis of projects posted on the Freelancer site.
+
+Contents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 3
+
+   license
+   help
 
 
 
