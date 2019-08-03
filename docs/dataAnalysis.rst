@@ -10,7 +10,7 @@ Currency Conversions
 
 This file contains numerous functions to handle currency conversion.
 
-convertCurrency
+*convertCurrency*
 -----------------
 .. code-block:: python
 
