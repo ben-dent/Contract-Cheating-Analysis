@@ -1,6 +1,8 @@
 # Contract Cheating Analysis
 A tool for analysis of contract cheating sites. Designed by Ben Dent as part of an Undergraduate Research Opportunities Placement (UROP) at Imperial College London
 
+**Full documentation can be seen <a href=https://contract-cheating-analysis.readthedocs.io/en/latest/index.html>here</a>**
+
 **PLEASE NOTE - YOU WILL NEED TO INSTALL THE GECKO DRIVER LOCALLY FOR THIS TO WORK:**
 
 https://github.com/mozilla/geckodriver/releases

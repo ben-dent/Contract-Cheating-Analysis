@@ -18,6 +18,5 @@ getAllTheRelevantLinks
 ::
 
     getAllTheRelevantLinks(url)
-    print(hello)
 
-This function takes a single parameter, the URL of a week in the project archive of the Freelancer site
+This function takes a single parameter, the URL of a week in the project archive of the Freelancer site.
