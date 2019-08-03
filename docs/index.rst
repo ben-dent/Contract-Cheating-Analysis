@@ -14,10 +14,9 @@ Contents
 
    license
    help
+   installation
    crawler
    dataAnalysis
-
-
 
 Indices and tables
 ==================
