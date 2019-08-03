@@ -6,7 +6,6 @@ Code is provided as-is under an MIT License
 
 '''
 
-# TODO: Add JobID, URL to Reviews
 # TODO: Save job descriptions
 # TODO: Find some way of filtering relevant projects from reviews
 # TODO: Add export existing data to CSV option
@@ -41,6 +40,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnSaveCSV.clicked.connect(self.exportAsCSV)
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
+        self.time = ''
 
         self.profilesSavedAlready = {}
         self.projectsSavedAlready = {}
