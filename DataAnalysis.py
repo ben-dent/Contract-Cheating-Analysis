@@ -10,16 +10,6 @@ import csv
 
 # TODO: Implement saving to CSV
 
-
-def convertCurrencyWithYear(currency, amount, week, year):
-    week = str(year) + "-W" + str(week)
-
-    startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
-    endDate = startDate + timedelta(days=6)
-
-    return getAverage(currency, startDate, endDate, amount)
-
-
 # Converts the currency to USD at the historic rate
 def convertCurrency(currency, amount, date):
     c = CurrencyRates()
@@ -32,6 +22,15 @@ def convertCurrency(currency, amount, date):
         return split[0]
 
     return(dollarAmount)
+
+
+def convertCurrencyWithYear(currency, amount, week, year):
+    week = str(year) + "-W" + str(week)
+
+    startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
+    endDate = startDate + timedelta(days=6)
+
+    return getAverage(currency, startDate, endDate, amount)
 
 def getAverage(currency, startDate, endDate, amount):
     c = CurrencyRates()
