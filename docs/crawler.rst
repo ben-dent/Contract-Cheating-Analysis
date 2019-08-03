@@ -7,7 +7,8 @@ It contains one constant and one function:
 
 LINK_PREFIX
 ^^^^^^^^^^^^^^^
-::
+The file contains a constant::
+
     LINK_PREFIX = "https://www.freelancer.co.uk"
 
 This constant is used to avoid having to type out the same url multiple times.
