@@ -7,7 +7,7 @@ About
 This project allows for automated analysis of projects posted on the Freelancer site.
 
 Contents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+================
 
 .. toctree::
    :maxdepth: 3
