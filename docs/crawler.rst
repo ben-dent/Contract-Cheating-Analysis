@@ -15,7 +15,7 @@ This constant is used to avoid having to type out the same url multiple times.
 
 getAllTheRelevantLinks
 ^^^^^^^^^^^^^^^^^^^^^^
-.. code:: python
+.. code-block:: python
 
    getAllTheRelevantLinks(url)
 
