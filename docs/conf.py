@@ -23,10 +23,12 @@ author = 'Ben Dent'
 
 
 # -- General configuration ---------------------------------------------------
-
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+
+from TestStyle import *
+
 extensions = [
 ]
 
@@ -38,8 +40,8 @@ templates_path = ['_templates']
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'Python'
-highlight_language = 'python3'
+# language = 'Python'
+# highlight_language = 'python3'
 # pygments_style = 'python'
 
 # List of patterns, relative to source directory, that match files and
@@ -55,7 +57,6 @@ master_doc = 'index'
 # a list of builtin themes.
 #
 html_theme = 'default'
-
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
