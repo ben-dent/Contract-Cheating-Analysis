@@ -68,7 +68,7 @@ https://github.com/mozilla/geckodriver/releases
 This needs to be installed in usr/lib or usr/local/bin
 
 Program Execution
-===================
+------------------
 
 The program can be executed (within the directory) by running:
 ::
