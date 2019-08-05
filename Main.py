@@ -6,7 +6,6 @@ Code is provided as-is under an MIT License
 
 """
 
-# TODO: Save job descriptions
 # TODO: Find some way of filtering relevant projects from reviews
 # TODO: Add export existing data to CSV option
 
