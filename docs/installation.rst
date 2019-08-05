@@ -26,8 +26,16 @@ If you need to install it:
 **Windows:**\
 It is recommended that you use a Linux Virtual Machine if your Python distribution does not contain the 'pip' command.
 
-Once you have PyPi installed, make sure you have Git installed from here:
+Once you have PyPi installed, make sure you have Git installed. It should come pre-installed on Linux.
 
+If you want to check if you have Git installed, open up a command line terminal and execute this command:
+::
+
+   git
+
+If you get a lengthy output, telling you how to use the command then it is installed.
+
+If not, you can install it from here:
 https://git-scm.com/downloads
 
 Now you can install the project files with:
@@ -59,7 +67,8 @@ https://github.com/mozilla/geckodriver/releases
 
 This needs to be installed in usr/lib or usr/local/bin
 
-# Program Execution
+Program Execution
+------------------
 
 The program can be executed (within the directory) by running:
 ::

@@ -1,10 +1,10 @@
-'''
+"""
 
 Made by Ben Dent as part of an  Undergraduate Research Opportunities Placement (UROP) at Imperial College London
 
 Code is provided as-is under an MIT License
 
-'''
+"""
 
 # TODO: Save job descriptions
 # TODO: Find some way of filtering relevant projects from reviews
@@ -28,7 +28,7 @@ mainUI = uic.loadUiType("UIs/main.ui")[0]
 
 
 class Main(QtWidgets.QMainWindow, mainUI):
-    ''' This class handles the window in the application as PyQt requires a class for each program window '''
+    """ This class handles the window in the application as PyQt requires a class for each program window """
 
     # In the constructor, the UI is set up and the buttons are linked to the
     # relevant functions
@@ -54,6 +54,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.winnerProfiles = []
         self.winnerCountries = {}
+
+        self.projectDescription = ""
 
         # Defines a dictionary to store the number of bidders from each country
         # that has a bidder
@@ -197,6 +199,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'JobID' INTEGER PRIMARY KEY,
         'URL' TEXT NOT NULL,
         'Title' TEXT NOT NULL,
+        'Description' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -222,6 +225,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'JobID' INTEGER PRIMARY KEY,
         'URL' TEXT NOT NULL,
         'Title' TEXT NOT NULL,
+        'Description' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -368,9 +372,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
         DateScraped, Date, Country, Notes) 
         VALUES(?,?,?,?,?,?,?,?,?,?)''',
                     (
-                    self.username, self.projectLink, self.score, self.amountPaid, self.currency, self.convertedCurrency,
-                    self.dateToday,
-                    self.timePosted, self.reviewCountry, self.note))
+                        self.username, self.projectLink, self.score, self.amountPaid, self.currency,
+                        self.convertedCurrency,
+                        self.dateToday,
+                        self.timePosted, self.reviewCountry, self.note))
 
         con.commit()
 
@@ -393,12 +398,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO Jobs(JobID, URL, Title, NumberOfBidders, AverageBidCost, FinalCost,
+            INSERT INTO Jobs(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.numFreelancers, self.averagePrice,
-                         self.priceAmount, self.currency, self.time, self.convertedPrice, self.customerCountry,
-                         self.winnerCountry, self.year, self.week))
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
+                         self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
+                         self.customerCountry, self.winnerCountry, self.year, self.week))
 
             con.commit()
         except lite.IntegrityError:
@@ -423,12 +428,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO JobsHourly(JobID, URL, Title, NumberOfBidders, AverageBidCost, FinalCost,
+            INSERT INTO JobsHourly(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.numFreelancers, self.averagePrice,
-                         self.priceAmount, self.currency, self.time, self.convertedPrice, self.customerCountry,
-                         self.winnerCountry, self.year, self.week))
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
+                         self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
+                         self.customerCountry, self.winnerCountry, self.year, self.week))
 
             con.commit()
         except lite.IntegrityError:
@@ -549,6 +554,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.priceAmount = split[0]
                 self.currency = split[1]
                 self.time = split[3] + " " + split[4]
+
+            self.projectDescription = ""
+            descriptionTags = self.soup.find_all("p", {"class": "PageProjectViewLogout-detail-paragraph"})
+
+            for item in descriptionTags:
+                self.projectDescription += item.text
 
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all(

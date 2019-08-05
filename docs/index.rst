@@ -15,5 +15,6 @@ Contents
    license
    help
    installation
+   updates
    crawler
    dataAnalysis
