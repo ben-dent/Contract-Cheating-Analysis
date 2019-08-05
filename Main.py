@@ -559,7 +559,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             descriptionTags = self.soup.find_all("p", {"class": "PageProjectViewLogout-detail-paragraph"})
 
             for item in descriptionTags:
-                self.profileDescription += item.text
+                self.projectDescription += item.text
 
             # Retrieving the tags that the customer gave to their task
             self.givenTags = self.soup.find_all(
