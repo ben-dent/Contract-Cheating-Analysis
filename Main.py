@@ -400,7 +400,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             cur.execute('''
             INSERT INTO Jobs(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
@@ -430,7 +430,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             cur.execute('''
             INSERT INTO JobsHourly(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
