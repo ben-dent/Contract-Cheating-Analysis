@@ -35,7 +35,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.checkDescription)
+        self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
         self.btnSaveCSV.clicked.connect(self.exportAsCSV)
@@ -54,6 +54,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.winnerProfiles = []
         self.winnerCountries = {}
+
+        self.projectDescription = ""
 
         # Defines a dictionary to store the number of bidders from each country
         # that has a bidder
