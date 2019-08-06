@@ -26,6 +26,7 @@ from Notification import sendMessages
 mainUI = uic.loadUiType("UIs/main.ui")[0]
 
 
+# noinspection PyPep8Naming
 class Main(QtWidgets.QMainWindow, mainUI):
     """ This class handles the window in the application as PyQt requires a class for each program window """
 
@@ -96,7 +97,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         projects = getAllTheRelevantLinks(url)
 
         for project in projects:
-            if (self.projectsSavedAlready.get(project) == None):
+            if (self.projectsSavedAlready.get(project) is None):
                 self.fetchDataNonLogin(project)
 
         self.lookAtWinnerProfiles()
@@ -104,7 +105,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # plotBarChartsOfBidderCountries(self.winnerCountries)
         # plotBarChartsOfBidderCountries(self.countriesOfBidders)
         print("\nDone\n")
-        # self.send.sendMessage()
+        self.send.sendMessage()
         # a = 1
 
         # self.loginToFreelancer()
@@ -552,7 +553,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 split = self.finalPrice.split()
                 self.priceAmount = split[0]
                 self.currency = split[1]
-                self.time = split[3] + " " + split[4]
+                try:
+                    self.time = split[3] + " " + split[4]
+                except IndexError:
+                    a = 1
 
             self.projectDescription = ""
             descriptionTags = self.soup.find_all("p", {"class": "PageProjectViewLogout-detail-paragraph"})
@@ -1006,9 +1010,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
             else:
                 done = True
 
-                for project in (list(links.keys())):
-                    if self.projectsSeen.get(project) == None:
-                        self.projectsSeen[project] = True
+                for link in links:
+                    if (self.projectsSavedAlready.get(link) is None):
+                        self.fetchDataNonLogin(link)
+
+                # for project in (list(links.keys())):
+                #     if self.projectsSeen.get(project) is None:
+                #         self.projectsSeen[project] = True
+
 
         # print(str(duplicates) + " duplicates")
 
