@@ -10,6 +10,8 @@ import csv
 
 # TODO: Implement saving to CSV
 
+DATABASE_NAME = 'JobDetails.db'
+
 # Converts the currency to USD at the historic rate
 def convertCurrency(currency, amount, date):
     c = CurrencyRates()
@@ -223,12 +225,8 @@ def plotBarChartsOfBidderCountries(countryValues):
     plt.show()
 
 # Saving values from the database to a CSV file
-def saveDataToCSV(data):
-    db = "JobDetails.db"
-    con = lite.connect(db)
-    cur = con.cursor()
-
-    file = 'CountryData.csv'
+def saveDataToCSV(table, data):
+    file = table + '.csv'
 
     with open(file, 'a', newline='') as fp:
         a = csv.writer(fp, delimeter=',')

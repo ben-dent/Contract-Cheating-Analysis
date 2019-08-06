@@ -35,7 +35,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.setUpProgram)
+        self.btnFetch.clicked.connect(self.exportAsCSV)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
         self.btnSaveCSV.clicked.connect(self.exportAsCSV)
@@ -116,7 +116,18 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # self.getInformationFromBidderProfile(url)
 
     def exportAsCSV(self):
-        print("Hello")
+        con = lite.connect(DATABASE_NAME)
+        cur = con.cursor()
+
+        cur.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
+        con.commit()
+
+        tableNames = [each[0] for each in cur.fetchall()]
+
+        for table in tableNames:
+            query = 'SELECT * FROM ' + table
+            cur.execute(query)
+            data = cur.fetchall()
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
