@@ -224,7 +224,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
-# Saving values from the database to a CSV file
+# Saving values from the database to CSV files
 def saveDataToCSV():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
