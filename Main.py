@@ -112,20 +112,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         # self.getInformationFromBidderProfile(url)
 
-    def exportAsCSV(self):
-        con = lite.connect(DATABASE_NAME)
-        cur = con.cursor()
-
-        cur.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
-        con.commit()
-
-        tableNames = [each[0] for each in cur.fetchall()]
-
-        for table in tableNames:
-            query = 'SELECT * FROM ' + table
-            cur.execute(query)
-            data = cur.fetchall()
-
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
         print('\nLogging in...\n')
