@@ -1,8 +1,7 @@
-selenium>=3.141.0
 requests>=2.22.0
 PyQt5>=5.13.0
 beautifulsoup4>=4.7.1
 pycountry-convert>=0.7.2
 forex-python>=1.5
-twilio>=6.0.0
 python-dotenv>=0.10.3
+selenium>=3.141.0
