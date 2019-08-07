@@ -452,27 +452,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     # Closes the window
     def exit(self):
         main.close()
-
-    # Does all the fetching and handling of the data required
-    def fetch(self):
-        url = "https://www.freelancer.co.uk/projects/graphic-design/Photos-for-Radio-Promo/"
-
-        # Fetch the data that can be gathered without logging in
-        self.fetchDataNonLogin(url)
-
-        # Login
-        self.loginToFreelancer()
-
-        # Fetch the data that requires logging in
-        self.fetchDataWithLogin(url)
-
-    # Retrieves the profile link of the customer who posted the job
-    def getCustomerProfileLink(self):
-        self.customerProfileLink = self.driver.find_elements(
-            By.CLASS_NAME, "NativeElement.ng-star-inserted")[10].text
-        self.customerProfileLink = LINK_PREFIX + "/u/" + \
-                                   self.customerProfileLink.split("@")[1]
-
+        
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self):
         profileLinks = list(self.profilesSeen.keys())[:2]
