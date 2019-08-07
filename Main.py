@@ -5,7 +5,7 @@ Made by Ben Dent as part of an  Undergraduate Research Opportunities Placement (
 Code is provided as-is under an MIT License
 
 """
-
+# TODO: FIX REVIEWS
 # TODO: Find some way of filtering relevant projects from reviews
 
 import math
@@ -40,6 +40,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
         self.time = ''
+        self.startFrom = 0
 
         self.profilesSavedAlready = {}
         self.projectsSavedAlready = {}
@@ -115,12 +116,15 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def lookAtWinnerProfiles(self):
         print('\nLogging in...\n')
         self.loginToFreelancer()
+        self.winnerProfiles = list(self.profilesSavedAlready.keys())
         for i in range(len(self.winnerProfiles)):
             profileLink = self.winnerProfiles[i]
             self.numOn = i + 1
-            if (self.profilesSavedAlready.get(profileLink) is None):
-                self.getInformationFromBidderProfile(profileLink)
-                self.profilesSavedAlready.update({profileLink: True})
+            self.getInformationFromBidderProfile(profileLink)
+            self.profilesSavedAlready.update({profileLink: True})
+            # if (self.profilesSavedAlready.get(profileLink) is None):
+            #     self.getInformationFromBidderProfile(profileLink)
+            #     self.profilesSavedAlready.update({profileLink: True})
 
     # Creates the Winners table in the database, which will initially be empty
     def createWinnersTable(self):
@@ -363,7 +367,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
             tag = self.tags[i]
             tagString += tag + ", "
 
-        tagString += self.tags[-1]
+        if len(self.tags) > 0:
+            tagString += self.tags[-1]
+        else:
+            tagString = "None given"
 
 
         if (self.convertedCurrency == -1):
@@ -471,9 +478,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
         r = requests.get(url)
         self.soup = BeautifulSoup(r.content, "html.parser")
 
-        self.projectID = self.soup.find_all(
-            "p", {"class": "PageProjectViewLogout-detail-tags"}
-        )[-1].text.split("#")[-1]
+        try:
+            self.projectID = self.soup.find_all(
+                "p", {"class": "PageProjectViewLogout-detail-tags"}
+            )[-1].text.split("#")[-1]
+        except IndexError:
+            self.projectID = -1
 
         if (self.seenIDs.get(self.projectID) == None):
 
@@ -836,8 +846,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         time.sleep(3)
 
-        # wait = WebDriverWait(self.driver, 10)
-
         # Showing the maximum number of reviews possible per page
         dropDownList = self.driver.find_elements(
             By.CLASS_NAME, "small-select")[-1]
@@ -852,13 +860,37 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.saveProfileDetails()
 
-        done = False
+        con = lite.connect(DATABASE_NAME)
+        cur = con.cursor()
+        cur.execute('SELECT COUNT(*) From (SELECT Profile FROM Reviews WHERE Profile = ?) AS result',
+                    [self.username])
+
+        numFound = int(cur.fetchall()[0][0])
+
+        if numFound == self.numReviews:
+            done = True
+        else:
+            done = False
+            self.startFrom = numFound
+
         page = 0
 
         links = {}
         duplicates = 0
 
         dupes = []
+
+        pageNeeded = math.floor(self.startFrom / 100)
+        first = True
+
+        while page < pageNeeded:
+            pageButtons = self.driver.find_element_by_class_name(
+                "user-reviews-pagination")
+            page += 1
+            nextPageButton = pageButtons.find_elements_by_tag_name(
+                "li")[-2]
+            nextPageButton.find_element_by_tag_name("a").click()
+            time.sleep(1.5)
 
         # Will loop through all review pages until every review has been seen
         while (not done):
@@ -874,11 +906,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 By.CLASS_NAME, "user-reviews")
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
+            if first:
+                i = (self.startFrom % 100) - 1
+            else:
+                i = 0
+
             if (page == math.floor(self.numReviews / 100)):
-                reviews = reviews[:(self.numReviews % 100)]
+                if first:
+                    reviews = reviews[:(len(reviews) - self.startFrom)]
+                else:
+                    reviews = reviews[:(self.numReviews % 100)]
+
 
             # Go through all the reviews on the current page
-            for i in range(len(reviews)):
+            while i < (len(reviews)):
                 countReview = True
                 duplicate = False
                 sealed = False
@@ -943,12 +984,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 reviewText = review.find_element_by_tag_name(
                     "p").text.split('"')[1:][:-1][0]
 
+                titleFind = review.find_element_by_class_name(
+                    "user-review-title")
+
                 # Gets the link to the project that the review is for
-                self.projectLink = review.find_element_by_class_name(
-                    "user-review-title").get_attribute("href")
+                self.projectLink = titleFind.get_attribute("href")
+
+                self.reviewTitle = titleFind.text
 
                 if (links.get(self.projectLink) is None):
-                    links[self.projectLink] = True
+                    if (self.reviewTitle.split("Project for")[0] == self.reviewTitle):
+                        links[self.projectLink] = True
                 else:
                     duplicate = True
 
@@ -960,6 +1006,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 saveReview = True
 
                 self.note = "None"
+                i += 1
+                if first == True:
+                    first = False
 
                 if (countReview == False):
                     numDiscounted += 1
@@ -973,6 +1022,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     self.saveReviewDetails()
 
                 a = 1
+
                 # print("Score: " + score)
                 # print("\nWith review of:\n" + reviewText)
                 # print("\nAmount paid: " + amountPaid)
