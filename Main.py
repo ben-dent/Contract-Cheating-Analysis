@@ -11,7 +11,6 @@ Code is provided as-is under an MIT License
 import math
 import sys
 import time
-import argparse
 
 from PyQt5 import uic, QtWidgets
 from selenium import webdriver
@@ -168,6 +167,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('''CREATE TABLE Reviews (
         'ReviewID' INTEGER PRIMARY KEY,
         'ProjectURL' TEXT NOT NULL,
+        'Tags' TEXT NOT NULL,
         'Profile' TEXT NOT NULL,
         'Score' INTEGER NOT NULL,
         'AmountPaid' TEXT NOT NULL,
@@ -358,15 +358,23 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con = lite.connect(dbName)
         cur = con.cursor()
 
+        tagString = ""
+        for i in range(len(self.tags) - 1):
+            tag = self.tags[i]
+            tagString += tag + ", "
+
+        tagString += self.tags[-1]
+
+
         if (self.convertedCurrency == -1):
             self.convertedCurrency = "None"
 
         cur.execute('''
-        INSERT INTO Reviews(Profile, ProjectURL, Score, AmountPaid, Currency, ConvertedCurrency, 
+        INSERT INTO Reviews(Profile, ProjectURL, Tags, Score, AmountPaid, Currency, ConvertedCurrency, 
         DateScraped, Date, Country, Notes) 
-        VALUES(?,?,?,?,?,?,?,?,?,?)''',
+        VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
                     (
-                        self.username, self.projectLink, self.score, self.amountPaid, self.currency,
+                        self.username, self.projectLink, tagString, self.score, self.amountPaid, self.currency,
                         self.convertedCurrency,
                         self.dateToday,
                         self.timePosted, self.reviewCountry, self.note))
@@ -903,11 +911,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 self.convertedCurrency = -1
 
-                self.tagList = review.find_element_by_class_name("user-rating-skills")
+                tagList = review.find_element_by_class_name("user-rating-skills")
                 self.tags = []
 
-                for tag in self.tagList:
-                    self.tags.append(tag.find_element_by_tag_name("li").text)
+                tagItems = tagList.find_elements_by_tag_name("li")
+
+                for tag in tagItems:
+                    self.tags.append(tag.text)
 
                 if (self.amountPaid == " "):
                     countReview = False
@@ -1053,14 +1063,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
             self.setUpProgram()
-
-
-# Runs the application and launches the window
-parser = argparse.ArgumentParser()
-parser.add_argument('type', metavar='N', type=int, nargs='+', help='An integer to choose whether to show GUI')
-
-args = parser.parse_args()
-print(args.type[0])
 
 app = QtWidgets.QApplication(sys.argv)
 main = Main()
