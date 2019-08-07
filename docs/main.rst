@@ -127,7 +127,7 @@ getBiddersInfo
 
    getBiddersInfo(url)
 
-This function gets all information about the bidders then calls getBiddersCountries to get their locations.
+This function gets all information about the bidders then calls *getBiddersCountries* to get their locations.
 It takes 1 argument:
 
 | - *url*: This is the url of the project that is being looked at.
