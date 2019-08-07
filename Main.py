@@ -34,7 +34,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
-        self.btnFetch.clicked.connect(self.exportAsCSV)
+        self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
         self.btnSaveCSV.clicked.connect(self.exportAsCSV)
@@ -124,7 +124,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         for table in tableNames:
             query = 'SELECT * FROM ' + table
             cur.execute(query)
-            data = cur.fetchall()
+            data = []
+            for item in cur.fetchall():
+                data.append(item[0])
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
