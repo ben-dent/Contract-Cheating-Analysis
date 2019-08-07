@@ -104,7 +104,7 @@ Program Execution
 ^^^^^^^^^^^^^^^^^^^^^
 
 lookAtWinnerProfiles
----------------------
+------------------------
 .. code-block:: python
 
    lookAtWinnerProfiles()
@@ -112,11 +112,49 @@ lookAtWinnerProfiles
 This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the profile URL, to retrieve all the relevant data from that profile.
 It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution.
 
+fetchDataNonLogin
+------------------
+.. code-block:: python
+
+   fetchDataNonLogin(url)
+
+This function looks at the given project web page and fetches all the relevant data from this, including information about bids and bidders. It calls many other functions from this class and the other files in the program.
+It takes 1 argument:
+
+| - *url*: This is the url of the project that is being looked at.
+
+getCustomerCountry
+-------------------
+.. code-block:: python
+
+   getCustomerCountry()
+
+This function returns the country of the customer who posted the project currently being looked at.
+
+getBiddersInfo
+---------------
+.. code-block:: python
+
+   getBiddersInfo(url)
+
+This function gets all information about the bidders then calls getBiddersCountries to get their locations.
+It takes 1 argument:
+
+| - *url*: This is the url of the project that is being looked at.
+
+getBiddersCountries
+--------------------
+.. code-block:: python
+
+   getBiddersCountries()
+
+This function retrieves the countries of the bidders of the project being currently looked at and stores them in a dictionary
+
 Saving to database
-*******************
+^^^^^^^^^^^^^^^^^^^
 
 saveWinnerDetails
-__________________
+------------------------
 .. code-block:: python
 
    saveWinnerDetails(jobID, url, user)
@@ -131,7 +169,7 @@ It takes 3 arguments:
 | - *user* This is the username of the bidder that was awarded this work.
 
 saveQualificationDetails
-__________________
+--------------------------
 .. code-block:: python
 
    saveQualificationDetails()
@@ -139,7 +177,7 @@ __________________
 This function handles saving the details of qualifications of this user to the Qualifications table of the database.
 
 saveReviewDetails
-__________________
+------------------
 .. code-block:: python
 
    saveReviewDetails()
@@ -147,7 +185,7 @@ __________________
 This function handles saving the details of a review of this user to the Reviews table of the database.
 
 saveJobDetails
-__________________
+---------------
 .. code-block:: python
 
    saveJobDetails(url)
@@ -158,7 +196,7 @@ It takes 1 argument:
 | - *url*: This is the URL for the project.
 
 saveJobHourlyDetails
-__________________
+---------------------
 .. code-block:: python
 
    saveJobHourlyDetails(url)
@@ -169,7 +207,7 @@ It takes 1 argument:
 | - *url*: This is the URL for the project.
 
 saveProfileDetails
-__________________
+-------------------
 .. code-block:: python
 
    saveProfileDetails()
@@ -177,7 +215,7 @@ __________________
 This function handles saving the details of a user's profile to the Profiles table of the database.
 
 saveBidDetails
-__________________
+---------------
 .. code-block:: python
 
    saveBidDetails(jobID, country, user)

@@ -43,7 +43,7 @@ It takes 4 arguments:
 | - *year* This is an integer that contains the year to use for historic conversion
 
 *dateRange*
-----------
+------------
 .. code-block:: python
 
    daterange(startDate, endDate)
@@ -57,7 +57,7 @@ It takes 2 arguments:
 
 
 *getAverage*
------------
+-------------
 .. code-block:: python
 
    getAverage(currency, startDate, endDate, amount)
@@ -89,7 +89,7 @@ It takes 3 arguments:
 | - *weeksAgo* This is an integer that contains the number of weeks since the desired week
 
 *calculateMonthlyAverage*
-------------------------
+--------------------------
 .. code-block:: python
 
    calculateWeeklyAverage(currency, amount, monthsAgo)
@@ -121,7 +121,7 @@ It takes 3 arguments:
 Analysis
 ^^^^^^^^^
 *plotBarChartsOfBidderCountries*
--------------------------------
+---------------------------------
 .. code-block:: python
 
    plotBarChartsOfBidderCountries(countryValues)
@@ -133,7 +133,7 @@ It takes 1 argument:
 
 
 *plotFromDatabase*
------------------
+------------------
 
 .. code-block:: python
 
@@ -142,12 +142,10 @@ It takes 1 argument:
 This function reads in data from the program database and will produce graphs from it by calling *plotBarChartsOfBidderCountries*
 
 *saveDataToCSV*
---------------
+---------------
 .. code-block:: python
 
-   saveDataToCSV(data)
+   saveDataToCSV()
 
 This function handles saving data to CSV files for easy analysis in programs such as Microsoft Excel.
-It takes 1 argument:
-
-| - *data*: This is a list of the data to be saved to a CSV file
+Each table in the database will have its own CSV file produced.
