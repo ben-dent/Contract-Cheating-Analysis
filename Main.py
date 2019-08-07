@@ -7,7 +7,6 @@ Code is provided as-is under an MIT License
 """
 
 # TODO: Find some way of filtering relevant projects from reviews
-# TODO: Add export existing data to CSV option
 
 import math
 import sys
@@ -452,7 +451,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     # Closes the window
     def exit(self):
         main.close()
-        
+
     # Fetching all the data that requires a login first
     def fetchDataWithLogin(self):
         profileLinks = list(self.profilesSeen.keys())[:2]

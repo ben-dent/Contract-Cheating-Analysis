@@ -8,8 +8,6 @@ from calendar import monthrange
 from forex_python.converter import CurrencyRates
 import csv
 
-# TODO: Implement saving to CSV
-
 DATABASE_NAME = 'JobDetails.db'
 
 # Converts the currency to USD at the historic rate
