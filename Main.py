@@ -903,6 +903,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 self.convertedCurrency = -1
 
+                self.tagList = review.find_element_by_class_name("user-rating-skills")
+                self.tags = []
+
+                for tag in self.tagList:
+                    self.tags.append(tag.find_element_by_tag_name("li").text)
+
                 if (self.amountPaid == " "):
                     countReview = False
                     sealed = True
