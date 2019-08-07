@@ -100,18 +100,8 @@ __________________
 
 Creates the Bids table in the database, which will initially be empty.
 
-Program Execution
-^^^^^^^^^^^^^^^^^^^^^
-
-lookAtWinnerProfiles
-------------------------
-.. code-block:: python
-
-   lookAtWinnerProfiles()
-
-This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the profile URL, to retrieve all the relevant data from that profile.
-It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution.
-
+Program Execution - Logged out
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 fetchDataNonLogin
 ------------------
 .. code-block:: python
@@ -149,6 +139,44 @@ getBiddersCountries
    getBiddersCountries()
 
 This function retrieves the countries of the bidders of the project being currently looked at and stores them in a dictionary
+
+Program Execution - Logged in
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lookAtWinnerProfiles
+------------------------
+.. code-block:: python
+
+   lookAtWinnerProfiles()
+
+This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the profile URL, to retrieve all the relevant data from that profile.
+It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution.
+
+getInformationFromBidderProfile
+--------------------------------
+.. code-block:: python
+
+   getInformationFromBidderProfile(url)
+
+This function retrieves all the relevant data from the profile of the given bidder, including qualifications. It makes calls to many helper functions, including *getCertifications* and *getReviewDetails*.
+It takes 1 argument:
+
+| - *url*: This is the url of the profile that is being looked at.
+
+getCertifications
+------------------
+.. code-block:: python
+
+   getCertifications()
+
+This function retrieves all certifications from the 'Certifications' tab of the profile being looked at.
+
+getReviewDetails
+-----------------
+.. code-block:: python
+
+   getReviewDetails()
+
+This function retrieves details about the reviews on the profile being currently looked at.
 
 Saving to database
 ^^^^^^^^^^^^^^^^^^^
@@ -228,3 +256,31 @@ It takes 3 arguments:
 | - *country*: The country of the user who bid for this project.
 
 | - *user*: The username of the person who bid on this project
+
+General helper functions
+^^^^^^^^^^^^^^^^^^^^^^^^^
+exit
+-----
+.. code-block:: python
+
+   exit()
+
+This function handles closing the program.
+
+closeBrowser
+-------------
+.. code-block:: python
+
+   closeBrowser()
+
+This function closes the browser being used by the program, regardless of whether it is being run in headless mode.
+The function then calls *exit* to close the program.
+
+keyPressEvent
+--------------
+.. code-block:: python
+
+   keyPressEvent(event)
+
+This function overrides a function in the PyQt library and handles the user pressing keys during program execution.
+This function only handles the use of the Enter key, which calls *setUpProgram*.
