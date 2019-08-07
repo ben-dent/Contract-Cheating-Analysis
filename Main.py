@@ -38,7 +38,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
-        self.btnSaveCSV.clicked.connect(self.exportAsCSV)
+        self.btnSaveCSV.clicked.connect(saveDataToCSV)
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
         self.time = ''
@@ -111,23 +111,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # # url = "https://www.freelancer.co.uk/u/LOSPOS77"
         # url = "https://www.freelancer.co.uk/u/Djdesign"
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
-        # self.getInformationFromBidderProfile(url)
-
-    def exportAsCSV(self):
-        con = lite.connect(DATABASE_NAME)
-        cur = con.cursor()
-
-        cur.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
-        con.commit()
-
-        tableNames = [each[0] for each in cur.fetchall()]
-
-        for table in tableNames:
-            query = 'SELECT * FROM ' + table
-            cur.execute(query)
-            data = []
-            for item in cur.fetchall():
-                data.append(item[0])
+        # self.getInformationFromBidderProfile(url
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
