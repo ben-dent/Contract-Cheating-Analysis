@@ -12,6 +12,7 @@ Code is provided as-is under an MIT License
 import math
 import sys
 import time
+import argparse
 
 from PyQt5 import uic, QtWidgets
 from selenium import webdriver
@@ -1086,6 +1087,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
 
 # Runs the application and launches the window
+parser = argparse.ArgumentParser()
+parser.add_argument('type', metavar='N', type=int, nargs='+', help='An integer to choose whether to show GUI')
+
+args = parser.parse_args()
+print(args.type[0])
+
 app = QtWidgets.QApplication(sys.argv)
 main = Main()
 main.show()

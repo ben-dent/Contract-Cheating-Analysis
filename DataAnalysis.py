@@ -224,11 +224,51 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
-# Saving values from the database to a CSV file
-def saveDataToCSV(table, data):
-    file = table + '.csv'
+# Saving values from the database to CSV files
+def saveDataToCSV():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
 
-    with open(file, 'a', newline='') as fp:
-        a = csv.writer(fp, delimeter=',')
-        data = [data]
-        a.writerows(data)
+    cur.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
+    con.commit()
+
+    tables = [each[0] for each in cur.fetchall()]
+
+    bidNames = ["Bid ID", "Job ID", "Country", "User"]
+    jobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
+                "Currency",
+                "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week"]
+    profileNames = ["Profile ID", "Username", "Number Of Reviews", "Average Review", "Hourly Rate",
+                    "Earnings Percentage",
+                    "Country"]
+    qualificationNames = ["Qualification ID", "Qualification Type", "User", "Qualification Name", "Extra Information"]
+    reviewNames = ["Review ID", "Project URL", "Profile", "Score", "Amount Paid", "Currency", "Converted Currency",
+                   "Date Scraped", "Date", "Country", "Notes"]
+    winnerNames = ["Job ID", "Job URL", "Username", "Profile URL"]
+
+    names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "Profiles": profileNames,
+             "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
+
+    for table in tables:
+        query = "SELECT * FROM " + table
+        cur.execute(query)
+        data = []
+
+        for item in cur.fetchall():
+            data.append(list(item))
+
+        con.commit()
+
+        file = table + ".csv"
+
+        columnNames = names.get(table)
+
+        data.insert(0, columnNames)
+        data.insert(1, [])
+
+        for line in data:
+            with open(file, 'a', newline='') as fp:
+                a = csv.writer(fp, delimiter=',')
+                line = [line]
+                a.writerows(line)
+
