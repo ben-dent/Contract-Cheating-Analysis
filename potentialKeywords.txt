@@ -1,10 +1,72 @@
+Tags:
+Almost certainly:
+Essay Writing
+* Engineering
+Education & Tutoring
+* Education *
+
+Possibly:
+Report Writing
+Research
+Research Writing
+Technical Writing
+Article Rewriting
+
+Keywords:
 Almost certainly:
 academic
 essay
+essays
 study
 research
+research proposal
+proposal
+copyscape
+turnitin
+reference
+references
+referenced
+referencing
+cite
+citing
+reword
+rewording
+reworded
+school
+college
+uni
+university
+plagiarism
+plagiarised
+paraphrase
+paraphrasing
+engineering
+case study
+paper
+review paper
 
 Possibly:
 rewrite
 article
-
+theory
+deadline
+due date
+words
+word
+literature review
+assessment
+similarity
+technical
+proposal
+summary
+hour
+hours
+day
+days
+week
+weeks
+today
+review
+journal
+journals
+project
