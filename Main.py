@@ -20,6 +20,7 @@ from selenium.webdriver.firefox.options import Options
 
 from Crawler import *
 from DataAnalysis import *
+from Notification import sendMessages
 
 mainUI = uic.loadUiType("UIs/main.ui")[0]
 
@@ -61,6 +62,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.countriesOfBidders = {}
 
         self.numOn = 1
+        self.messages = sendMessages()
 
     # Ensures no duplicate entries in tables
     def getSeen(self):
@@ -105,6 +107,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # plotBarChartsOfBidderCountries(self.winnerCountries)
         # plotBarChartsOfBidderCountries(self.countriesOfBidders)
         print("\nDone\n")
+        self.messages.sendMessage()
         # a = 1
 
         # self.loginToFreelancer()
