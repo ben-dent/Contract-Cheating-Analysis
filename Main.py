@@ -123,6 +123,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.loginToFreelancer()
         # self.winnerProfiles = list(self.profilesSavedAlready.keys())
         for i in range(len(self.winnerProfiles)):
+            print("Profile " + str(i + 1) + " / " + str(len(self.winnerProfiles)))
             profileLink = self.winnerProfiles[i]
             self.numOn = i + 1
             self.getInformationFromBidderProfile(profileLink)
