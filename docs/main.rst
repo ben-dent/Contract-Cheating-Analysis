@@ -148,8 +148,8 @@ lookAtWinnerProfiles
 
    lookAtWinnerProfiles()
 
-This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the profile URL, to retrieve all the relevant data from that profile.
-It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution.
+This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the each profile URL, to retrieve all the relevant data from that profile.
+It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution. It can handle cases where fetching of data was interrupted, starting from the review it was up to.
 
 getInformationFromBidderProfile
 --------------------------------
