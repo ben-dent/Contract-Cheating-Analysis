@@ -82,7 +82,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         if (len(users) > 0):
             for user in users:
-                self.profilesSavedAlready[LINK_PREFIX + "/u/" + user[0]] = True
+                profileLink = LINK_PREFIX + "/u/" + user[0]
+                self.profilesSavedAlready[profileLink] = True
+                self.winnerProfiles.append(profileLink)
 
     def setUpProgram(self):
         self.databaseSetup()
@@ -116,7 +118,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
     def lookAtWinnerProfiles(self):
         print('\nLogging in...\n')
         self.loginToFreelancer()
-        self.winnerProfiles = list(self.profilesSavedAlready.keys())
+        # self.winnerProfiles = list(self.profilesSavedAlready.keys())
         for i in range(len(self.winnerProfiles)):
             profileLink = self.winnerProfiles[i]
             self.numOn = i + 1
@@ -778,6 +780,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # print("\n#########\n")
 
+        b = 1
         # Get all the details on the reviews
         self.getReviewDetails()
 
@@ -907,7 +910,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             reviews = reviewList.find_elements(By.CLASS_NAME, "user-review")
 
             if first:
-                i = (self.startFrom % 100) - 1
+                i = (self.startFrom % 100)
             else:
                 i = 0
 
