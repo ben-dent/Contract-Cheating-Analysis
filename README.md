@@ -7,7 +7,7 @@ A tool for analysis of contract cheating sites. Designed by Ben Dent as part of 
 
 https://github.com/mozilla/geckodriver/releases
 
-Install this in usr/lib or usr/local/bin
+Install this in /usr/bin or /usr/local/bin
 
 All other requirements can be installed from the cloned directory with
 
@@ -68,15 +68,11 @@ The relevant instruction to use will depend on your PyPi distribution.
 
 Now make sure you install the gecko driver.
 
-Users on Windows are directed to the instructions at this link if they wish to continue on Windows:
-
-https://selenium-python.readthedocs.io/installation.html#detailed-instructions-for-windows-users
-
-Users on all other Operating Systems can install the drivers here:
+The driver can be installed from here:
 
 https://github.com/mozilla/geckodriver/releases
 
-This needs to be installed in usr/lib or usr/local/bin
+This needs to be installed in /usr/bin or /usr/local/bin
 
 # Updates
 

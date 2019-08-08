@@ -6,7 +6,7 @@ Make sure you have Python installed. It can be found here:
 https://www.python.org
 
 You will also need PyPi, which is usually installed by default with Python on version 3.4 onwards.
-If you need to install it:
+If you do need to install it:
 
 **Debian/Ubuntu:**
 ::
@@ -57,15 +57,11 @@ The relevant instruction to use will depend on your PyPi distribution.
 
 Now make sure you install the gecko driver.
 
-Users on Windows are directed to the instructions at this link if they wish to continue on Windows:
-
-https://selenium-python.readthedocs.io/installation.html#detailed-instructions-for-windows-users
-
-Users on all other Operating Systems can install the drivers here:
+The driver can be installed from here here:
 
 https://github.com/mozilla/geckodriver/releases
 
-This needs to be installed in usr/lib or usr/local/bin
+This needs to be installed in /usr/bin or /usr/local/bin
 
 Program Execution
 ------------------
