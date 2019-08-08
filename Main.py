@@ -51,6 +51,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.projectsSeen = {}
 
         self.finalPrices = []
+        self.fetchMode = "First"
 
         self.winnerProfiles = []
         self.winnerCountries = {}
@@ -119,12 +120,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
+        self.fetchMode = "Second"
         print('\nLogging in...\n')
         self.loginToFreelancer()
         # self.winnerProfiles = list(self.profilesSavedAlready.keys())
         for i in range(len(self.winnerProfiles)):
             print("Profile " + str(i + 1) + " / " + str(len(self.winnerProfiles)))
             profileLink = self.winnerProfiles[i]
+            print(profileLink)
             self.numOn = i + 1
             self.getInformationFromBidderProfile(profileLink)
             self.profilesSavedAlready.update({profileLink: True})
@@ -274,7 +277,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'BidID' INTEGER PRIMARY KEY,
         'JobID' INTEGER NOT NULL,
         'Country' TEXT NOT NULL,
-        'User' TEXT NOT NULL
+        'User' TEXT NOT NULL,
+        'Price' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL
         );''')
 
         con.commit()
@@ -337,15 +342,17 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con.commit()
 
     # Will save bid details to the database
-    def saveBidDetails(self, jobID, country, user):
+    def saveBidDetails(self, jobID, country, user, price):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
 
+        split = price.text.rstrip().split()
+
         cur.execute('''
-        INSERT INTO Bids(JobID, Country, User)
-        VALUES(?,?,?)''',
-                    (jobID, country, user))
+        INSERT INTO Bids(JobID, Country, User, Price, Currency)
+        VALUES(?,?,?,?,?)''',
+                    (jobID, country, user, split[0], split[1]))
 
         con.commit()
 
@@ -377,7 +384,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
             tagString += self.tags[-1]
         else:
             tagString = "None given"
-
 
         if (self.convertedCurrency == -1):
             self.convertedCurrency = "None"
@@ -481,106 +487,107 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
     # Fetching all the data that we need without logging in
     def fetchDataNonLogin(self, url):
-        r = requests.get(url)
-        self.soup = BeautifulSoup(r.content, "html.parser")
+        if (len(url.split('/')) == 7):
+            r = requests.get(url)
+            self.soup = BeautifulSoup(r.content, "html.parser")
 
-        try:
-            self.projectID = self.soup.find_all(
-                "p", {"class": "PageProjectViewLogout-detail-tags"}
-            )[-1].text.split("#")[-1]
-        except IndexError:
-            self.projectID = -1
+            try:
+                self.projectID = self.soup.find_all(
+                    "p", {"class": "PageProjectViewLogout-detail-tags"}
+                )[-1].text.split("#")[-1]
+            except IndexError:
+                self.projectID = -1
 
-        if (self.seenIDs.get(self.projectID) == None):
+            if (self.seenIDs.get(self.projectID) == None):
 
-            self.seenIDs[self.projectID] = True
-            print("\n" + url)
+                self.seenIDs[self.projectID] = True
+                print("\n" + url)
 
-            self.projectTitle = self.soup.find(
-                "h1", {"class": "PageProjectViewLogout-header-title"}).text
+                self.projectTitle = self.soup.find(
+                    "h1", {"class": "PageProjectViewLogout-header-title"}).text
 
-            # Checking if the given page is an archived page
-            self.finishedType = self.soup.find(
-                "span", {"class": "promotion-tag"}).text
+                # Checking if the given page is an archived page
+                self.finishedType = self.soup.find(
+                    "span", {"class": "promotion-tag"}).text
 
-            # Removing irrelevant characters
-            self.finishedType = ''.join(
-                c for c in self.finishedType if c.isalnum())
+                # Removing irrelevant characters
+                self.finishedType = ''.join(
+                    c for c in self.finishedType if c.isalnum())
 
-            self.archived = False
+                self.archived = False
 
-            print(self.finishedType)
+                print(self.finishedType)
 
-            # If the project is archived then the response will definitely be
-            # one of these
-            if (self.finishedType == "Cancelled" or self.finishedType ==
-                    "Closed" or self.finishedType == "Completed"):
-                self.archived = True
+                # If the project is archived then the response will definitely be
+                # one of these
+                if (self.finishedType == "Cancelled" or self.finishedType ==
+                        "Closed" or self.finishedType == "Completed"):
+                    self.archived = True
 
-            # Finding the average that freelancers are bidding - the first h2
-            # HTML tag
-            self.biddersInfo = self.soup.find_all("h2")
-            self.biddersAndPriceFind = self.biddersInfo[0]
+                # Finding the average that freelancers are bidding - the first h2
+                # HTML tag
+                self.biddersInfo = self.soup.find_all("h2")
+                self.biddersAndPriceFind = self.biddersInfo[0]
 
-            if (self.finishedType == "InProgress"):
-                if (self.soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"}) != None):
+                if (self.finishedType == "InProgress"):
+                    if (self.soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"}) != None):
+                        self.biddersAndPriceFind = self.biddersInfo[1]
+
+                self.awarded = False
+
+                # Retrieving the final price for the task if we are looking at
+                # a completed project in the archives
+                self.finalPrice = self.soup.find(
+                    "div", {"class": "FreelancerInfo-price"}).text
+
+                # Checks if the project was awarded to anyone
+                if (self.archived and self.finishedType == "Completed"):
+                    self.awarded = True
+
+                    # Makes sure the bidding info is correct as archived pages use
+                    # a slightly different format
                     self.biddersAndPriceFind = self.biddersInfo[1]
 
-            self.awarded = False
+                    # self.winner = LINK_PREFIX + self.soup.find(
+                    #     "a", {"class": "FreelancerInfo-username"}).get("href")
+                    self.winnerCountry = self.soup.find(
+                        "span", {"class": "usercard-flag"}).get("title")
 
-            # Retrieving the final price for the task if we are looking at
-            # a completed project in the archives
-            self.finalPrice = self.soup.find(
-                "div", {"class": "FreelancerInfo-price"}).text
+                    self.finalPrices.append(self.finalPrice)
 
-            # Checks if the project was awarded to anyone
-            if (self.archived and self.finishedType == "Completed"):
-                self.awarded = True
+                    split = self.finalPrice.split()
+                    self.priceAmount = split[0]
+                    self.currency = split[1]
+                    try:
+                        self.time = split[3] + " " + split[4]
+                    except IndexError:
+                        a = 1
 
-                # Makes sure the bidding info is correct as archived pages use
-                # a slightly different format
-                self.biddersAndPriceFind = self.biddersInfo[1]
+                self.projectDescription = ""
+                descriptionTags = self.soup.find_all("p", {"class": "PageProjectViewLogout-detail-paragraph"})
 
-                # self.winner = LINK_PREFIX + self.soup.find(
-                #     "a", {"class": "FreelancerInfo-username"}).get("href")
-                self.winnerCountry = self.soup.find(
-                    "span", {"class": "usercard-flag"}).get("title")
+                for item in descriptionTags:
+                    self.projectDescription += item.text
 
-                self.finalPrices.append(self.finalPrice)
+                # Retrieving the tags that the customer gave to their task
+                self.givenTags = self.soup.find_all(
+                    "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
 
-                split = self.finalPrice.split()
-                self.priceAmount = split[0]
-                self.currency = split[1]
-                try:
-                    self.time = split[3] + " " + split[4]
-                except IndexError:
-                    a = 1
+                # Get the country of the customer
+                self.getCustomerCountry()
 
-            self.projectDescription = ""
-            descriptionTags = self.soup.find_all("p", {"class": "PageProjectViewLogout-detail-paragraph"})
+                # Gets the information about the bidders
+                self.getBiddersInfo(url)
 
-            for item in descriptionTags:
-                self.projectDescription += item.text
+                avPriceCheck = self.averagePrice.split("/hour")[0]
 
-            # Retrieving the tags that the customer gave to their task
-            self.givenTags = self.soup.find_all(
-                "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
+                if (avPriceCheck == self.averagePrice):
+                    self.saveJobDetails(url)
+                else:
+                    self.averagePrice = avPriceCheck
+                    self.saveJobHourlyDetails(url)
 
-            # Get the country of the customer
-            self.getCustomerCountry()
-
-            # Gets the information about the bidders
-            self.getBiddersInfo(url)
-
-            avPriceCheck = self.averagePrice.split("/hour")[0]
-
-            if (avPriceCheck == self.averagePrice):
-                self.saveJobDetails(url)
-            else:
-                self.averagePrice = avPriceCheck
-                self.saveJobHourlyDetails(url)
-
-            a = 1
+                a = 1
 
     # Retrieving the country of the customer
     def getCustomerCountry(self):
@@ -620,18 +627,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
             division = self.biddersAndPriceFind.text.split(" ")
 
             self.numFreelancers = division[0]
-            self.averagePrice = division[6]
-            print(
-                self.numFreelancers +
-                " freelancers who are bidding an average of " +
-                self.averagePrice)
+            self.averagePrice = ""
+            # self.averagePrice = division[6]
+            # print(
+            #     self.numFreelancers +
+            #     " freelancers who are bidding an average of " +
+            #     self.averagePrice)
 
             currencySplit = self.finalPrice.split()
 
             if (self.awarded):
                 print("The final price was: " + self.finalPrice + "\n")
                 winnerProfile = LINK_PREFIX + bidderLinks[0].get("href")
-                self.winnerProfiles.append(winnerProfile)
+                if (self.fetchMode == "First"):
+                    self.winnerProfiles.append(winnerProfile)
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
                 self.convertedPrice = "$" + convertCurrencyWithYear(currency, amount, self.week, self.year)
@@ -655,6 +664,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # Retrieves all listed countries of the bidders
         self.bidderCountries = self.soup.find_all(
             "span", {"class": "FreelancerInfo-flag"})
+
+        prices = self.soup.find_all("div", {"class": "FreelancerInfo-price"})
 
         # Saving the locations of bidders and the number from that country into
         # the dictionary
@@ -688,7 +699,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
             # Updating the dictionary with the country data
             self.countriesOfBidders.update({country: num})
-            self.saveBidDetails(self.projectID, country, self.users[i])
+            self.saveBidDetails(self.projectID, country, self.users[i], prices[i])
 
         # Temporary outputting of the dictionary
         print("Countries of bidders: ")
@@ -924,7 +935,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 else:
                     reviews = reviews[:(self.numReviews % 100)]
 
-
             # Go through all the reviews on the current page
             while i < (len(reviews)):
                 countReview = True
@@ -975,17 +985,18 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     timeSplit = self.timePosted.split()
                     timeFrame = timeSplit[1]
                     timeAmount = int(timeSplit[0])
+                    self.convertedCurrency = ""
 
-                    if ((timeFrame == 'month') or (timeFrame == 'months')):
-                        self.convertedCurrency = calculateMonthlyAverage(self.currency, valuePaid, timeAmount)
-                    elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
-                        self.convertedCurrency = calculateWeeklyAverage(self.currency, valuePaid, timeAmount)
-                    elif ((timeFrame == 'year') or (timeFrame == 'years')):
-                        self.convertedCurrency = calculateYearlyAverage(self.currency, valuePaid,
-                                                                        date.today().year - timeAmount)
-                    elif ((timeFrame == 'day') or (timeFrame == 'days')):
-                        dateToConvert = date.today() - relativedelta(days=timeAmount)
-                        self.convertedCurrency = convertCurrency(self.currency, valuePaid, dateToConvert)
+                    # if ((timeFrame == 'month') or (timeFrame == 'months')):
+                    #     self.convertedCurrency = calculateMonthlyAverage(self.currency, valuePaid, timeAmount)
+                    # elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+                    #     self.convertedCurrency = calculateWeeklyAverage(self.currency, valuePaid, timeAmount)
+                    # elif ((timeFrame == 'year') or (timeFrame == 'years')):
+                    #     self.convertedCurrency = calculateYearlyAverage(self.currency, valuePaid,
+                    #                                                     date.today().year - timeAmount)
+                    # elif ((timeFrame == 'day') or (timeFrame == 'days')):
+                    #     dateToConvert = date.today() - relativedelta(days=timeAmount)
+                    #     self.convertedCurrency = convertCurrency(self.currency, valuePaid, dateToConvert)
 
                 # Gets the review text
                 reviewText = review.find_element_by_tag_name(
@@ -1000,7 +1011,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.reviewTitle = titleFind.text
 
                 if (links.get(self.projectLink) is None):
-                    if (self.reviewTitle.split("Project for")[0] == self.reviewTitle):
+                    if (self.reviewTitle.split("Project for")[0] == self.reviewTitle and
+                            self.reviewTitle.split("deleted")[0] == self.reviewTitle):
                         links[self.projectLink] = True
                 else:
                     duplicate = True
@@ -1065,7 +1077,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 #     if self.projectsSeen.get(project) is None:
                 #         self.projectsSeen[project] = True
 
-
         # print(str(duplicates) + " duplicates")
 
     # Handles logging into the site
@@ -1120,6 +1131,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         if (event.key() == ENTER_KEY):
             # Calls the fetch function
             self.setUpProgram()
+
 
 app = QtWidgets.QApplication(sys.argv)
 main = Main()
