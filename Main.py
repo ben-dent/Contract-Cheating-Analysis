@@ -42,6 +42,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.dateToday = datetime.today().strftime('%d/%m/%y')
         self.time = ''
         self.startFrom = 0
+        self.convertedPrice = ""
 
         self.profilesSavedAlready = {}
         self.projectsSavedAlready = {}
@@ -125,7 +126,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.loginToFreelancer()
         # self.winnerProfiles = list(self.profilesSavedAlready.keys())
         for i in range(len(self.winnerProfiles)):
-            print("Profile " + str(i + 1) + " / " + str(len(self.winnerProfiles)))
+            print("\nProfile " + str(i + 1) + " / " + str(len(self.winnerProfiles)) + ":")
             profileLink = self.winnerProfiles[i]
             print(profileLink)
             self.numOn = i + 1
@@ -207,6 +208,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'URL' TEXT NOT NULL,
         'Title' TEXT NOT NULL,
         'Description' TEXT NOT NULL,
+        'Tags' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -233,6 +235,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'URL' TEXT NOT NULL,
         'Title' TEXT NOT NULL,
         'Description' TEXT NOT NULL,
+        'Tags' TEXT NOT NULL,
         'NumberOfBidders' INTEGER NOT NULL,
         'AverageBidCost' TEXT NOT NULL,
         'FinalCost' TEXT NOT NULL,
@@ -419,10 +422,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO Jobs(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
+            INSERT INTO Jobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave, self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
 
@@ -449,10 +452,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         try:
             cur.execute('''
-            INSERT INTO JobsHourly(JobID, URL, Title, Description, NumberOfBidders, AverageBidCost, FinalCost,
+            INSERT INTO JobsHourly(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.projectDescription, self.numFreelancers,
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave, self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
 
@@ -537,12 +540,16 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 # Retrieving the final price for the task if we are looking at
                 # a completed project in the archives
-                self.finalPrice = self.soup.find(
-                    "div", {"class": "FreelancerInfo-price"}).text
+                self.finalPrice = ""
 
                 # Checks if the project was awarded to anyone
                 if (self.archived and self.finishedType == "Completed"):
                     self.awarded = True
+
+                    # Retrieving the final price for the task if we are looking at
+                    # a completed project in the archives
+                    self.finalPrice = self.soup.find(
+                        "div", {"class": "FreelancerInfo-price"}).text
 
                     # Makes sure the bidding info is correct as archived pages use
                     # a slightly different format
@@ -572,6 +579,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 # Retrieving the tags that the customer gave to their task
                 self.givenTags = self.soup.find_all(
                     "a", {"class": "PageProjectViewLogout-detail-tags-link--highlight"})
+
+                self.tagsToSave = ""
+                for i in range(len(self.givenTags) - 1):
+                    self.tagsToSave += self.givenTags[i].text + ", "
+
+                self.tagsToSave += self.givenTags[-1].text
 
                 # Get the country of the customer
                 self.getCustomerCountry()
@@ -643,11 +656,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     self.winnerProfiles.append(winnerProfile)
                 currency = currencySplit[1]
                 amount = ''.join(c for c in currencySplit[0] if c.isalnum())
-                self.convertedPrice = "$" + convertCurrencyWithYear(currency, amount, self.week, self.year)
+                # self.convertedPrice = "$" + convertCurrencyWithYear(currency, amount, self.week, self.year)
                 self.saveWinnerDetails(self.projectID, url, self.users[0])
 
             else:
-                self.currency = currencySplit[1]
+                self.currency = self.soup.find("p", {"class": "PageProjectViewLogout-header-byLine"}).text.split()[-1]
                 print("No one was awarded this project\n")
 
             self.getBiddersCountries()
@@ -902,6 +915,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         first = True
 
         while page < pageNeeded:
+
             pageButtons = self.driver.find_element_by_class_name(
                 "user-reviews-pagination")
             page += 1
@@ -953,15 +967,25 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 amountElement = review.find_element(
                     By.CLASS_NAME, "user-review-price")
 
+                testValue = amountElement.find_elements_by_css_selector("span[ng-show='review.get().paid_amount !== 0']")
+
                 value = amountElement.find_element_by_class_name(
                     "ng-binding").text
                 self.amountPaid = value + " " + amountElement.text
+                splitThing = self.amountPaid.split()
 
-                if (len(self.amountPaid.split()) == 3):
+                if (len(self.amountPaid.split()) != 2):
                     self.amountPaid = amountElement.text
-
-                self.currency = self.amountPaid.split()[1]
-                self.amountPaid = self.amountPaid.split()[0]
+                try:
+                    self.currency = self.amountPaid.split()[1]
+                    self.amountPaid = self.amountPaid.split()[0]
+                except IndexError:
+                    # sib = amountElement.get_attribute("nextSibling")
+                    # self.currency = sib.get_attribute("data").rstrip()
+                    amount = amountElement.get_attribute("innerText")
+                    split = amount.split()
+                    self.currency = split[-1]
+                    self.amountPaid = "SEALED"
 
                 self.reviewCountry = review.find_element_by_class_name("user-review-flag").get_attribute("title")
                 self.timePosted = ' '.join(review.find_element_by_class_name("user-review-details").text.split(".")[
@@ -981,11 +1005,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     countReview = False
                     sealed = True
                 else:
-                    valuePaid = float(''.join(c for c in self.amountPaid if c.isnumeric() or c == '.'))
                     timeSplit = self.timePosted.split()
                     timeFrame = timeSplit[1]
                     timeAmount = int(timeSplit[0])
                     self.convertedCurrency = ""
+                    if (self.amountPaid != "SEALED"):
+                        valuePaid = float(''.join(c for c in self.amountPaid if c.isnumeric() or c == '.'))
 
                     # if ((timeFrame == 'month') or (timeFrame == 'months')):
                     #     self.convertedCurrency = calculateMonthlyAverage(self.currency, valuePaid, timeAmount)
