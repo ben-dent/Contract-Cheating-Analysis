@@ -5,7 +5,8 @@ Made by Ben Dent as part of an  Undergraduate Research Opportunities Placement (
 Code is provided as-is under an MIT License
 
 """
-# TODO: FIX REVIEWS
+# TODO: Currency conversions
+# TODO: Data visualisations in program
 # TODO: Find some way of filtering relevant projects from reviews
 
 import math
