@@ -234,25 +234,34 @@ def doAverages():
     for job in jobs:
         jobID = job[0]
         bidAverage = calcAverage(cur, jobID)
-        update = "UPDATE Jobs SET AverageBidCost = " + bidAverage + " WHERE JobID = '" + jobID + "'"
-        cur.execute(update)
+        if (bidAverage == -1):
+            bidAverage = "None"
+
+        bidAverage = str(str(bidAverage[1]) + str(bidAverage[0]))
+        update = "UPDATE Jobs SET AverageBidCost = ? WHERE JobID = ?"
+        cur.execute(update, [bidAverage, jobID])
         con.commit()
 
 def calcAverage(cur, jobID):
     average = 0.0
     n = 0
 
-    select = "SELECT Price FROM Bids WHERE JobID = '" + jobID + "'"
-    cur.execute(select)
+    select = "SELECT Price FROM Bids WHERE JobID = ?"
+    cur.execute(select, [jobID])
 
     prices = cur.fetchall()
     for price in prices:
         givenAmount = price[0]
-        price = float(c for c in givenAmount if c.isnumeric() or c == '.')
+        price = float(''.join(c for c in givenAmount if c.isnumeric() or c == '.'))
         n += 1
         average += price
+    try:
+        result = average / n
+    except ZeroDivisionError:
+        return [-1, -1]
 
-    return (average / n)
+    symbol = givenAmount[0]
+    return [float('%.2f' % result), symbol]
 
 
 # Saving values from the database to CSV files
@@ -302,7 +311,3 @@ def saveDataToCSV():
                 a = csv.writer(fp, delimiter=',')
                 line = [line]
                 a.writerows(line)
-
-
-
-doAverages()
