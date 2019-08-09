@@ -222,6 +222,39 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
+def doAverages():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    cur.execute('SELECT JobID FROM Jobs')
+
+    jobs = cur.fetchall()
+    con.commit()
+
+    for job in jobs:
+        jobID = job[0]
+        bidAverage = calcAverage(cur, jobID)
+        update = "UPDATE Jobs SET AverageBidCost = " + bidAverage + " WHERE JobID = '" + jobID + "'"
+        cur.execute(update)
+        con.commit()
+
+def calcAverage(cur, jobID):
+    average = 0.0
+    n = 0
+
+    select = "SELECT Price FROM Bids WHERE JobID = '" + jobID + "'"
+    cur.execute(select)
+
+    prices = cur.fetchall()
+    for price in prices:
+        givenAmount = price[0]
+        price = float(c for c in givenAmount if c.isnumeric() or c == '.')
+        n += 1
+        average += price
+
+    return (average / n)
+
+
 # Saving values from the database to CSV files
 def saveDataToCSV():
     con = lite.connect(DATABASE_NAME)
@@ -270,3 +303,6 @@ def saveDataToCSV():
                 line = [line]
                 a.writerows(line)
 
+
+
+doAverages()
