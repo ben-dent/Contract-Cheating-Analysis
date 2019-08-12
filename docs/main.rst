@@ -13,8 +13,8 @@ Setup
 
 These functions are concerned with setting up the program and are called at the beginning of execution, if they are needed.
 
-getSeen
---------
+*getSeen*
+----------
 .. code-block:: python
 
    getSeen()
@@ -22,8 +22,8 @@ getSeen
 This function retrieves the jobs and profiles already seen from the database and updates a dictionary to hold their IDs.
 This prevents data duplication and wasted time retrieving data already seen.
 
-setUpProgram
--------------
+*setUpProgram*
+---------------
 .. code-block:: python
 
    setUpProgram()
@@ -36,23 +36,23 @@ After running *fetchDataNonLogin*, the program will have retrieved the winner de
 Creating database tables
 *************************
 
-databaseSetup
-______________
+*databaseSetup*
+________________
 .. code-block:: python
 
    databaseSetup()
 
 This function creates all the tables in the database (if they do not yet exist) by calling the relevant function.
 
-createWinnersTable
-____________________
+*createWinnersTable*
+______________________
 .. code-block:: python
 
    createWinnersTable()
 
 Creates the Winners table in the database, which will initially be empty.
 
-createQualificationsTable
+*createQualificationsTable*
 _____________________________
 .. code-block:: python
 
@@ -60,7 +60,7 @@ _____________________________
 
 Creates the Qualifications table in the database, which will initially be empty.
 
-createReviewsTable
+*createReviewsTable*
 ______________________
 .. code-block:: python
 
@@ -68,7 +68,7 @@ ______________________
 
 Creates the Reviews table in the database, which will initially be empty.
 
-createJobsTable
+*createJobsTable*
 __________________
 .. code-block:: python
 
@@ -76,7 +76,7 @@ __________________
 
 Creates the Jobs table in the database, which will initially be empty.
 
-createJobsHourlyTable
+*createJobsHourlyTable*
 __________________________
 .. code-block:: python
 
@@ -84,7 +84,7 @@ __________________________
 
 Creates the JobsHourly table in the database, which will initially be empty.
 
-createProfilesTable
+*createProfilesTable*
 ______________________
 .. code-block:: python
 
@@ -92,7 +92,7 @@ ______________________
 
 Creates the Profiles table in the database, which will initially be empty.
 
-createBidsTable
+*createBidsTable*
 __________________
 .. code-block:: python
 
@@ -102,8 +102,8 @@ Creates the Bids table in the database, which will initially be empty.
 
 Program Execution - Logged out
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-fetchDataNonLogin
-------------------
+*fetchDataNonLogin*
+--------------------
 .. code-block:: python
 
    fetchDataNonLogin(url)
@@ -113,16 +113,16 @@ It takes 1 argument:
 
 | - *url*: This is the url of the project that is being looked at.
 
-getCustomerCountry
--------------------
+*getCustomerCountry*
+---------------------
 .. code-block:: python
 
    getCustomerCountry()
 
 This function returns the country of the customer who posted the project currently being looked at.
 
-getBiddersInfo
----------------
+*getBiddersInfo*
+-----------------
 .. code-block:: python
 
    getBiddersInfo(url)
@@ -132,8 +132,8 @@ It takes 1 argument:
 
 | - *url*: This is the url of the project that is being looked at.
 
-getBiddersCountries
---------------------
+*getBiddersCountries*
+----------------------
 .. code-block:: python
 
    getBiddersCountries()
@@ -142,7 +142,7 @@ This function retrieves the countries of the bidders of the project being curren
 
 Program Execution - Logged in
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-lookAtWinnerProfiles
+*lookAtWinnerProfiles*
 ------------------------
 .. code-block:: python
 
@@ -151,8 +151,8 @@ lookAtWinnerProfiles
 This function logs into Freelancer by calling the *loginToFreelancer* function and then calls the *getInformationFromBidderProfile* function, passing in the each profile URL, to retrieve all the relevant data from that profile.
 It then adds the given profile to the profiles already seen, to prevent duplication within a single program execution. It can handle cases where fetching of data was interrupted, starting from the review it was up to.
 
-getInformationFromBidderProfile
---------------------------------
+*getInformationFromBidderProfile*
+----------------------------------
 .. code-block:: python
 
    getInformationFromBidderProfile(url)
@@ -162,16 +162,16 @@ It takes 1 argument:
 
 | - *url*: This is the url of the profile that is being looked at.
 
-getCertifications
-------------------
+*getCertifications*
+---------------------
 .. code-block:: python
 
    getCertifications()
 
 This function retrieves all certifications from the 'Certifications' tab of the profile being looked at.
 
-getReviewDetails
------------------
+*getReviewDetails*
+-------------------
 .. code-block:: python
 
    getReviewDetails()
@@ -181,7 +181,7 @@ This function retrieves details about the reviews on the profile being currently
 Saving to database
 ^^^^^^^^^^^^^^^^^^^
 
-saveWinnerDetails
+*saveWinnerDetails*
 ------------------------
 .. code-block:: python
 
@@ -196,24 +196,24 @@ It takes 3 arguments:
 
 | - *user* This is the username of the bidder that was awarded this work.
 
-saveQualificationDetails
---------------------------
+*saveQualificationDetails*
+---------------------------
 .. code-block:: python
 
    saveQualificationDetails()
 
 This function handles saving the details of qualifications of this user to the Qualifications table of the database.
 
-saveReviewDetails
-------------------
+*saveReviewDetails*
+--------------------
 .. code-block:: python
 
    saveReviewDetails()
 
 This function handles saving the details of a review of this user to the Reviews table of the database.
 
-saveJobDetails
----------------
+*saveJobDetails*
+-----------------
 .. code-block:: python
 
    saveJobDetails(url)
@@ -223,8 +223,8 @@ It takes 1 argument:
 
 | - *url*: This is the URL for the project.
 
-saveJobHourlyDetails
----------------------
+*saveJobHourlyDetails*
+-----------------------
 .. code-block:: python
 
    saveJobHourlyDetails(url)
@@ -234,16 +234,16 @@ It takes 1 argument:
 
 | - *url*: This is the URL for the project.
 
-saveProfileDetails
--------------------
+*saveProfileDetails*
+---------------------
 .. code-block:: python
 
    saveProfileDetails()
 
 This function handles saving the details of a user's profile to the Profiles table of the database.
 
-saveBidDetails
----------------
+*saveBidDetails*
+-----------------
 .. code-block:: python
 
    saveBidDetails(jobID, country, user)
@@ -259,16 +259,16 @@ It takes 3 arguments:
 
 General helper functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-exit
------
+*exit*
+-------
 .. code-block:: python
 
    exit()
 
 This function handles closing the program.
 
-closeBrowser
--------------
+*closeBrowser*
+----------------
 .. code-block:: python
 
    closeBrowser()
@@ -276,8 +276,8 @@ closeBrowser
 This function closes the browser being used by the program, regardless of whether it is being run in headless mode.
 The function then calls *exit* to close the program.
 
-keyPressEvent
---------------
+*keyPressEvent*
+-----------------
 .. code-block:: python
 
    keyPressEvent(event)
