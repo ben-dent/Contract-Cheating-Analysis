@@ -385,7 +385,7 @@ def conversions():
         results.append(list(result))
 
     for i in range(len(results)):
-        print("Review " + str(i) + "/" + str(len(results) + 1))
+        print("Review " + str(i + 1) + "/" + str(len(results) + 1))
         r = results[i]
         id = r[0]
         value = r[1]
@@ -408,7 +408,7 @@ def conversions():
             convertedCurrency = convertCurrency(currency, amount, dateToConvert)
 
         convertedCurrency = "$" + str(convertedCurrency)
-        query = 'UPDATE Reviews SET ConvertedCurrency = ' + str(convertedCurrency) + 'WHERE JobID = ' + str(id)
+        query = 'UPDATE Reviews SET ConvertedCurrency = ' + str(convertedCurrency) + ' WHERE JobID = ' + str(id)
         cur.execute(query)
         con.commit()
 
