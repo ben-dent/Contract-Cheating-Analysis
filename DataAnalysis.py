@@ -421,7 +421,7 @@ def jobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    cur.execute('''SELECT JobID, FinalCost, Currency, Year, Week FROM Reviews''')
+    cur.execute('''SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs''')
 
     res = cur.fetchall()
 
