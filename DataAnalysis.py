@@ -386,10 +386,10 @@ def conversions():
 
     for r in results:
         id = r[0]
-        value = r[5]
+        value = r[1]
         amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
-        currency = r[6]
-        date = r[9]
+        currency = r[2]
+        date = r[3]
         timeSplit = date.split()
         timeFrame = timeSplit[1]
         timeAmount = int(timeSplit[0])
