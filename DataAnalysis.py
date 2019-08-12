@@ -417,8 +417,42 @@ def conversions():
         con.commit()
 
 
+def jobConversions():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    cur.execute('''SELECT JobID, FinalCost, Currency, Year, Week FROM Reviews''')
+
+    res = cur.fetchall()
+
+    results = []
+    for result in res:
+        results.append(list(result))
+
+    for i in range(len(results)):
+        print("Job " + str(i + 1) + "/" + str(len(results) + 1))
+        r = results[i]
+        id = r[0]
+        value = r[1]
+        if (value != 'None'):
+            amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+        else:
+            amount = "None"
+        currency = r[2]
+        year = r[3]
+        week = r[4]
+        convertedCurrency = "None"
+        if amount != "None":
+            convertedCurrency = convertCurrencyWithYear(currency, amount, week, year)
+            convertedCurrency = "$" + str(convertedCurrency)
+
+        query = "UPDATE Jobs SET ConvertedFinalCost = '" + str(convertedCurrency) + "' WHERE JobID = " + str(
+            id)
+        cur.execute(query)
+        con.commit()
+
 def saveRelevantJobs():
     return
 
 
-conversions()
+jobConversions()
