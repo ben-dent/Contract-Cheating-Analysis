@@ -389,25 +389,29 @@ def conversions():
         r = results[i]
         id = r[0]
         value = r[1]
-        amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+        if (value != 'SEALED'):
+            amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+        else:
+            amount = "None"
         currency = r[2]
         dateOff = r[3]
         timeSplit = dateOff.split()
         timeFrame = timeSplit[1]
         timeAmount = int(timeSplit[0])
+        convertedCurrency = "None"
+        if amount != "None":
+            if ((timeFrame == 'month') or (timeFrame == 'months')):
+                convertedCurrency = calculateMonthlyAverage(currency, amount, timeAmount)
+            elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+                convertedCurrency = calculateWeeklyAverage(currency, amount, timeAmount)
+            elif ((timeFrame == 'year') or (timeFrame == 'years')):
+                convertedCurrency = calculateYearlyAverage(currency, amount,
+                                                           date.today().year - timeAmount)
+            elif ((timeFrame == 'day') or (timeFrame == 'days')):
+                dateToConvert = date.today() - relativedelta(days=timeAmount)
+                convertedCurrency = convertCurrency(currency, amount, dateToConvert)
 
-        if ((timeFrame == 'month') or (timeFrame == 'months')):
-            convertedCurrency = calculateMonthlyAverage(currency, amount, timeAmount)
-        elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
-            convertedCurrency = calculateWeeklyAverage(currency, amount, timeAmount)
-        elif ((timeFrame == 'year') or (timeFrame == 'years')):
-            convertedCurrency = calculateYearlyAverage(currency, amount,
-                                                       date.today().year - timeAmount)
-        elif ((timeFrame == 'day') or (timeFrame == 'days')):
-            dateToConvert = date.today() - relativedelta(days=timeAmount)
-            convertedCurrency = convertCurrency(currency, amount, dateToConvert)
-
-        convertedCurrency = "$" + str(convertedCurrency)
+            convertedCurrency = "$" + str(convertedCurrency)
         query = "UPDATE Reviews SET ConvertedCurrency = '" + str(convertedCurrency) + "' WHERE ReviewID = " + str(id)
         cur.execute(query)
         con.commit()
