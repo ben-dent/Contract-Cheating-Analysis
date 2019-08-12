@@ -408,7 +408,7 @@ def conversions():
             convertedCurrency = convertCurrency(currency, amount, dateToConvert)
 
         convertedCurrency = "$" + str(convertedCurrency)
-        query = "UPDATE Reviews SET ConvertedCurrency = '" + str(convertedCurrency) + "' WHERE JobID = " + str(id)
+        query = "UPDATE Reviews SET ConvertedCurrency = '" + str(convertedCurrency) + "' WHERE ReviewID = " + str(id)
         cur.execute(query)
         con.commit()
 
