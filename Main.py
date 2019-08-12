@@ -109,6 +109,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         # plotBarChartsOfBidderCountries(self.winnerCountries)
         # plotBarChartsOfBidderCountries(self.countriesOfBidders)
+        doAverages()
         print("\nDone\n")
         self.messages.sendMessage()
         # a = 1

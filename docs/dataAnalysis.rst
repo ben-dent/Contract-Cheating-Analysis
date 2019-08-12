@@ -132,6 +132,27 @@ It takes 1 argument:
 | - *countryValues*: This is a dictionary of country names (Strings) to integers containing the number of bidders from that country. It also produces graphs by continent.
 
 
+*doAverages*
+--------------
+.. code-block:: python
+
+   doAverages()
+
+This function will populate the database with average costs of jobs (if the average is not already saved). It does this by calling *calcAverage*.
+
+*calcAverage*
+---------------
+.. code-block:: python
+
+   calcAverage(cur, jobID)
+
+This function actually calculates job averages by averaging the costs of saved bids for that job.
+It takes 2 arguments:
+
+| - cur: This is the connection to the database that is passed in to allow for execution of SQL queries.
+
+| - jobID: This is the saved ID of the job for which an average price is being calculated.
+
 *plotFromDatabase*
 ------------------
 

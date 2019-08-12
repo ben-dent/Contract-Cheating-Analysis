@@ -226,21 +226,23 @@ def doAverages():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    cur.execute('SELECT JobID FROM Jobs')
+    cur.execute('SELECT JobID, AverageBidCost FROM Jobs')
 
     jobs = cur.fetchall()
     con.commit()
 
     for job in jobs:
         jobID = job[0]
-        bidAverage = calcAverage(cur, jobID)
-        if (bidAverage == -1):
-            bidAverage = "None"
+        cost = job[1]
+        if (cost == '')
+            bidAverage = calcAverage(cur, jobID)
+            if (bidAverage == -1):
+                bidAverage = "None"
 
-        bidAverage = str(str(bidAverage[1]) + str(bidAverage[0]))
-        update = "UPDATE Jobs SET AverageBidCost = ? WHERE JobID = ?"
-        cur.execute(update, [bidAverage, jobID])
-        con.commit()
+            bidAverage = str(str(bidAverage[1]) + str(bidAverage[0]))
+            update = "UPDATE Jobs SET AverageBidCost = ? WHERE JobID = ?"
+            cur.execute(update, [bidAverage, jobID])
+            con.commit()
 
 def calcAverage(cur, jobID):
     average = 0.0
