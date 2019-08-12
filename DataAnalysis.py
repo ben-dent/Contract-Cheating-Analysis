@@ -391,8 +391,8 @@ def conversions():
         value = r[1]
         amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
         currency = r[2]
-        date = r[3]
-        timeSplit = date.split()
+        dateOff = r[3]
+        timeSplit = dateOff.split()
         timeFrame = timeSplit[1]
         timeAmount = int(timeSplit[0])
 
