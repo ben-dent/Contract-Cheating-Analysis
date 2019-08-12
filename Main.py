@@ -252,6 +252,33 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         con.commit()
 
+    # Creates the Jobs table in the database, which will initially be empty
+    def createRelevantJobsTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS RelevantJobs')
+        cur.execute('''CREATE TABLE RelevantJobs (
+        'JobID' INTEGER PRIMARY KEY,
+        'URL' TEXT NOT NULL,
+        'Title' TEXT NOT NULL,
+        'Description' TEXT NOT NULL,
+        'Tags' TEXT NOT NULL,
+        'NumberOfBidders' INTEGER NOT NULL,
+        'AverageBidCost' TEXT NOT NULL,
+        'FinalCost' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL,
+        'Time' TEXT NOT NULL,
+        'ConvertedFinalCost' TEXT NOT NULL,
+        'CountryOfPoster' TEXT NOT NULL,
+        'CountryOfWinner' TEXT NOT NULL,
+        'Year' INTEGER NOT NULL,
+        'Week' INTEGER NOT NULL
+        );''')
+
+        con.commit()
+
     # Creates the Profiles table in the database, which will initially be empty
     def createProfilesTable(self):
         dbName = "JobDetails.db"
@@ -301,6 +328,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Jobs'")
         if (len(cur.fetchall()) == 0):
             self.createJobsTable()
+
+        # Checks if tables exist and creates them if they do not
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='RelevantJobs'")
+        if (len(cur.fetchall()) == 0):
+            self.createRelevantJobsTable()
 
         # Checks if tables exist and creates them if they do not
         cur.execute(

@@ -7,6 +7,7 @@ from dateutil.relativedelta import relativedelta
 from calendar import monthrange
 from forex_python.converter import CurrencyRates
 import csv
+import string
 
 DATABASE_NAME = 'JobDetails.db'
 
@@ -234,7 +235,7 @@ def doAverages():
     for job in jobs:
         jobID = job[0]
         cost = job[1]
-        if (cost == '')
+        if (cost == ''):
             bidAverage = calcAverage(cur, jobID)
             if (bidAverage == -1):
                 bidAverage = "None"
@@ -264,7 +265,6 @@ def calcAverage(cur, jobID):
 
     symbol = givenAmount[0]
     return [float('%.2f' % result), symbol]
-
 
 # Saving values from the database to CSV files
 def saveDataToCSV():
@@ -313,3 +313,67 @@ def saveDataToCSV():
                 a = csv.writer(fp, delimiter=',')
                 line = [line]
                 a.writerows(line)
+
+
+def extractRelevantProjects():
+    tags, keywords = getKeywords()
+
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    cur.execute('SELECT * FROM Jobs')
+    con.commit()
+
+    jobsToLookAt = []
+    data = []
+    for result in cur.fetchall():
+        data.append(list(result))
+
+    for job in data:
+        decided = False
+        jobTags = [i.lower() for i in job[4].split(',')]
+        tagOverlap = [tag for tag in tags if tag in jobTags]
+        if (len(tagOverlap) > 0):
+            jobsToLookAt.append(job)
+            decided = True
+
+        if (not decided):
+            description = job[3]
+            words = [i.translate(str.maketrans('', '', string.punctuation)).lower() for i in description]
+            keywordOverlap = [k for k in keywords if k in words]
+            if (len(keywordOverlap) > 0):
+                jobsToLookAt.append(job)
+                decided = True
+
+    for values in data:
+        cur.execute('''
+            INSERT INTO RelevantJobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
+            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                    tuple(values))
+        con.commit()
+
+
+def getKeywords():
+    tags = []
+    keywords = []
+    typeOn = "tags"
+
+    for line in open('potentialKeywords.txt'):
+        if (len(line) > 1):
+            word = line.rstrip('\n')
+            if word == "Keywords:":
+                typeOn = "keywords"
+            elif word == word.split(':')[0]:
+                if (typeOn == "tags"):
+                    tags.append(word)
+                else:
+                    keywords.append(word)
+    return [tag.lower() for tag in tags], [keyword.lower() for keyword in keywords]
+
+
+def saveRelevantJobs():
+    return
+
+
+extractRelevantProjects()
