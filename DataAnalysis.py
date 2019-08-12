@@ -384,7 +384,9 @@ def conversions():
     for result in res:
         results.append(list(result))
 
-    for r in results:
+    for i in range(len(results)):
+        print("Review " + str(i) + "/" + str(len(results) + 1))
+        r = results[i]
         id = r[0]
         value = r[1]
         amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
