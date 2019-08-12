@@ -372,8 +372,44 @@ def getKeywords():
     return [tag.lower() for tag in tags], [keyword.lower() for keyword in keywords]
 
 
+def conversions():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    cur.execute('''SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews''')
+
+    res = cur.fetchall()
+
+    results = []
+    for result in res:
+        results.append(list(result))
+
+    for r in results:
+        id = r[0]
+        value = r[5]
+        amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+        currency = r[6]
+        date = r[9]
+        timeSplit = date.split()
+        timeFrame = timeSplit[1]
+        timeAmount = int(timeSplit[0])
+
+        if ((timeFrame == 'month') or (timeFrame == 'months')):
+            convertedCurrency = calculateMonthlyAverage(currency, amount, timeAmount)
+        elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+            convertedCurrency = calculateWeeklyAverage(currency, amount, timeAmount)
+        elif ((timeFrame == 'year') or (timeFrame == 'years')):
+            convertedCurrency = calculateYearlyAverage(currency, amount,
+                                                       date.today().year - timeAmount)
+        elif ((timeFrame == 'day') or (timeFrame == 'days')):
+            dateToConvert = date.today() - relativedelta(days=timeAmount)
+            convertedCurrency = convertCurrency(currency, amount, dateToConvert)
+
+        convertedCurrency = "$" + str(convertedCurrency)
+        query = 'UPDATE Reviews SET ConvertedCurrency = ' + convertedCurrency + 'WHERE JobID = ' + id
+        cur.execute(query)
+        con.commit()
+
+
 def saveRelevantJobs():
     return
-
-
-extractRelevantProjects()
