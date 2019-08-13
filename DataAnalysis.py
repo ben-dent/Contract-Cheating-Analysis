@@ -512,9 +512,124 @@ def reviewJobConversions(con, cur):
             cur.execute(query)
             con.commit()
 
+def getDateRanges():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    today = date.today()
+
+    cur.execute('SELECT JobID, Date FROM ReviewJobs')
+
+    res = cur.fetchall()
+
+    results = []
+
+    for r in res:
+        results.append(list(r))
+
+    for i in range(len(results)):
+        print("Review Job Date " + str(i + 1) + "/" + str(len(results) + 1))
+        r = results[i]
+        timeSplit = r[1].split()
+        timeFrame = timeSplit[1]
+        timeAmount = int(timeSplit[0])
+        jID = r[0]
+
+        timeRange = ""
+
+        if ((timeFrame == 'month') or (timeFrame == 'months')):
+            newDay = (today + relativedelta(months=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+            newDay = (today + relativedelta(weeks=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'year') or (timeFrame == 'years')):
+            newDay = (today + relativedelta(years=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'day') or (timeFrame == 'days')):
+            newDay = (today + relativedelta(days=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+
+        query = "UPDATE ReviewJobs SET DateRange = '" + str(timeRange) + "' WHERE JobID = " + str(
+            jID)
+        cur.execute(query)
+        con.commit()
+
+    cur.execute('SELECT ReviewID, Date FROM Reviews')
+
+    res = cur.fetchall()
+
+    results = []
+
+    for r in res:
+        results.append(list(r))
+
+    for i in range(len(results)):
+        print("Review Date " + str(i + 1) + "/" + str(len(results) + 1))
+        r = results[i]
+        timeSplit = r[1].split()
+        timeFrame = timeSplit[1]
+        timeAmount = int(timeSplit[0])
+        jID = r[0]
+
+        timeRange = ""
+
+        if ((timeFrame == 'month') or (timeFrame == 'months')):
+            newDay = (today + relativedelta(months=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+            newDay = (today + relativedelta(weeks=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'year') or (timeFrame == 'years')):
+            newDay = (today + relativedelta(years=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+        elif ((timeFrame == 'day') or (timeFrame == 'days')):
+            newDay = (today + relativedelta(days=-timeAmount))
+            month = newDay.month
+            year = newDay.year
+            startDate = date(year, month, 1).strftime("%d/%m/%y")
+            endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
+            timeRange = startDate + " - " + endDate
+
+        query = "UPDATE Reviews SET DateRange = '" + str(timeRange) + "' WHERE ReviewID = " + str(
+            jID)
+        cur.execute(query)
+        con.commit()
+
+
+
 def saveRelevantJobs():
     return
 
-doAverages()
+# doAverages()
 # jobConversions()
 # conversions()
+getDateRanges()
