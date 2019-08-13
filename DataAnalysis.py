@@ -245,7 +245,7 @@ def doAverages():
             cur.execute(update, [bidAverage, jobID])
             con.commit()
 
-    cur.execute('SELECT JobID, AverageBidCost FROM Jobs')
+    cur.execute('SELECT JobID, AverageBidCost FROM ReviewJobs')
 
     jobs = cur.fetchall()
     con.commit()
@@ -516,5 +516,5 @@ def saveRelevantJobs():
     return
 
 doAverages()
-jobConversions()
-conversions()
+# jobConversions()
+# conversions()
