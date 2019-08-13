@@ -454,5 +454,6 @@ def jobConversions():
 def saveRelevantJobs():
     return
 
-
+doAverages()
 jobConversions()
+conversions()

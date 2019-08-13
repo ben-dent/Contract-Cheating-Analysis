@@ -44,6 +44,8 @@ engineering
 case study
 paper
 review paper
+literature review
+reflection
 
 Possibly:
 rewrite
@@ -53,7 +55,6 @@ deadline
 due date
 words
 word
-literature review
 assessment
 similarity
 technical

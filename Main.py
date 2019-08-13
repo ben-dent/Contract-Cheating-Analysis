@@ -132,8 +132,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
             profileLink = self.winnerProfiles[i]
             print(profileLink)
             self.numOn = i + 1
-            self.getInformationFromBidderProfile(profileLink)
-            self.profilesSavedAlready.update({profileLink: True})
+            if profileLink != "https://www.freelancer.co.uk/u/chukuaile1":
+                self.getInformationFromBidderProfile(profileLink)
+                self.profilesSavedAlready.update({profileLink: True})
             # if (self.profilesSavedAlready.get(profileLink) is None):
             #     self.getInformationFromBidderProfile(profileLink)
             #     self.profilesSavedAlready.update({profileLink: True})
@@ -446,10 +447,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.priceAmount = "None"
             self.convertedPrice = "None"
 
+        if self.numFreelancers == "Other":
+            self.numFreelancers = 0
+
         if (self.numFreelancers == 0):
             self.averagePrice = "None"
             self.priceAmount = "None"
             self.convertedPrice = "None"
+
 
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
@@ -668,6 +673,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         for each in bidderLinks:
             self.bidderProfileLinks.append(LINK_PREFIX + each.get("href"))
+
+        self.numFreelancers = 0
+        self.averagePrice = ""
 
         # Check if anyone has bid on the job yet
         if (self.biddersAndPriceFind.text.split("Need to")
