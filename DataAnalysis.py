@@ -451,6 +451,47 @@ def jobConversions():
         cur.execute(query)
         con.commit()
 
+    reviewJobConversions(con, cur)
+
+def reviewJobConversions(con, cur):
+    cur.execute('''SELECT JobID, FinalCost, Currency, Date FROM ReviewJobs''')
+
+    res = cur.fetchall()
+
+    results = []
+    for result in res:
+        results.append(list(result))
+
+    for i in range(len(results)):
+        print("Review Job " + str(i + 1) + "/" + str(len(results) + 1))
+        r = results[i]
+        timeSplit = r[3].split()
+        timeFrame = timeSplit[1]
+        timeAmount = int(timeSplit[0])
+        currency = r[2]
+        finalCost = r[1]
+        convertedCurrency = ""
+        jID = r[0]
+
+        if (finalCost != "None"):
+            valuePaid = float(''.join(c for c in finalCost if c.isnumeric() or c == '.'))
+
+            if ((timeFrame == 'month') or (timeFrame == 'months')):
+                convertedCurrency = calculateMonthlyAverage(currency, valuePaid, timeAmount)
+            elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
+                convertedCurrency = calculateWeeklyAverage(currency, valuePaid, timeAmount)
+            elif ((timeFrame == 'year') or (timeFrame == 'years')):
+                convertedCurrency = calculateYearlyAverage(currency, valuePaid,
+                                                                date.today().year - timeAmount)
+            elif ((timeFrame == 'day') or (timeFrame == 'days')):
+                dateToConvert = date.today() - relativedelta(days=timeAmount)
+                convertedCurrency = convertCurrency(currency, valuePaid, dateToConvert)
+
+            query = "UPDATE ReviewJobs SET ConvertedFinalCost = '" + str(convertedCurrency) + "' WHERE JobID = " + str(
+                jID)
+            cur.execute(query)
+            con.commit()
+
 def saveRelevantJobs():
     return
 

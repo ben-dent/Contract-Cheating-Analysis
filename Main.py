@@ -103,7 +103,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         for project in projects:
             if (self.projectsSavedAlready.get(project) is None):
-                self.fetchDataNonLogin(project)
+                self.fetchDataNonLogin(project, [])
 
         self.lookAtWinnerProfiles()
 
@@ -253,7 +253,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         con.commit()
 
-    # Creates the Jobs table in the database, which will initially be empty
+    # Creates the RelevantJobs table in the database, which will initially be empty
     def createRelevantJobsTable(self):
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
@@ -276,6 +276,33 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'CountryOfWinner' TEXT NOT NULL,
         'Year' INTEGER NOT NULL,
         'Week' INTEGER NOT NULL
+        );''')
+
+        con.commit()
+
+    # Creates the Jobs table in the database, which will initially be empty
+    def createReviewJobsTable(self):
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        cur.execute('DROP TABLE IF EXISTS ReviewJobs')
+        cur.execute('''CREATE TABLE ReviewJobs (
+        'JobID' INTEGER PRIMARY KEY,
+        'URL' TEXT NOT NULL,
+        'Title' TEXT NOT NULL,
+        'Description' TEXT NOT NULL,
+        'Tags' TEXT NOT NULL,
+        'NumberOfBidders' INTEGER NOT NULL,
+        'AverageBidCost' TEXT NOT NULL,
+        'FinalCost' TEXT NOT NULL,
+        'Currency' TEXT NOT NULL,
+        'Time' TEXT NOT NULL,
+        'ConvertedFinalCost' TEXT NOT NULL,
+        'CountryOfPoster' TEXT NOT NULL,
+        'CountryOfWinner' TEXT NOT NULL,
+        'DateScraped' TEXT NOT NULL,
+        'Date' TEXT NOT NULL
         );''')
 
         con.commit()
@@ -335,6 +362,12 @@ class Main(QtWidgets.QMainWindow, mainUI):
             "SELECT name FROM sqlite_master WHERE type='table' AND name='RelevantJobs'")
         if (len(cur.fetchall()) == 0):
             self.createRelevantJobsTable()
+
+        # Checks if tables exist and creates them if they do not
+        cur.execute(
+            "SELECT name FROM sqlite_master WHERE type='table' AND name='ReviewJobs'")
+        if (len(cur.fetchall()) == 0):
+            self.createReviewJobsTable()
 
         # Checks if tables exist and creates them if they do not
         cur.execute(
@@ -481,6 +514,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.priceAmount = "None"
             self.convertedPrice = "None"
 
+        if self.numFreelancers == "Other":
+            self.numFreelancers = 0
+
         if (self.numFreelancers == 0):
             self.averagePrice = "None"
             self.priceAmount = "None"
@@ -499,6 +535,38 @@ class Main(QtWidgets.QMainWindow, mainUI):
                          self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
+
+            con.commit()
+        except lite.IntegrityError:
+            b = 1
+
+    def saveReviewJobDetails(self, url, scraped, timeFrame):
+        if (not (self.awarded)):
+            self.winnerCountry = "None"
+            self.priceAmount = "None"
+            self.convertedPrice = "None"
+
+        if self.numFreelancers == "Other":
+            self.numFreelancers = 0
+
+        if (self.numFreelancers == 0):
+            self.averagePrice = "None"
+            self.priceAmount = "None"
+            self.convertedPrice = "None"
+
+        dbName = "JobDetails.db"
+        con = lite.connect(dbName)
+        cur = con.cursor()
+
+        try:
+            cur.execute('''
+            INSERT INTO ReviewJobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
+            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, DateScraped, Date) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave,
+                         self.numFreelancers,
+                         self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
+                         self.customerCountry, self.winnerCountry, scraped, timeFrame))
 
             con.commit()
         except lite.IntegrityError:
@@ -530,7 +598,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.getInformationFromBidderProfile(profile)
 
     # Fetching all the data that we need without logging in
-    def fetchDataNonLogin(self, url):
+    def fetchDataNonLogin(self, url, data):
         if (len(url.split('/')) == 7):
             r = requests.get(url)
             self.soup = BeautifulSoup(r.content, "html.parser")
@@ -642,11 +710,14 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                 avPriceCheck = self.averagePrice.split("/hour")[0]
 
-                if (avPriceCheck == self.averagePrice):
-                    self.saveJobDetails(url)
+                if data != []:
+                    self.saveReviewJobDetails(url, data[0], data[1])
                 else:
-                    self.averagePrice = avPriceCheck
-                    self.saveJobHourlyDetails(url)
+                    if (avPriceCheck == self.averagePrice):
+                        self.saveJobDetails(url)
+                    else:
+                        self.averagePrice = avPriceCheck
+                        self.saveJobHourlyDetails(url)
 
                 a = 1
 
@@ -1089,7 +1160,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 if (links.get(self.projectLink) is None):
                     if (self.reviewTitle.split("Project for")[0] == self.reviewTitle and
                             self.reviewTitle.split("deleted")[0] == self.reviewTitle):
-                        links[self.projectLink] = True
+                        links[self.projectLink] = [self.dateToday, self.timePosted]
                 else:
                     duplicate = True
 
@@ -1145,9 +1216,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
             else:
                 done = True
 
-                for link in links:
+                for link in links.keys():
                     if (self.projectsSavedAlready.get(link) is None):
-                        self.fetchDataNonLogin(link)
+                        self.fetchDataNonLogin(link, links.get(link))
 
                 # for project in (list(links.keys())):
                 #     if self.projectsSeen.get(project) is None:
