@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt; plt.rcdefaults()
+# import matplotlib.pyplot as plt; plt.rcdefaults()
 import numpy as np
 import pycountry_convert as pc
 import sqlite3 as lite

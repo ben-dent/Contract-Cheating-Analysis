@@ -455,7 +455,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.priceAmount = "None"
             self.convertedPrice = "None"
 
-
         dbName = "JobDetails.db"
         con = lite.connect(dbName)
         cur = con.cursor()
@@ -465,7 +464,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
             INSERT INTO Jobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave, self.numFreelancers,
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave,
+                         self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
 
@@ -495,7 +495,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
             INSERT INTO JobsHourly(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
             VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave, self.numFreelancers,
+                        (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave,
+                         self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
                          self.customerCountry, self.winnerCountry, self.year, self.week))
 
@@ -576,15 +577,22 @@ class Main(QtWidgets.QMainWindow, mainUI):
                     if (self.soup.find("span", {"class": "PageProjectViewLogout-awardedTo-heading"}) != None):
                         self.biddersAndPriceFind = self.biddersInfo[1]
 
-                self.awarded = False
+                # self.awarded = False
 
                 # Retrieving the final price for the task if we are looking at
                 # a completed project in the archives
                 self.finalPrice = ""
 
-                # Checks if the project was awarded to anyone
-                if (self.archived and self.finishedType == "Completed"):
+                try:
+                    check = self.biddersAndPriceFind.find("span",
+                                                             {"class": "PageProjectViewLogout-awardedTo-heading"}).text
                     self.awarded = True
+                except AttributeError:
+                    self.awarded = False
+
+                # Checks if the project was awarded to anyone
+                if (self.archived and self.awarded):
+                    # self.awarded = True
 
                     # Retrieving the final price for the task if we are looking at
                     # a completed project in the archives
@@ -958,7 +966,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
         first = True
 
         while page < pageNeeded:
-
             pageButtons = self.driver.find_element_by_class_name(
                 "user-reviews-pagination")
             page += 1
@@ -1010,7 +1017,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 amountElement = review.find_element(
                     By.CLASS_NAME, "user-review-price")
 
-                testValue = amountElement.find_elements_by_css_selector("span[ng-show='review.get().paid_amount !== 0']")
+                testValue = amountElement.find_elements_by_css_selector(
+                    "span[ng-show='review.get().paid_amount !== 0']")
 
                 value = amountElement.find_element_by_class_name(
                     "ng-binding").text
