@@ -221,8 +221,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Year' INTEGER NOT NULL,
         'Week' INTEGER NOT NULL,
         'DateRange' TEXT,
-        'Category' TEXT,
-        'Score' TEXT
+        'Category' INTEGER,
+        'Score' INTEGER
         );''')
 
         con.commit()
@@ -305,8 +305,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'DateScraped' TEXT NOT NULL,
         'Date' TEXT NOT NULL,
         'DateRange' TEXT,
-        'Category' TEXT,
-        'Score' TEXT
+        'Category' INTEGER,
+        'Score' INTEGER
         );''')
 
         con.commit()

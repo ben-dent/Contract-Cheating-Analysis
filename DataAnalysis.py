@@ -350,8 +350,8 @@ def scoreProjects():
         print("Job Score " + str(i + 1) + "/" + str(len(results) + 1))
         job = results[i]
         jID = job[0]
-        title = job[1]
-        description = job[2]
+        title = job[1].lower()
+        description = job[2].lower()
 
         numPositive = 0
         numNegative = 0
@@ -367,7 +367,7 @@ def scoreProjects():
         except ZeroDivisionError:
             score = -1
 
-        query = "UPDATE Jobs SET Score = '" + str(score) + "' WHERE JobID = " + str(
+        query = "UPDATE Jobs SET Score = " + str(score) + " WHERE JobID = " + str(
             jID)
         cur.execute(query)
         con.commit()
@@ -384,8 +384,8 @@ def scoreProjects():
         print("Review Job Score " + str(i + 1) + "/" + str(len(results) + 1))
         job = results[i]
         jID = job[0]
-        title = job[1]
-        description = job[2]
+        title = job[1].lower()
+        description = job[2].lower()
 
         numPositive = 0
         numNegative = 0
@@ -401,7 +401,7 @@ def scoreProjects():
         except ZeroDivisionError:
             score = -1
 
-        query = "UPDATE ReviewJobs SET Score = '" + str(score) + "' WHERE JobID = " + str(
+        query = "UPDATE ReviewJobs SET Score = " + str(score) + " WHERE JobID = " + str(
             jID)
         cur.execute(query)
         con.commit()
@@ -687,4 +687,4 @@ def getDateRanges():
 # jobConversions()
 # conversions()
 # getDateRanges()
-# scoreProjects()
+scoreProjects()
