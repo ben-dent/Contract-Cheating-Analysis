@@ -1,0 +1,16 @@
+book
+memoir
+blog
+article
+ebook
+product
+seo
+resume
+cv
+cover letter
+magazine
+website
+market
+publish
+bio
+

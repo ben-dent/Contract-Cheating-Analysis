@@ -5,9 +5,6 @@ Made by Ben Dent as part of an  Undergraduate Research Opportunities Placement (
 Code is provided as-is under an MIT License
 
 """
-# TODO: Currency conversions
-# TODO: Data visualisations in program
-# TODO: Find some way of filtering relevant projects from reviews
 
 import math
 import sys
@@ -222,7 +219,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL,
         'Year' INTEGER NOT NULL,
-        'Week' INTEGER NOT NULL
+        'Week' INTEGER NOT NULL,
+        'DateRange' TEXT,
+        'Category' TEXT,
+        'Score' TEXT
         );''')
 
         con.commit()
@@ -304,7 +304,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'CountryOfWinner' TEXT NOT NULL,
         'DateScraped' TEXT NOT NULL,
         'Date' TEXT NOT NULL,
-        'DateRange' TEXT
+        'DateRange' TEXT,
+        'Category' TEXT,
+        'Score' TEXT
         );''')
 
         con.commit()
@@ -360,10 +362,10 @@ class Main(QtWidgets.QMainWindow, mainUI):
             self.createJobsTable()
 
         # Checks if tables exist and creates them if they do not
-        cur.execute(
-            "SELECT name FROM sqlite_master WHERE type='table' AND name='RelevantJobs'")
-        if (len(cur.fetchall()) == 0):
-            self.createRelevantJobsTable()
+        # cur.execute(
+        #     "SELECT name FROM sqlite_master WHERE type='table' AND name='RelevantJobs'")
+        # if (len(cur.fetchall()) == 0):
+        #     self.createRelevantJobsTable()
 
         # Checks if tables exist and creates them if they do not
         cur.execute(

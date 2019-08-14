@@ -29,7 +29,7 @@ def convertCurrencyWithYear(currency, amount, week, year):
     week = str(year) + "-W" + str(week)
 
     startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
-    endDate = startDate + timedelta(days=6)
+    endDate = startDate + relativedelta(weeks=1)
 
     return getAverage(currency, startDate, endDate, amount)
 
@@ -66,7 +66,7 @@ def calculateWeeklyAverage(currency, amount, weeksAgo):
 
     # startDate = datetime.strptime(str(week) + '-1', "%Y-W%W-%w")
     startDate = newDay
-    endDate = startDate + timedelta(days=6)
+    endDate = startDate + relativedelta(weeks=1)
 
     return getAverage(currency, startDate, endDate, amount)
 
@@ -332,63 +332,95 @@ def saveDataToCSV():
                 line = [line]
                 a.writerows(line)
 
-
 def extractRelevantProjects():
-    tags, keywords = getKeywords()
+    positive, negative = getKeywords()
 
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    cur.execute('SELECT * FROM Jobs')
-    con.commit()
+    cur.execute('SELECT JobID, Title, Description FROM Jobs')
 
-    jobsToLookAt = []
-    data = []
-    for result in cur.fetchall():
-        data.append(list(result))
+    res = cur.fetchall()
+    results = []
 
-    for job in data:
-        decided = False
-        jobTags = [i.lower() for i in job[4].split(',')]
-        tagOverlap = [tag for tag in tags if tag in jobTags]
-        if (len(tagOverlap) > 0):
-            jobsToLookAt.append(job)
-            decided = True
+    for r in res:
+        results.append(list(r))
 
-        if (not decided):
-            description = job[3]
-            words = [i.translate(str.maketrans('', '', string.punctuation)).lower() for i in description]
-            keywordOverlap = [k for k in keywords if k in words]
-            if (len(keywordOverlap) > 0):
-                jobsToLookAt.append(job)
-                decided = True
+    for i in range(len(results)):
+        print("Job Score " + str(i + 1) + "/" + str(len(results) + 1))
+        job = results[i]
+        jID = job[0]
+        title = job[1]
+        description = job[2]
 
-    for values in data:
-        cur.execute('''
-            INSERT INTO RelevantJobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
-            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, Year, Week) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                    tuple(values))
+        numPositive = 0
+        numNegative = 0
+
+        for keyword in positive:
+            numPositive += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+
+        for keyword in negative:
+            numNegative += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+
+        try:
+            score = round((numPositive / (numPositive + numNegative)) * 100)
+        except ZeroDivisionError:
+            score = -1
+
+        query = "UPDATE Jobs SET Score = '" + str(score) + "' WHERE JobID = " + str(
+            jID)
+        cur.execute(query)
         con.commit()
 
+    cur.execute('SELECT JobID, Title, Description FROM ReviewJobs')
+
+    res = cur.fetchall()
+    results = []
+
+    for r in res:
+        results.append(list(r))
+
+    for i in range(len(results)):
+        print("Review Job Score " + str(i + 1) + "/" + str(len(results) + 1))
+        job = results[i]
+        jID = job[0]
+        title = job[1]
+        description = job[2]
+
+        numPositive = 0
+        numNegative = 0
+
+        for keyword in positive:
+            numPositive += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+
+        for keyword in negative:
+            numNegative += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+
+        try:
+            score = round((numPositive / (numPositive + numNegative)) * 100)
+        except ZeroDivisionError:
+            score = -1
+
+        query = "UPDATE ReviewJobs SET Score = '" + str(score) + "' WHERE JobID = " + str(
+            jID)
+        cur.execute(query)
+        con.commit()
 
 def getKeywords():
-    tags = []
-    keywords = []
-    typeOn = "tags"
+    positive = []
+    negative = []
 
-    for line in open('potentialKeywords.txt'):
+    for line in open('positiveKeywords.txt'):
         if (len(line) > 1):
             word = line.rstrip('\n')
-            if word == "Keywords:":
-                typeOn = "keywords"
-            elif word == word.split(':')[0]:
-                if (typeOn == "tags"):
-                    tags.append(word)
-                else:
-                    keywords.append(word)
-    return [tag.lower() for tag in tags], [keyword.lower() for keyword in keywords]
+            positive.append(word)
 
+    for line in open('negativeKeywords.txt'):
+        if (len(line) > 1):
+            word = line.rstrip('\n')
+            negative.append(word)
+
+    return [keyword.lower() for keyword in positive], [keyword.lower() for keyword in negative]
 
 def conversions():
     con = lite.connect(DATABASE_NAME)
@@ -433,7 +465,6 @@ def conversions():
         query = "UPDATE Reviews SET ConvertedCurrency = '" + str(convertedCurrency) + "' WHERE ReviewID = " + str(id)
         cur.execute(query)
         con.commit()
-
 
 def jobConversions():
     con = lite.connect(DATABASE_NAME)
@@ -624,12 +655,34 @@ def getDateRanges():
         cur.execute(query)
         con.commit()
 
+    cur.execute('SELECT JobID, Year, Week FROM Jobs')
 
+    res = cur.fetchall()
 
-def saveRelevantJobs():
-    return
+    results = []
+
+    for r in res:
+        results.append(list(r))
+
+    for i in range(len(results)):
+        print("Job Date " + str(i + 1) + "/" + str(len(results) + 1))
+        r = results[i]
+        year = r[1]
+        jobWeek = r[2]
+        jID = r[0]
+        week = str(year) + "-W" + str(jobWeek)
+        startDate = datetime.strptime(week + '-1', "%Y-W%W-%w")
+        endDate = startDate + relativedelta(weeks=1)
+
+        timeRange = startDate.strftime("%d/%m/%y") + " - " + endDate.strftime("%d/%m/%y")
+
+        query = "UPDATE Jobs SET DateRange = '" + str(timeRange) + "' WHERE JobID = " + str(
+            jID)
+        cur.execute(query)
+        con.commit()
 
 # doAverages()
 # jobConversions()
 # conversions()
-getDateRanges()
+# getDateRanges()
+extractRelevantProjects()
