@@ -194,6 +194,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Date' TEXT NOT NULL,
         'Country' TEXT NOT NULL,
         'Notes' TEXT NOT NULL,
+        'DateRange' TEXT,
         FOREIGN KEY(Profile) REFERENCES Profiles(Username)
         );''')
 
@@ -302,7 +303,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL,
         'DateScraped' TEXT NOT NULL,
-        'Date' TEXT NOT NULL
+        'Date' TEXT NOT NULL,
+        'DateRange' TEXT
         );''')
 
         con.commit()
