@@ -332,7 +332,7 @@ def saveDataToCSV():
                 line = [line]
                 a.writerows(line)
 
-def extractRelevantProjects():
+def scoreProjects():
     positive, negative = getKeywords()
 
     con = lite.connect(DATABASE_NAME)
@@ -500,9 +500,11 @@ def jobConversions():
         cur.execute(query)
         con.commit()
 
-    reviewJobConversions(con, cur)
+    reviewJobConversions()
 
-def reviewJobConversions(con, cur):
+def reviewJobConversions():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
     cur.execute('''SELECT JobID, FinalCost, Currency, Date FROM ReviewJobs''')
 
     res = cur.fetchall()
@@ -685,4 +687,4 @@ def getDateRanges():
 # jobConversions()
 # conversions()
 # getDateRanges()
-extractRelevantProjects()
+# scoreProjects()

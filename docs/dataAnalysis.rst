@@ -170,3 +170,72 @@ This function reads in data from the program database and will produce graphs fr
 
 This function handles saving data to CSV files for easy analysis in programs such as Microsoft Excel.
 Each table in the database will have its own CSV file produced.
+
+*doAverages*
+-------------
+.. code-block:: python
+
+   doAverages()
+
+This function will calculate the average bid cost for each job in the Jobs and ReviewJobs tables and save them in the database.
+It calculates the average using *calcAverage*.
+
+*calcAverage*
+--------------
+.. code-block:: python
+
+   calcAverage(cur, jobID)
+
+This function will calculate the average bid price for a given job.
+It takes 2 arguments:
+
+| - *cur*: This is the database cursor object that will allow for execution of SQL queries
+
+| - *jobID*: This is the ID of the job that needs the average.
+
+*conversions*
+--------------
+.. code-block:: python
+
+   conversions()
+
+This function converts all job prices in the Reviews table into USD, at the historic conversion rate, and saves them in the database.
+
+*jobConversions*
+-----------------
+.. code-block:: python
+
+   jobConversions()
+
+This function converts all job prices in the Jobs table into USD, at the historic conversion rate, and saves them in the database
+
+*reviewJobConversions*
+------------------------
+.. code-block:: python
+
+   reviewJobConversions()
+
+This function converts all job prices in the ReviewJobs table into USD, at the historic conversion rate, and saves them in the database
+
+*getDateRanges*
+-----------------
+.. code-block:: python
+
+   getDateRanges()
+
+This function calculates the possible date ranges for jobs saved in the Reviews, Jobs and ReviewJobs tables and saves them in the database.
+
+*getKeywords*
+---------------
+.. code-block:: python
+
+   getKeywords()
+
+This function retrieves the positive and negative keywords saved in *positiveKeywords.txt* and *negativeKeywords.txt* respectively and returns them as two lists.
+
+*scoreProjects*
+----------------
+.. code-block:: python
+
+This function uses *getKeywords* to retrieve the lists of positive and negative keywords. It then goes through the titles and description of each saved job in the Jobs and ReviewJobs tables and gives them an 'academic work likelihood' score out of 100.
+
