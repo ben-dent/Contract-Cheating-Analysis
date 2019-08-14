@@ -237,5 +237,7 @@ This function retrieves the positive and negative keywords saved in *positiveKey
 ----------------
 .. code-block:: python
 
+   scoreProjects()
+
 This function uses *getKeywords* to retrieve the lists of positive and negative keywords. It then goes through the titles and description of each saved job in the Jobs and ReviewJobs tables and gives them an 'academic work likelihood' score out of 100.
 
