@@ -789,7 +789,7 @@ def optimiseConstant():
     cur = con.cursor()
 
     low = 9
-    high = 20
+    high = 17
     averageDistance = 1000
     constant = random.randrange(low, high + 1)
 
