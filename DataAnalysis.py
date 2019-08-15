@@ -833,6 +833,7 @@ def optimiseConstant():
             averageDistances.append(totalDistance / n)
 
         averageDistance = sum(averageDistances) / 5
+        print("Average Distance: " + str(averageDistance) + "\n")
         if (averageDistance >= 5):
             if (tooBig > tooSmall):
                 constant += 0.1
