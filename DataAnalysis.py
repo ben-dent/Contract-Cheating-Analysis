@@ -344,7 +344,7 @@ def saveDataToCSV():
                 a.writerows(line)
 
 
-def scoreProjects(constant):
+def scoreProjects(constant, doPrint):
     positive, negative = getKeywords()
 
     positiveCopy = []
@@ -371,7 +371,8 @@ def scoreProjects(constant):
         results.append(list(r))
 
     for i in range(len(results)):
-        print("Job Score " + str(i + 1) + "/" + str(len(results) + 1))
+        if doPrint:
+            print("Job Score " + str(i + 1) + "/" + str(len(results) + 1))
         job = results[i]
         jID = job[0]
         title = job[1].lower()
@@ -439,7 +440,8 @@ def scoreProjects(constant):
         results.append(list(r))
 
     for i in range(len(results)):
-        print("Review Job Score " + str(i + 1) + "/" + str(len(results) + 1))
+        if doPrint:
+            print("Review Job Score " + str(i + 1) + "/" + str(len(results) + 1))
         job = results[i]
         jID = job[0]
         title = job[1].lower()
@@ -791,12 +793,15 @@ def optimiseConstant():
     averageDistance = 1000
     constant = random.randrange(low, high + 1)
 
+    iteration = 1
+
     ranges = {1: [0, 25], 2: [10, 45], 3: [45, 55], 4: [55, 90], 5: [70, 100]}
 
-    while(averageDistance >= 5):
+    while((averageDistance >= 5) and (iteration < 10000)):
+        print("Iteration number: " + str(iteration) + " - Constant = " + str(constant))
         tooBig = 0
         tooSmall = 0
-        scoreProjects(constant)
+        scoreProjects(constant, False)
         averageDistances = []
         for i in range(1, 6):
             totalDistance = 0
@@ -844,4 +849,4 @@ def optimiseConstant():
 # conversions()
 # getDateRanges()
 # scoreProjects(10)
-
+optimiseConstant()
