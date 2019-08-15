@@ -838,6 +838,8 @@ def optimiseConstant():
                 constant += 0.1
             else:
                 constant -= 0.1
+        else:
+            iteration += 1
 
 
     print(constant)
