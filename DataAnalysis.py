@@ -788,14 +788,14 @@ def optimiseConstant():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    low = 1
-    high = 100
+    low = 9
+    high = 20
     averageDistance = 1000
     constant = random.randrange(low, high + 1)
 
     iteration = 1
 
-    ranges = {1: [0, 25], 2: [10, 45], 3: [45, 55], 4: [55, 90], 5: [70, 100]}
+    ranges = {1: [0, 20], 2: [20, 40], 3: [40, 60], 4: [60, 80], 5: [80, 100]}
 
     while((averageDistance >= 5) and (iteration < 10000)):
         print("Iteration number: " + str(iteration) + " - Constant = " + str(constant))
@@ -836,9 +836,9 @@ def optimiseConstant():
         print("Average Distance: " + str(averageDistance) + "\n")
         if (averageDistance >= 5):
             if (tooBig > tooSmall):
-                constant += 0.1
+                constant += 0.0125
             else:
-                constant -= 0.1
+                constant -= 0.0125
             iteration += 1
 
 
