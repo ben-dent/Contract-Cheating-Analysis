@@ -35,16 +35,17 @@ abstract
 evaluat
 reflect
 summar
-proposal
+research proposal
+phd proposal
 diagram
 critique
-edit
 school
-uni
+university
 college
 intro
 assess
-apa
+apa ref
+apa style
 harvard
 grant
 histor
@@ -66,7 +67,6 @@ slide
 oscola
 intro
 conclu
-exam
 coursework
 compar
 wiki
@@ -86,3 +86,8 @@ business law
 question
 strategy
 governance
+techn
+audience
+information security
+character
+max

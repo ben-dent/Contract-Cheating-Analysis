@@ -1,15 +1,17 @@
 # import matplotlib.pyplot as plt; plt.rcdefaults()
+import csv
+import sqlite3 as lite
+from calendar import monthrange
+from datetime import datetime, date, timedelta
+
 import numpy as np
 import pycountry_convert as pc
-import sqlite3 as lite
-from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
-from calendar import monthrange
 from forex_python.converter import CurrencyRates
-import csv
-import string
+import random
 
 DATABASE_NAME = 'JobDetails.db'
+
 
 # Converts the currency to USD at the historic rate
 def convertCurrency(currency, amount, date):
@@ -22,7 +24,7 @@ def convertCurrency(currency, amount, date):
     if (int(split[1]) == 0):
         return split[0]
 
-    return(dollarAmount)
+    return (dollarAmount)
 
 
 def convertCurrencyWithYear(currency, amount, week, year):
@@ -37,6 +39,7 @@ def convertCurrencyWithYear(currency, amount, week, year):
 def daterange(startDate, endDate):
     for n in range(int((endDate - startDate).days)):
         yield startDate + timedelta(n)
+
 
 def getAverage(currency, startDate, endDate, amount):
     c = CurrencyRates()
@@ -58,6 +61,7 @@ def getAverage(currency, startDate, endDate, amount):
 
     return (dollarAmount)
 
+
 def calculateWeeklyAverage(currency, amount, weeksAgo):
     today = date.today()
     newDay = (today + relativedelta(weeks=-weeksAgo))
@@ -70,6 +74,7 @@ def calculateWeeklyAverage(currency, amount, weeksAgo):
 
     return getAverage(currency, startDate, endDate, amount)
 
+
 def calculateMonthlyAverage(currency, amount, monthsAgo):
     today = date.today()
     newDay = (today + relativedelta(months=-monthsAgo))
@@ -81,11 +86,13 @@ def calculateMonthlyAverage(currency, amount, monthsAgo):
 
     return getAverage(currency, startDate, endDate, amount)
 
+
 def calculateYearlyAverage(currency, amount, year):
     startDate = date(year, 1, 1)
     endDate = date(year + 1, 1, 1)
 
     return getAverage(currency, startDate, endDate, amount)
+
 
 # Retrieves saved details to plot
 def plotFromDatabase():
@@ -107,6 +114,7 @@ def plotFromDatabase():
         countries.update({country: n})
 
     plotBarChartsOfBidderCountries(countries)
+
 
 # Generates multiple windows of bar charts to display the countries of bidders - grouped by continent
 def plotBarChartsOfBidderCountries(countryValues):
@@ -158,7 +166,7 @@ def plotBarChartsOfBidderCountries(countryValues):
         continentValues = valuesFromContinent[1]
         continentValues.append(values[i])
 
-        countryData.update({continent_code : [continentCountries, continentValues]})
+        countryData.update({continent_code: [continentCountries, continentValues]})
 
     continentNames = list(countryData.keys())
 
@@ -223,6 +231,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
+
 def doAverages():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
@@ -263,6 +272,7 @@ def doAverages():
             cur.execute(update, [bidAverage, jobID])
             con.commit()
 
+
 def calcAverage(cur, jobID):
     average = 0.0
     n = 0
@@ -283,6 +293,7 @@ def calcAverage(cur, jobID):
 
     symbol = givenAmount[0]
     return [float('%.2f' % result), symbol]
+
 
 # Saving values from the database to CSV files
 def saveDataToCSV():
@@ -332,8 +343,21 @@ def saveDataToCSV():
                 line = [line]
                 a.writerows(line)
 
-def scoreProjects():
+
+def scoreProjects(constant):
     positive, negative = getKeywords()
+
+    positiveCopy = []
+
+    for word in positive:
+        positiveCopy.append(word)
+        new = ''.join(c + '.' for c in word if c.isalpha())
+        positiveCopy.append(new[:-1])
+
+    positive = positiveCopy
+
+
+    ratio = (len(positive) * constant) / len(negative)
 
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
@@ -353,21 +377,55 @@ def scoreProjects():
         title = job[1].lower()
         description = job[2].lower()
 
+        posMatches = ""
+        negMatches = ""
+
         numPositive = 0
         numNegative = 0
 
         for keyword in positive:
             numPositive += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+            if (len(title.split(keyword)) > 1) or (len(description.split(keyword)) > 1):
+                if (keyword not in posMatches):
+                    posMatches += (", " + keyword)
 
         for keyword in negative:
             numNegative += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+            if (len(title.split(keyword)) > 1) or (len(description.split(keyword)) > 1):
+                if (keyword not in negMatches):
+                    negMatches += (", " + keyword)
 
         try:
-            score = round((numPositive / (numPositive + numNegative)) * 100)
+            # numNegative *= ratio
+            # l = (numPositive * ratio)
+            # score = round((numPositive / (numPositive + numNegative)) * 100)
+            score = max(0, round((((numPositive * 100) - (ratio * numNegative)) / (numPositive + numNegative))))
         except ZeroDivisionError:
             score = -1
 
-        query = "UPDATE Jobs SET Score = " + str(score) + " WHERE JobID = " + str(
+        p = posMatches.split(",")
+        b = ""
+        for i in range(len(p)):
+            if (i > 0):
+                b += p[i]
+                if (i != len(p) - 1):
+                    b += ", "
+
+        posMatches = b.lstrip()
+
+        n = negMatches.split(",")
+        b = ""
+        for i in range(len(n)):
+            if (i > 0):
+                b += n[i]
+                if (i != len(n) - 1):
+                    b += ", "
+
+        negMatches = b.lstrip()
+
+        query = "UPDATE Jobs SET Score = " + str(score) + \
+                ", PositiveMatches = '" + str(posMatches) + "', NegativeMatches = '" + str(
+            negMatches) + "' WHERE JobID = " + str(
             jID)
         cur.execute(query)
         con.commit()
@@ -387,24 +445,60 @@ def scoreProjects():
         title = job[1].lower()
         description = job[2].lower()
 
+        posMatches = ""
+        negMatches = ""
+
         numPositive = 0
         numNegative = 0
 
         for keyword in positive:
             numPositive += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+            if (len(title.split(keyword)) > 1) or (len(description.split(keyword)) > 1):
+                if (keyword not in posMatches):
+                    posMatches += (", " + keyword)
 
         for keyword in negative:
             numNegative += (len(title.split(keyword)) - 1) + (len(description.split(keyword)) - 1)
+            if (len(title.split(keyword)) > 1) or (len(description.split(keyword)) > 1):
+                if (keyword not in negMatches):
+                    negMatches += (", " + keyword)
 
         try:
-            score = round((numPositive / (numPositive + numNegative)) * 100)
+            # numNegative *= ratio
+            # l = (numPositive * ratio)
+            # score = round((numPositive / (numPositive + numNegative)) * 100)
+            score = max(0, round((((numPositive * 100) - (ratio * numNegative)) / (numPositive + numNegative))))
         except ZeroDivisionError:
             score = -1
 
-        query = "UPDATE ReviewJobs SET Score = " + str(score) + " WHERE JobID = " + str(
+        p = posMatches.split(",")
+        b = ""
+        for i in range(len(p)):
+            if (i > 0):
+                b += p[i]
+                if (i != len(p) - 1):
+                    b += ", "
+
+        posMatches = b.lstrip()
+
+        n = negMatches.split(",")
+        b = ""
+        for i in range(len(n)):
+            if (i > 0):
+                b += n[i]
+                if (i != len(n) - 1):
+                    b += ", "
+
+        negMatches = b.lstrip()
+
+
+        query = "UPDATE ReviewJobs SET Score = " + str(score) + \
+                ", PositiveMatches = '" + str(posMatches) + "', NegativeMatches = '" + str(
+            negMatches) + "' WHERE JobID = " + str(
             jID)
         cur.execute(query)
         con.commit()
+
 
 def getKeywords():
     positive = []
@@ -421,6 +515,7 @@ def getKeywords():
             negative.append(word)
 
     return [keyword.lower() for keyword in positive], [keyword.lower() for keyword in negative]
+
 
 def conversions():
     con = lite.connect(DATABASE_NAME)
@@ -466,6 +561,7 @@ def conversions():
         cur.execute(query)
         con.commit()
 
+
 def jobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
@@ -502,6 +598,7 @@ def jobConversions():
 
     reviewJobConversions()
 
+
 def reviewJobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
@@ -533,7 +630,7 @@ def reviewJobConversions():
                 convertedCurrency = calculateWeeklyAverage(currency, valuePaid, timeAmount)
             elif ((timeFrame == 'year') or (timeFrame == 'years')):
                 convertedCurrency = calculateYearlyAverage(currency, valuePaid,
-                                                                date.today().year - timeAmount)
+                                                           date.today().year - timeAmount)
             elif ((timeFrame == 'day') or (timeFrame == 'days')):
                 dateToConvert = date.today() - relativedelta(days=timeAmount)
                 convertedCurrency = convertCurrency(currency, valuePaid, dateToConvert)
@@ -544,6 +641,7 @@ def reviewJobConversions():
                 jID)
             cur.execute(query)
             con.commit()
+
 
 def getDateRanges():
     con = lite.connect(DATABASE_NAME)
@@ -683,8 +781,67 @@ def getDateRanges():
         cur.execute(query)
         con.commit()
 
+
+def optimiseConstant():
+    con = lite.connect(DATABASE_NAME)
+    cur = con.cursor()
+
+    low = 1
+    high = 500
+    averageDistance = 1000
+    constant = random.randrange(low, high + 1)
+
+    ranges = {1: [0, 25], 2: [10, 45], 3: [45, 55], 4: [55, 90], 5: [70, 100]}
+
+    while(averageDistance >= 5):
+        tooBig = 0
+        tooSmall = 0
+        scoreProjects(constant)
+        averageDistances = []
+        for i in range(1, 6):
+            totalDistance = 0
+            n = 0
+            query = 'SELECT Score FROM ReviewJobs WHERE Category = ' + str(i)
+            cur.execute(query)
+            results = [r[0] for r in cur.fetchall()]
+
+            scoreRange = ranges.get(i)
+            lower = scoreRange[0]
+            upper = scoreRange[1]
+
+            for result in results:
+                n += 1
+                if (result != -1):
+                    if ((result >= lower) and (result <= upper)):
+                        distance = 0
+                    elif (result > upper):
+                        distance = result - upper
+                        tooBig += 1
+                    else:
+                        distance = lower - result
+                        tooSmall += 1
+                        # distance = min(abs(result - lower), abs(result - upper))
+
+                    totalDistance += distance
+
+
+            averageDistances.append(totalDistance / n)
+
+        averageDistance = sum(averageDistances) / 5
+        if (averageDistance >= 5):
+            if (tooBig > tooSmall):
+                constant += 0.1
+            else:
+                constant -= 0.1
+
+
+    print(constant)
+
+
+
 # doAverages()
 # jobConversions()
 # conversions()
 # getDateRanges()
-scoreProjects()
+# scoreProjects(10)
+
