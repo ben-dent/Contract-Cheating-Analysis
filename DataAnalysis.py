@@ -852,4 +852,4 @@ def optimiseConstant():
 # conversions()
 # getDateRanges()
 # scoreProjects(10)
-optimiseConstant()
+# optimiseConstant()

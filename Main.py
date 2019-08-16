@@ -92,7 +92,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.databaseSetup()
         self.getSeen()
         # projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
-        url = "https://www.freelancer.co.uk/archives/essay-writing/2019-22/"
+        # url = "https://www.freelancer.co.uk/archives/essay-writing/2019-22/"
+        url = "https://www.freelancer.co.uk/archives/essay-writing/2019-25/"
         pageTime = url.split("/")[-2].split("-")
         self.year = int(pageTime[0])
         self.week = int(pageTime[1])
@@ -130,8 +131,11 @@ class Main(QtWidgets.QMainWindow, mainUI):
             print(profileLink)
             self.numOn = i + 1
             if profileLink != "https://www.freelancer.co.uk/u/chukuaile1":
-                self.getInformationFromBidderProfile(profileLink)
-                self.profilesSavedAlready.update({profileLink: True})
+                try:
+                    check = (self.profilesSavedAlready[profileLink] != True)
+                except KeyError:
+                    self.getInformationFromBidderProfile(profileLink)
+                    self.profilesSavedAlready.update({profileLink: True})
             # if (self.profilesSavedAlready.get(profileLink) is None):
             #     self.getInformationFromBidderProfile(profileLink)
             #     self.profilesSavedAlready.update({profileLink: True})
@@ -222,7 +226,9 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Week' INTEGER NOT NULL,
         'DateRange' TEXT,
         'Category' INTEGER,
-        'Score' INTEGER
+        'Score' INTEGER,
+        'PositiveMatches' TEXT,
+        'NegativeMatches' TEXT
         );''')
 
         con.commit()
@@ -249,37 +255,42 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL,
         'Year' INTEGER NOT NULL,
-        'Week' INTEGER NOT NULL
+        'Week' INTEGER NOT NULL,
+        'DateRange' TEXT,
+        'Category' INTEGER,
+        'Score' INTEGER,
+        'PositiveMatches' TEXT,
+        'NegativeMatches' TEXT
         );''')
 
         con.commit()
 
     # Creates the RelevantJobs table in the database, which will initially be empty
-    def createRelevantJobsTable(self):
-        dbName = "JobDetails.db"
-        con = lite.connect(dbName)
-        cur = con.cursor()
-
-        cur.execute('DROP TABLE IF EXISTS RelevantJobs')
-        cur.execute('''CREATE TABLE RelevantJobs (
-        'JobID' INTEGER PRIMARY KEY,
-        'URL' TEXT NOT NULL,
-        'Title' TEXT NOT NULL,
-        'Description' TEXT NOT NULL,
-        'Tags' TEXT NOT NULL,
-        'NumberOfBidders' INTEGER NOT NULL,
-        'AverageBidCost' TEXT NOT NULL,
-        'FinalCost' TEXT NOT NULL,
-        'Currency' TEXT NOT NULL,
-        'Time' TEXT NOT NULL,
-        'ConvertedFinalCost' TEXT NOT NULL,
-        'CountryOfPoster' TEXT NOT NULL,
-        'CountryOfWinner' TEXT NOT NULL,
-        'Year' INTEGER NOT NULL,
-        'Week' INTEGER NOT NULL
-        );''')
-
-        con.commit()
+    # def createRelevantJobsTable(self):
+    #     dbName = "JobDetails.db"
+    #     con = lite.connect(dbName)
+    #     cur = con.cursor()
+    #
+    #     cur.execute('DROP TABLE IF EXISTS RelevantJobs')
+    #     cur.execute('''CREATE TABLE RelevantJobs (
+    #     'JobID' INTEGER PRIMARY KEY,
+    #     'URL' TEXT NOT NULL,
+    #     'Title' TEXT NOT NULL,
+    #     'Description' TEXT NOT NULL,
+    #     'Tags' TEXT NOT NULL,
+    #     'NumberOfBidders' INTEGER NOT NULL,
+    #     'AverageBidCost' TEXT NOT NULL,
+    #     'FinalCost' TEXT NOT NULL,
+    #     'Currency' TEXT NOT NULL,
+    #     'Time' TEXT NOT NULL,
+    #     'ConvertedFinalCost' TEXT NOT NULL,
+    #     'CountryOfPoster' TEXT NOT NULL,
+    #     'CountryOfWinner' TEXT NOT NULL,
+    #     'Year' INTEGER NOT NULL,
+    #     'Week' INTEGER NOT NULL
+    #     );''')
+    #
+    #     con.commit()
 
     # Creates the Jobs table in the database, which will initially be empty
     def createReviewJobsTable(self):
@@ -302,11 +313,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'ConvertedFinalCost' TEXT NOT NULL,
         'CountryOfPoster' TEXT NOT NULL,
         'CountryOfWinner' TEXT NOT NULL,
-        'DateScraped' TEXT NOT NULL,
-        'Date' TEXT NOT NULL,
+        'DateScraped' INTEGER NOT NULL,
+        'TimeAgo' INTEGER NOT NULL,
         'DateRange' TEXT,
         'Category' INTEGER,
-        'Score' INTEGER
+        'Score' INTEGER,
+        'PositiveMatches' TEXT,
+        'NegativeMatches' TEXT
         );''')
 
         con.commit()
@@ -339,7 +352,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('DROP TABLE IF EXISTS Bids')
         cur.execute('''CREATE TABLE Bids (
         'BidID' INTEGER PRIMARY KEY,
-        'JobID' INTEGER NOT NULL,
+        'JobID' INTEGER NOT NULL,x
         'Country' TEXT NOT NULL,
         'User' TEXT NOT NULL,
         'Price' TEXT NOT NULL,
@@ -565,8 +578,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         try:
             cur.execute('''
             INSERT INTO ReviewJobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
-            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, DateScraped, Date) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+            Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, DateScraped, TimeAgo) 
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave,
                          self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
@@ -786,7 +799,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 self.saveWinnerDetails(self.projectID, url, self.users[0])
 
             else:
-                self.currency = self.soup.find("p", {"class": "PageProjectViewLogout-header-byLine"}).text.split()[-1]
+                # self.currency = self.soup.find("p", {"class": "PageProjectViewLogout-header-byLine"}).text.split()[-1]
                 print("No one was awarded this project\n")
 
             self.getBiddersCountries()
