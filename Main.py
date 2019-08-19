@@ -93,7 +93,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.getSeen()
         # projects = getAllTheRelevantLinks("https://www.freelancer.co.uk/archives/essay-writing/2019-21/")
         # url = "https://www.freelancer.co.uk/archives/essay-writing/2019-22/"
-        url = "https://www.freelancer.co.uk/archives/essay-writing/2019-25/"
+        url = "https://www.freelancer.co.uk/archives/essay-writing/2019-18/"
         pageTime = url.split("/")[-2].split("-")
         self.year = int(pageTime[0])
         self.week = int(pageTime[1])
@@ -131,9 +131,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
             print(profileLink)
             self.numOn = i + 1
             if profileLink != "https://www.freelancer.co.uk/u/chukuaile1":
-                try:
-                    check = (self.profilesSavedAlready[profileLink] != True)
-                except KeyError:
+                check = (self.profilesSavedAlready.get(profileLink) is None)
+                if check:
                     self.getInformationFromBidderProfile(profileLink)
                     self.profilesSavedAlready.update({profileLink: True})
             # if (self.profilesSavedAlready.get(profileLink) is None):
@@ -352,7 +351,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         cur.execute('DROP TABLE IF EXISTS Bids')
         cur.execute('''CREATE TABLE Bids (
         'BidID' INTEGER PRIMARY KEY,
-        'JobID' INTEGER NOT NULL,x
+        'JobID' INTEGER NOT NULL,
         'Country' TEXT NOT NULL,
         'User' TEXT NOT NULL,
         'Price' TEXT NOT NULL,
@@ -579,7 +578,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             cur.execute('''
             INSERT INTO ReviewJobs(JobID, URL, Title, Description, Tags, NumberOfBidders, AverageBidCost, FinalCost,
             Currency, Time, ConvertedFinalCost, CountryOfPoster, CountryOfWinner, DateScraped, TimeAgo) 
-            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (self.projectID, url, self.projectTitle, self.projectDescription, self.tagsToSave,
                          self.numFreelancers,
                          self.averagePrice, self.priceAmount, self.currency, self.time, self.convertedPrice,
@@ -675,14 +674,26 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 except AttributeError:
                     self.awarded = False
 
+                # Retrieving the final price for the task if we are looking at
+                # a completed project in the archives
+                try:
+                    self.finalPrice = self.soup.find(
+                        "div", {"class": "FreelancerInfo-price"}).text
+                    yes = True
+                except AttributeError:
+                    self.finalPrice = self.soup.find(
+                        "p", {"class": "PageProjectViewLogout-header-byLine"}).text
+                    yes = False
+
+                split = self.finalPrice.split()
+                self.priceAmount = "None"
+                if yes:
+                    self.priceAmount = split[0]
+                self.currency = split[1]
+
                 # Checks if the project was awarded to anyone
                 if (self.archived and self.awarded):
                     # self.awarded = True
-
-                    # Retrieving the final price for the task if we are looking at
-                    # a completed project in the archives
-                    self.finalPrice = self.soup.find(
-                        "div", {"class": "FreelancerInfo-price"}).text
 
                     # Makes sure the bidding info is correct as archived pages use
                     # a slightly different format
@@ -695,9 +706,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                     self.finalPrices.append(self.finalPrice)
 
-                    split = self.finalPrice.split()
-                    self.priceAmount = split[0]
-                    self.currency = split[1]
+
                     try:
                         self.time = split[3] + " " + split[4]
                     except IndexError:
