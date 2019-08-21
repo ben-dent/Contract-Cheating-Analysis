@@ -604,7 +604,7 @@ def jobConversions():
 def reviewJobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
-    cur.execute("SELECT JobID, FinalCost, Currency, TimeAgo, Week FROM Jobs WHERE ConvertedFinalCost = 'None'")
+    cur.execute("SELECT JobID, FinalCost, Currency, TimeAgo, Week FROM ReviewJobs WHERE ConvertedFinalCost = 'None'")
 
     res = cur.fetchall()
 
