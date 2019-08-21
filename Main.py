@@ -35,7 +35,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         self.btnFetch.clicked.connect(self.setUpProgram)
         self.btnExit.clicked.connect(self.exit)
         self.btnCloseBrowser.clicked.connect(self.closeBrowser)
-        self.btnSaveCSV.clicked.connect(saveDataToCSV)
+        self.btnSaveCSV.clicked.connect(saveAllDataToCSV)
 
         self.dateToday = datetime.today().strftime('%d/%m/%y')
         self.time = ''

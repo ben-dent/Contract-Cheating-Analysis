@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>325</height>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,7 +34,7 @@
      <string>Choose Filter Option</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnCountry">
+   <widget class="QPushButton" name="btnCountryBids">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -49,14 +49,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Filter By Country</string>
+     <string>Filter By Country - Bidders</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnCategory">
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>140</y>
+      <y>240</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -74,7 +74,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>190</y>
+      <y>290</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>240</y>
+      <y>340</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -104,6 +104,42 @@
     </property>
     <property name="text">
      <string>Filter By Keyword</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnCountryPosters">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>140</y>
+      <width>200</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Filter By Country - Posters</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnCountryWinners">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>190</y>
+      <width>200</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Filter By Country - Winners</string>
     </property>
    </widget>
   </widget>

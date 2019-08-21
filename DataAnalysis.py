@@ -11,6 +11,8 @@ from forex_python.converter import CurrencyRates
 import random
 
 DATABASE_NAME = 'JobDetails.db'
+con = lite.connect(DATABASE_NAME)
+cur = con.cursor()
 
 
 # Converts the currency to USD at the historic rate
@@ -96,10 +98,6 @@ def calculateYearlyAverage(currency, amount, year):
 
 # Retrieves saved details to plot
 def plotFromDatabase():
-    db = "JobDetails.db"
-    con = lite.connect(db)
-    cur = con.cursor()
-
     cur.execute('SELECT Country FROM Bids')
 
     results = cur.fetchall()
@@ -233,9 +231,6 @@ def plotBarChartsOfBidderCountries(countryValues):
 
 
 def doAverages():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
     cur.execute('SELECT JobID, AverageBidCost FROM Jobs')
 
     jobs = cur.fetchall()
@@ -296,14 +291,14 @@ def calcAverage(cur, jobID):
 
 
 # Saving values from the database to CSV files
-def saveDataToCSV():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
+def saveAllDataToCSV():
     cur.execute("SELECT name FROM sqlite_master WHERE type = 'table'")
     con.commit()
 
     tables = [each[0] for each in cur.fetchall()]
+    saveToCSV(tables, '*', None)
+
+def saveToCSV(tables, columns, filter):
 
     bidNames = ["Bid ID", "Job ID", "Country", "User"]
     jobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
@@ -321,7 +316,9 @@ def saveDataToCSV():
              "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
 
     for table in tables:
-        query = "SELECT * FROM " + table
+        query = "SELECT " + columns + " FROM " + table
+        if filter is not None:
+            query += " WHERE " + filter
         cur.execute(query)
         data = []
 
@@ -358,9 +355,6 @@ def scoreProjects(constant, doPrint):
 
 
     ratio = (len(positive) * constant) / len(negative)
-
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
 
     cur.execute('SELECT JobID, Title, Description FROM Jobs')
 
@@ -520,9 +514,6 @@ def getKeywords():
 
 
 def conversions():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
     cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None'")
 
     res = cur.fetchall()
@@ -565,9 +556,6 @@ def conversions():
 
 
 def jobConversions():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
     cur.execute("SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE ConvertedFinalCost = 'None'")
 
     res = cur.fetchall()
@@ -602,8 +590,6 @@ def jobConversions():
 
 
 def reviewJobConversions():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
     cur.execute("SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs WHERE ConvertedFinalCost = 'None'")
 
     res = cur.fetchall()
@@ -646,9 +632,6 @@ def reviewJobConversions():
 
 
 def getDateRanges():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
     today = date.today()
 
     cur.execute('SELECT JobID, Date FROM ReviewJobs')
@@ -785,9 +768,6 @@ def getDateRanges():
 
 
 def optimiseConstant():
-    con = lite.connect(DATABASE_NAME)
-    cur = con.cursor()
-
     low = 9
     high = 17
     averageDistance = 1000
@@ -847,9 +827,9 @@ def optimiseConstant():
 
 
 
-doAverages()
-jobConversions()
-conversions()
+# doAverages()
+# jobConversions()
+# conversions()
 # getDateRanges()
 # scoreProjects(10)
 # optimiseConstant()
