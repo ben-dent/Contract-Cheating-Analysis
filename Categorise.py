@@ -54,20 +54,20 @@ class Categorise(QtWidgets.QMainWindow, categoriseUi):
         self.show()
 
     def getData(self):
-        self.cur.execute('SELECT JobID, Title, Tags, Description FROM Jobs WHERE Category = -1')
+        self.cur.execute('SELECT JobID, Title, Tags, Description FROM Jobs WHERE Category = -1 OR Category IS NULL')
         self.jobData = [list(each) for each in self.cur.fetchall()]
 
-        self.cur.execute('SELECT COUNT(JobID) FROM Jobs WHERE Category = -1')
+        self.cur.execute('SELECT COUNT(JobID) FROM Jobs WHERE Category = -1 OR Category IS NULL')
 
         tot1 = int(self.cur.fetchall()[0][0])
 
         if (tot1 == 0):
             self.currentList = "ReviewJobs"
 
-        self.cur.execute('SELECT JobID, Title, Tags, Description FROM ReviewJobs WHERE Category = -1')
+        self.cur.execute('SELECT JobID, Title, Tags, Description FROM ReviewJobs WHERE Category = -1 OR Category IS NULL')
         self.reviewJobData = [list(each) for each in self.cur.fetchall()]
 
-        self.cur.execute('SELECT COUNT(JobID) FROM ReviewJobs WHERE Category = -1')
+        self.cur.execute('SELECT COUNT(JobID) FROM ReviewJobs WHERE Category = -1 OR Category IS NULL')
 
         self.numProjects = tot1 + int(self.cur.fetchall()[0][0])
 
