@@ -1,1005 +1,695 @@
 Title	Description	Category
-1 simple macro's made for excel that will delete colums and sort ready to print	<built-in method lower of str object at 0x12405c458>	1
-excel spread sheet - insert comma delimited text	<built-in method lower of str object at 0x124047300>	2
-excel macro to organize date - urgent	<built-in method lower of str object at 0x1240475d0>	1
-magento page linking	<built-in method lower of str object at 0x124093cf0>	1
-pricing calculator (excel)	<built-in method lower of str object at 0x124103900>	3
-public health cimate change	<built-in method lower of str object at 0x11e9f2000>	5
-magento expert to complete task	<built-in method lower of str object at 0x123d33d50>	1
-document clean-up	<built-in method lower of str object at 0x123e6eb70>	1
-the individual assignment is based on the development of a marketing communications plan for the launch of a product/brand of your choice	<built-in method lower of str object at 0x11e9f2a00>	5
-market analysis	<built-in method lower of str object at 0x1241029e0>	5
-need to transfer data to excel and do information scrape 	<built-in method lower of str object at 0x11e9f0600>	1
-three orders: 2000words global marketing & communication	<built-in method lower of str object at 0x12404ec90>	5
-write a report  -- 2	<built-in method lower of str object at 0x124103e40>	5
-australian taxation -1000 words report needed in 4-5 hours	<built-in method lower of str object at 0x12409a188>	5
-accounting and insurance	<built-in method lower of str object at 0x123ef2a80>	5
-write a  mathematical report 	<built-in method lower of str object at 0x124093d78>	5
-senior project	<built-in method lower of str object at 0x12404ece8>	5
-academic writing 	<built-in method lower of str object at 0x124103be0>	5
-help in  writing!!	<built-in method lower of str object at 0x124104280>	5
-urgent  writing task_deadline 1 hour_length 500 words	<built-in method lower of str object at 0x123ed6100>	5
-help me write something	<built-in method lower of str object at 0x1240666b0>	4
-"essay on book ""quantum shift in global brain"" by ervin lászló "	<built-in method lower of str object at 0x124012cb0>	5
-academic writing 	<built-in method lower of str object at 0x124093e00>	4
-finance project	<built-in method lower of str object at 0x12407a5e0>	5
-academic writing (critical path)	<built-in method lower of str object at 0x12404ed98>	4
-help with business finance 	<built-in method lower of str object at 0x123e1bc30>	1
-generate an word sign in sheet from excel data source.	<built-in method lower of str object at 0x11e9ee400>	1
-need editing n polishing	<built-in method lower of str object at 0x123ebea80>	5
-client engagment skills (financial planning)	<built-in method lower of str object at 0x1239e0030>	5
-client engagment stratigies (financial planning) question 650 word response	<built-in method lower of str object at 0x123c6d420>	5
-find massage therapy and personal training colleges in queensland australia.	<built-in method lower of str object at 0x11e9f3400>	1
-outline strategies to deal with overconfident clients (financial planning) max 600 words -- 3	<built-in method lower of str object at 0x123e5e828>	5
-reflective journal 	<built-in method lower of str object at 0x124104720>	5
-3 short english wrting	<built-in method lower of str object at 0x124007270>	5
-yazılım üret 	<built-in method lower of str object at 0x123e279b8>	5
-maximum 2500 word response to genos survey (financial planning)	<built-in method lower of str object at 0x12409a2e0>	5
-analyze some data  	<built-in method lower of str object at 0x124022670>	1
-find an accountant 	<built-in method lower of str object at 0x124078b90>	1
-digestion process	<built-in method lower of str object at 0x124022800>	5
-create an invoice in microsoft excel 2010	<built-in method lower of str object at 0x124104b10>	1
-academic writing for project management 	<built-in method lower of str object at 0x12409d030>	5
-academic writing three different articles 	<built-in method lower of str object at 0x124097240>	5
-hotel operation managment  (cost control and maximisation of efficiency)  	<built-in method lower of str object at 0x11e9f4800>	5
-write a report 	<built-in method lower of str object at 0x124018470>	4
-manage project and project risks	<built-in method lower of str object at 0x123e49900>	5
-write a report 	<built-in method lower of str object at 0x11e9eea00>	5
-excel generator crossword / wordsearch.	<built-in method lower of str object at 0x11e9f5c00>	5
-bi analysis in excel     fx 	<built-in method lower of str object at 0x1240901e0>	1
-find an accountant 2	<built-in method lower of str object at 0x123d1e030>	1
-coefficient of variation method  according  to i̇ncome i̇nequality 	<built-in method lower of str object at 0x12409d0c0>	3
-portfolio construction report	<built-in method lower of str object at 0x11e9f3e00>	2
-quick 4 questions finance	<built-in method lower of str object at 0x124093e88>	5
-500 word commentary	<built-in method lower of str object at 0x1240668b0>	5
-coefficient of cariation according to population income	<built-in method lower of str object at 0x123e73d00>	4
-type essay word for word from scanned document	<built-in method lower of str object at 0x124104f00>	5
-fill in a spreadsheet with data  - copy and paste	<built-in method lower of str object at 0x124047738>	1
-i need you to write some content for a website.    [login to view url]	<built-in method lower of str object at 0x123ecc6b0>	1
-find an accountant 	<built-in method lower of str object at 0x124065a40>	1
-accounts and finance expert needed 17th july	<built-in method lower of str object at 0x124012d50>	2
-academic writing  ma	<built-in method lower of str object at 0x12404eea0>	5
-create a break-even chart in excel from a variable data range	<built-in method lower of str object at 0x11e9f6200>	1
-analyze some data  	<built-in method lower of str object at 0x124022990>	1
-philosophy quiz homework short	<built-in method lower of str object at 0x12407a780>	5
-write some articles 	<built-in method lower of str object at 0x12409d150>	4
-managerial economics	<built-in method lower of str object at 0x1241053c0>	5
-urgent need for 1 chapter 	<built-in method lower of str object at 0x12406a750>	5
-further clarification and comments on a statistical analysis  [n1]	<built-in method lower of str object at 0x11e9f6800>	5
-public healthhealth & safety-supporting independent living -- 1	<built-in method lower of str object at 0x12409a438>	5
-academic writing  in marketing 	<built-in method lower of str object at 0x12404eef8>	5
-academic writing	<built-in method lower of str object at 0x124105670>	5
-academic writing marketing 	<built-in method lower of str object at 0x12400cf30>	5
-1 probability calculations question + 500 word statistics essay	<built-in method lower of str object at 0x12407a7e8>	5
-academic writing ( case in marketing ) 	<built-in method lower of str object at 0x12406a7b0>	5
-2 page project on financial aspect of small housing. 	<built-in method lower of str object at 0x123ed6e00>	5
-financial analysis project	<built-in method lower of str object at 0x124105180>	4
-a 700 word report on b2b, ebusiness and eai and with sourcing and references throughout	<built-in method lower of str object at 0x124090390>	5
-simple macroeconomic calculation	<built-in method lower of str object at 0x1240478a0>	5
-academic writing 	<built-in method lower of str object at 0x123e49a78>	1
-academic writing marketing rough draft 	<built-in method lower of str object at 0x12409e088>	5
-college assignment. only bid, if you can finish the work in 2/3 hours.	<built-in method lower of str object at 0x12408c288>	5
-help with business finance 	<built-in method lower of str object at 0x11e9f6e00>	5
-academic writing 	<built-in method lower of str object at 0x12408c418>	5
-help with business finance 	<built-in method lower of str object at 0x12407a8b8>	4
-help me write something -- 3	<built-in method lower of str object at 0x12407b2d0>	5
-paper 1 mobile computing	<built-in method lower of str object at 0x124047a08>	5
-financial project writing	<built-in method lower of str object at 0x123ed6ed0>	4
-executive level report	<built-in method lower of str object at 0x124105c50>	5
-write a technical report  & swot analysis	<built-in method lower of str object at 0x1240972f0>	5
-risk analysis	<built-in method lower of str object at 0x123e73e48>	5
-content writing	<built-in method lower of str object at 0x11e9f7600>	1
-financial planning analysis (1 day)	<built-in method lower of str object at 0x124014870>	5
-excel assignment 	<built-in method lower of str object at 0x12409e138>	5
-excel project2	<built-in method lower of str object at 0x12407a920>	5
-help with business finance 	<built-in method lower of str object at 0x124013ae0>	3
-research paper for english 102	<built-in method lower of str object at 0x123e43810>	5
-statistics assignment help	<built-in method lower of str object at 0x12407a988>	5
-the milagro beanfield war by john nichols	<built-in method lower of str object at 0x12400d530>	5
-finance class homework	<built-in method lower of str object at 0x11e9f7c00>	5
-finanicial calculations	<built-in method lower of str object at 0x124066930>	5
-academic writing-conference paper	<built-in method lower of str object at 0x1240a1030>	5
-escrever um plano de negócios 	<built-in method lower of str object at 0x1241062b0>	4
-content writing 	<built-in method lower of str object at 0x11e9f8400>	5
-need help in a quiz on operation management,tomorrow.	<built-in method lower of str object at 0x1240017f0>	5
-academic writing - macroeconomic	<built-in method lower of str object at 0x11e9efc00>	5
-assist with project management  	<built-in method lower of str object at 0x123ec8a28>	5
-linear regression project	<built-in method lower of str object at 0x11f143830>	5
-masters in health service managment project for university	<built-in method lower of str object at 0x124018580>	5
-academic writing 	<built-in method lower of str object at 0x123e5ecf0>	5
-literature work 	<built-in method lower of str object at 0x124065c70>	5
-set up project costs tracking for multi projects 	<built-in method lower of str object at 0x12408c4e0>	1
-financial calculations	<built-in method lower of str object at 0x12409d1e0>	5
-data analysis	<built-in method lower of str object at 0x123efa8d0>	5
-simple economics applied writing	<built-in method lower of str object at 0x12400d670>	5
-calculus help	<built-in method lower of str object at 0x123ec8b10>	5
-academic writing 	<built-in method lower of str object at 0x11e9f9200>	5
-disaster recovery plan abilash	<built-in method lower of str object at 0x123e78e88>	5
-organizational change paper	<built-in method lower of str object at 0x124106a60>	5
-work health and safe management  essay 	<built-in method lower of str object at 0x124105990>	5
-bussniss assignment (need more than one freelancer)	<built-in method lower of str object at 0x123c80e30>	5
-macroeconomics help	<built-in method lower of str object at 0x123ec8bf8>	5
-business case sravan	<built-in method lower of str object at 0x12408c5a8>	5
-finance info	<built-in method lower of str object at 0x12407ab90>	5
-5  page assignment 	<built-in method lower of str object at 0x12408c670>	5
-write a report 	<built-in method lower of str object at 0x12409a590>	5
-5 page assignment 2	<built-in method lower of str object at 0x12407abf8>	5
-quantitative empirical research method writing -- 2	<built-in method lower of str object at 0x123e43420>	5
-academic writing 	<built-in method lower of str object at 0x123ebec90>	5
-marketing plan	<built-in method lower of str object at 0x12407acc8>	5
-assist with project management 	<built-in method lower of str object at 0x124012df0>	5
-us red book car data 	<built-in method lower of str object at 0x123ec8ce0>	3
-economics task 8 hours	<built-in method lower of str object at 0x1240669b0>	5
-help with business finance 	<built-in method lower of str object at 0x124028650>	1
-philosophy  academic writing 	<built-in method lower of str object at 0x12407ad30>	5
-5000 words business and marketing assignment 	<built-in method lower of str object at 0x11e9f9e00>	5
-accounting help	<built-in method lower of str object at 0x123ebbb20>	1
-presentation	<built-in method lower of str object at 0x12409d270>	4
-academic writing 	<built-in method lower of str object at 0x124090540>	5
-need help in choi choi's work	<built-in method lower of str object at 0x12407ad98>	5
-financial management project	<built-in method lower of str object at 0x12409f0a8>	5
-biology proposal	<built-in method lower of str object at 0x1240a3030>	5
-assist with project management  	<built-in method lower of str object at 0x1240a30b8>	5
-write analysis on a closed-end fund	<built-in method lower of str object at 0x123e70ce8>	1
-statistics	<built-in method lower of str object at 0x124007390>	5
-1500 word essay 	<built-in method lower of str object at 0x124106670>	5
-academic writing in supply chain magt 	<built-in method lower of str object at 0x124065ce0>	5
-help with business finance project	<built-in method lower of str object at 0x124066a30>	5
-write some articles 	<built-in method lower of str object at 0x12409f120>	2
-information delivery and information management	<built-in method lower of str object at 0x123803b10>	5
-dystopian society	<built-in method lower of str object at 0x124012e90>	5
-business mathematics	<built-in method lower of str object at 0x12409e4a8>	5
-coll electrical case study 9	<built-in method lower of str object at 0x11e9faa00>	5
-business case 	<built-in method lower of str object at 0x124105ea0>	5
-do some blog posting  pr	<built-in method lower of str object at 0x1240973a0>	5
-"need help in picky and annoying lady ""tiffany wong""'s 1000words proposal"	<built-in method lower of str object at 0x1240a11a0>	3
-write a technical report  	<built-in method lower of str object at 0x124047b70>	5
-proofread business plan & small changes /  new value adding ideas   	<built-in method lower of str object at 0x124106d00>	4
-academic writing 4	<built-in method lower of str object at 0x124066b30>	5
-3 questions 	<built-in method lower of str object at 0x11e9fb400>	5
-academic writing essay	<built-in method lower of str object at 0x124106f10>	5
-tejafffffff -- 2	<built-in method lower of str object at 0x123e43618>	5
-quantitative business tasks- only  bid if you are good at it	<built-in method lower of str object at 0x124078c70>	5
-political science short essay and short answers.	<built-in method lower of str object at 0x124065dc0>	5
-dashboard on a company	<built-in method lower of str object at 0x11ea30800>	5
-finance, portfolio analysis	<built-in method lower of str object at 0x124097450>	3
- report  writting	<built-in method lower of str object at 0x12409f210>	5
-assist with project management. research and email marketing	<built-in method lower of str object at 0x124022b20>	5
-write a business plan 	<built-in method lower of str object at 0x124097500>	5
-excel help	<built-in method lower of str object at 0x124065ea0>	1
-help me write something	<built-in method lower of str object at 0x1240975b0>	5
-write about deepika padukone bithday	<built-in method lower of str object at 0x12407ae68>	5
-a movie reaction assignment of the law of business class	<built-in method lower of str object at 0x11ea31400>	5
-analyze some data  	<built-in method lower of str object at 0x1240018e8>	5
-academic writing (business)	<built-in method lower of str object at 0x12406a990>	5
-write a technical report  	<built-in method lower of str object at 0x124078d50>	5
-help me with a workplace health and safety diploma 	<built-in method lower of str object at 0x123ebeb88>	5
-rewrite some articles for me 	<built-in method lower of str object at 0x1240a5030>	1
-academic writing 	<built-in method lower of str object at 0x123e6ec60>	5
-academic writing  holism	<built-in method lower of str object at 0x1241071b0>	5
-2x 1200 word docs (said) by wednesday 5pm uk gmt	<built-in method lower of str object at 0x123e2be30>	5
-academic writer need possessing excellent english grammer and punctuation 	<built-in method lower of str object at 0x1240a5178>	4
-content writing 	<built-in method lower of str object at 0x123e1bdb0>	1
-research methods for psychology -- 2	<built-in method lower of str object at 0x12409bb20>	5
-writing summary of classic articles or reports	<built-in method lower of str object at 0x1240a6030>	5
-mechanism description	<built-in method lower of str object at 0x11ea32400>	5
-term paper	<built-in method lower of str object at 0x1240019e0>	5
-cpnference paper 	<built-in method lower of str object at 0x1240a7030>	5
-write a business plan 	<built-in method lower of str object at 0x124065f80>	2
-academic writing :intel	<built-in method lower of str object at 0x1240a8030>	5
-psychology	<built-in method lower of str object at 0x12409e5b0>	5
-research paper	<built-in method lower of str object at 0x1240a3140>	5
-writing for art course	<built-in method lower of str object at 0x12406aa50>	5
-long term article writers required - inr 85/500 words  (approx. $1.25/500 words) -- 2	<built-in method lower of str object at 0x124107430>	4
-content writing 	<built-in method lower of str object at 0x1240a80a0>	3
-suggested additions to business plan, and cash flow	<built-in method lower of str object at 0x124107940>	1
-building a financial budget and business model for a trading international business	<built-in method lower of str object at 0x124107d30>	1
-critical analysis on two journal articles	<built-in method lower of str object at 0x11e9f8c00>	5
-interpret some poems for me	<built-in method lower of str object at 0x1240a8110>	5
-write a business plan 	<built-in method lower of str object at 0x11ea34c00>	1
-help with business finance 	<built-in method lower of str object at 0x1240a4c90>	1
-academic writing 	<built-in method lower of str object at 0x124108070>	5
-research methodology  	<built-in method lower of str object at 0x1240a52c0>	5
-assist with project management  	<built-in method lower of str object at 0x1240a4e40>	5
-master of financial mathematics program application essay editor required   	<built-in method lower of str object at 0x124001ad8>	5
-help me write	<built-in method lower of str object at 0x124018690>	5
-annotated bibliography, mla citation	<built-in method lower of str object at 0x123efa988>	5
-mini case project	<built-in method lower of str object at 0x1240a9098>	5
-need help with quick rewrite	<built-in method lower of str object at 0x12407b378>	2
-academic writing rewrite	<built-in method lower of str object at 0x124012f30>	5
-article writers/rewriters	<built-in method lower of str object at 0x11e9fbe00>	1
-i need you to write an academic project 	<built-in method lower of str object at 0x12409f288>	5
-methodology	<built-in method lower of str object at 0x1240a8180>	5
-write a report	<built-in method lower of str object at 0x1240a32d8>	5
-marketing case study	<built-in method lower of str object at 0x1240aa270>	5
-health promotion	<built-in method lower of str object at 0x1240a81f0>	5
-critically analyse amazon company model (master degree level)	<built-in method lower of str object at 0x124014930>	5
-assist with project management  	<built-in method lower of str object at 0x11e9ef000>	5
-critical analysis articles  	<built-in method lower of str object at 0x11e9fa400>	5
-paper  due at midnight urban politics 3 pg	<built-in method lower of str object at 0x123e6ed50>	5
-case study louis vuitton	<built-in method lower of str object at 0x11ea33c00>	5
-help with business finance 	<built-in method lower of str object at 0x1240a9100>	5
-500-800 words --- 20 articles	<built-in method lower of str object at 0x1240074b0>	1
-rewrite and reword work	<built-in method lower of str object at 0x1240aa5d0>	4
-написание статей 	<built-in method lower of str object at 0x1241082a0>	1
-a political paper 	<built-in method lower of str object at 0x11ea36c00>	5
-2000 word help (pet)	<built-in method lower of str object at 0x123e6ee40>	5
-academic writing hindu	<built-in method lower of str object at 0x1240036c0>	5
-literature review based on survey 	<built-in method lower of str object at 0x1240ab030>	5
-bio academic writing 	<built-in method lower of str object at 0x11ea34200>	5
-write some articles 	<built-in method lower of str object at 0x1240a6100>	5
-rewrite some articles for me 	<built-in method lower of str object at 0x123efaa40>	5
-logistics in e-business   	<built-in method lower of str object at 0x1240ac030>	5
-write an 500-700 word essay with following question.	<built-in method lower of str object at 0x124108860>	5
-write a technical marketing report  	<built-in method lower of str object at 0x1240ad030>	5
-put an ebook in your own words	<built-in method lower of str object at 0x124066cb0>	4
-academic writing 	<built-in method lower of str object at 0x12408c738>	5
-write a proposal of defense(literature review + research methodology) in it fields	<built-in method lower of str object at 0x1240ae030>	5
-write a technical report with calculation for accounting 	<built-in method lower of str object at 0x12409d300>	1
-academic writing 	<built-in method lower of str object at 0x1240a91d0>	5
-academic writing for charleslimnet	<built-in method lower of str object at 0x12409f300>	5
-write 4 articles about a highly addictive browser game! urgent!	<built-in method lower of str object at 0x11ea38000>	5
-[report][presentation] domain based enterprise system	<built-in method lower of str object at 0x123ef2c38>	5
-paraphrasing about 2000 words in 5 hours	<built-in method lower of str object at 0x1240af030>	5
-rewrite some articles for me 	<built-in method lower of str object at 0x124066d30>	4
-write a report 	<built-in method lower of str object at 0x12405c750>	5
-report 5000 words with material given (easy)	<built-in method lower of str object at 0x12405e130>	5
-academic writing	<built-in method lower of str object at 0x11ea3ca00>	5
-required 30 health related short articles rewriting	<built-in method lower of str object at 0x124047cd8>	4
-statictics	<built-in method lower of str object at 0x11ea3a800>	5
-"content writing - ""value"""	<built-in method lower of str object at 0x11ea31c00>	4
-private project for an existing freelancer.	<built-in method lower of str object at 0x1240af108>	3
-rewrite 500 word article	<built-in method lower of str object at 0x1240a8420>	4
-write a business plan 	<built-in method lower of str object at 0x1240b1080>	2
-need articles rewritten - health related topics	<built-in method lower of str object at 0x1240af1e0>	1
-need to write some text of 20 word	<built-in method lower of str object at 0x12409e870>	2
-rewrite 30 positive and spiritual articles for me.	<built-in method lower of str object at 0x123e70e10>	4
-write my product descriptions 	<built-in method lower of str object at 0x12409a6e8>	1
-edit an existing paper and make significant changes according the briefing.	<built-in method lower of str object at 0x124078e30>	5
-financial managment /corporate finance case	<built-in method lower of str object at 0x1240af2b8>	5
-academic writing about short stature in childhood	<built-in method lower of str object at 0x124078f10>	5
-i would like to hire a proofreader	<built-in method lower of str object at 0x1240b1120>	4
-financial report 1	<built-in method lower of str object at 0x12405e230>	1
-integrate 01	<built-in method lower of str object at 0x124099c30>	4
-environmental sustainability/ office  	<built-in method lower of str object at 0x12406adb0>	4
-proofread a short report and make it eye-catching 	<built-in method lower of str object at 0x12400d7b0>	4
-culture diversity-group research project	<built-in method lower of str object at 0x123e8ca30>	5
-editing a family genealogy book to look visually more professional	<built-in method lower of str object at 0x1241084c0>	1
-quickbooks support 	<built-in method lower of str object at 0x12405c7e8>	1
-compression socks pt. 2	<built-in method lower of str object at 0x1240b2030>	3
-paraphrase 	<built-in method lower of str object at 0x12406ae70>	3
-academic writing 	<built-in method lower of str object at 0x1240a5408>	5
-ghostwriter- write 1000 word article on new medical research findings	<built-in method lower of str object at 0x11ea42000>	5
-help me write something	<built-in method lower of str object at 0x1240b3030>	4
-help me write something -- 4	<built-in method lower of str object at 0x12407b420>	5
-write affiliate article 1	<built-in method lower of str object at 0x12406aed0>	1
-new work for sraheel	<built-in method lower of str object at 0x1240b1210>	3
-write an evolution report 	<built-in method lower of str object at 0x12409e978>	5
-find 8 academic  references for a case study, do not write anything	<built-in method lower of str object at 0x12409f4e0>	5
-rewrite an ebook 	<built-in method lower of str object at 0x124066e30>	2
-edit something 	<built-in method lower of str object at 0x123efaaf8>	5
-writing report of 700- 800 words about e-commerce business models  , any business 2 consumer , prefer in uae 	<built-in method lower of str object at 0x124108c20>	5
-help me write something	<built-in method lower of str object at 0x124108ef0>	5
-i need you to write a report for something.	<built-in method lower of str object at 0x12406af90>	4
-project work	<built-in method lower of str object at 0x123efabb0>	5
-development of an authentic assessment	<built-in method lower of str object at 0x11ea32c00>	5
-need help coming up with a research topic for japanese history paper	<built-in method lower of str object at 0x123efac68>	5
-help with business finance	<built-in method lower of str object at 0x1240a9440>	2
-economic analysis	<built-in method lower of str object at 0x12407b4c8>	5
-assign 2 report	<built-in method lower of str object at 0x12405e330>	5
-help with business finance	<built-in method lower of str object at 0x1240a61d0>	1
-find an accountant 	<built-in method lower of str object at 0x123ecc850>	1
-build an excel file based on other excel files	<built-in method lower of str object at 0x12405e430>	1
-economics overview for my company.	<built-in method lower of str object at 0x1240149f0>	5
-help with business finance 	<built-in method lower of str object at 0x12409ea80>	1
-academic writing.	<built-in method lower of str object at 0x12407b570>	5
-cross checking my translation 	<built-in method lower of str object at 0x12407b618>	2
-criminology critical literature review - 1,500 words	<built-in method lower of str object at 0x11ea33200>	5
-hi everyone please help me to complete my project report.	<built-in method lower of str object at 0x124047e40>	5
-effect of double glazing	<built-in method lower of str object at 0x1240b3120>	5
-academic writing 	<built-in method lower of str object at 0x124066eb0>	5
-commercial banking	<built-in method lower of str object at 0x1240a9510>	5
-recommendations to a business merger. 	<built-in method lower of str object at 0x1240a7160>	5
-write a report 	<built-in method lower of str object at 0x1241091f0>	5
-academic writing 	<built-in method lower of str object at 0x123ea8110>	5
-academic writing	<built-in method lower of str object at 0x1240b5468>	4
-assist with project management  	<built-in method lower of str object at 0x1240b54f8>	3
-help me write something	<built-in method lower of str object at 0x1240ae170>	5
-write a report 	<built-in method lower of str object at 0x1240a33e8>	1
-argumentative research paper needed	<built-in method lower of str object at 0x123ebbc38>	5
-write a technical report  	<built-in method lower of str object at 0x1240b1490>	5
-write a report 	<built-in method lower of str object at 0x1241094f0>	5
-help me write a report for the current problem of dundee wellgate centrum	<built-in method lower of str object at 0x124109850>	5
-academic writing 	<built-in method lower of str object at 0x123efad20>	5
-write some articles	<built-in method lower of str object at 0x1240b4090>	5
-write a business plan	<built-in method lower of str object at 0x124109b20>	2
-solve an excel problem, please!	<built-in method lower of str object at 0x11ea41a00>	5
-help me write something	<built-in method lower of str object at 0x1240187a0>	5
-help me write something	<built-in method lower of str object at 0x12408c800>	5
-write a brief pestel analysis on a company	<built-in method lower of str object at 0x124097660>	5
-content writing 	<built-in method lower of str object at 0x12409ebe0>	5
-paraphrase reservoir engineering report	<built-in method lower of str object at 0x123ec8dc8>	5
-academic writing f	<built-in method lower of str object at 0x123efadd8>	5
-interior and exterior design (home improvement) and concrete delivery	<built-in method lower of str object at 0x124003810>	1
-academic writing 	<built-in method lower of str object at 0x123efae90>	5
-marketing report: netflix's mobile app evaluation 	<built-in method lower of str object at 0x1240ad190>	5
-write a report 	<built-in method lower of str object at 0x123efaf48>	5
-academic writing 	<built-in method lower of str object at 0x11ea37600>	5
-write a report 	<built-in method lower of str object at 0x1240a3470>	4
-write a report 	<built-in method lower of str object at 0x1240b6030>	4
-write a report 	<built-in method lower of str object at 0x1240b1530>	5
-i need you to write an academic article. -- 2	<built-in method lower of str object at 0x1240b3210>	5
-academic writing 	<built-in method lower of str object at 0x124003960>	5
-writing statistics	<built-in method lower of str object at 0x1240a95e0>	5
-academic writing 	<built-in method lower of str object at 0x1240b1580>	5
-write a report 	<built-in method lower of str object at 0x12409a840>	1
-bonus scheme design  (major [login to view url]) work as well (urgent!!!)	<built-in method lower of str object at 0x123ebbd50>	1
-system design and analysis- computer science	<built-in method lower of str object at 0x12405c880>	5
-proofread something  	<built-in method lower of str object at 0x1240a62a0>	5
-report  writing	<built-in method lower of str object at 0x1240b3300>	5
-business analysis 	<built-in method lower of str object at 0x1240b15d0>	5
-invoicing template	<built-in method lower of str object at 0x123e49bf0>	1
-write a report 	<built-in method lower of str object at 0x1240b4210>	5
-research writing 	<built-in method lower of str object at 0x1240b1620>	5
-writing cover letter	<built-in method lower of str object at 0x1240b33f0>	1
-help with business finance 	<built-in method lower of str object at 0x124109d70>	5
-write some articles 	<built-in method lower of str object at 0x1240b7618>	3
-find and re-word articles for the news section of our website	<built-in method lower of str object at 0x11ea42c00>	1
-write a business plan 	<built-in method lower of str object at 0x124097710>	4
-rewrite some articles for me 	<built-in method lower of str object at 0x1240a34f8>	5
-rewrite some paper for me 	<built-in method lower of str object at 0x12409ec90>	5
-help with business finance 	<built-in method lower of str object at 0x1240b17b0>	5
-get articles written	<built-in method lower of str object at 0x1240a5550>	5
-write a technical report  	<built-in method lower of str object at 0x12407b6c0>	5
-part of a business plan	<built-in method lower of str object at 0x12409f648>	2
-write a technical report  	<built-in method lower of str object at 0x12410a160>	5
-research writing 	<built-in method lower of str object at 0x1240a3580>	5
-help me write something	<built-in method lower of str object at 0x12409d390>	5
-real estate problems	<built-in method lower of str object at 0x1240b18a0>	4
-risk decision analysis 672 a3	<built-in method lower of str object at 0x12409f6c0>	5
-electronic business and computing 	<built-in method lower of str object at 0x1240b4270>	3
-write a business plan 	<built-in method lower of str object at 0x1240b34e0>	5
-discussion  - open to bidding	<built-in method lower of str object at 0x1240b9030>	4
-research writing 	<built-in method lower of str object at 0x12405c918>	5
- knowledge management x2 set	<built-in method lower of str object at 0x1240a8570>	5
-write a drug addiction article	<built-in method lower of str object at 0x12400d8f0>	5
-design making 	<built-in method lower of str object at 0x12409ed40>	1
-business writtingg	<built-in method lower of str object at 0x1240b42d0>	5
-project for finance	<built-in method lower of str object at 0x11ea45200>	5
-intranet website development project management report	<built-in method lower of str object at 0x124013750>	5
-leaders are born, not made! do you agree or disagree?	<built-in method lower of str object at 0x12410a510>	5
-find an accountant 	<built-in method lower of str object at 0x1240a85e0>	1
-analyze some data  	<built-in method lower of str object at 0x1240a1310>	5
-research writing 	<built-in method lower of str object at 0x11ea47000>	5
-a marketing strategy for a tourism project in south africa	<built-in method lower of str object at 0x11ea33800>	5
-get articles written	<built-in method lower of str object at 0x12405c9b0>	5
-report writing 	<built-in method lower of str object at 0x12409f738>	5
-report on market structures	<built-in method lower of str object at 0x11ea40e00>	5
-technical writing 	<built-in method lower of str object at 0x12409ed98>	5
-report writing 	<built-in method lower of str object at 0x11ea47a00>	5
-research writing required	<built-in method lower of str object at 0x1240bc030>	5
-analyze project 	<built-in method lower of str object at 0x12409f7b0>	5
-find an accountant 	<built-in method lower of str object at 0x1240a9718>	2
-400 words business memo	<built-in method lower of str object at 0x1240b80b0>	4
-report writing about how data analytics is used in the retail industries  	<built-in method lower of str object at 0x123ebbe68>	5
-write a report 	<built-in method lower of str object at 0x123ec8eb0>	5
-help with business finance 	<built-in method lower of str object at 0x12409d420>	5
-research writing	<built-in method lower of str object at 0x11ea49a00>	5
-case study	<built-in method lower of str object at 0x1240ab1f0>	5
-write a technical report -- 2	<built-in method lower of str object at 0x12409edf0>	4
-write a business plan	<built-in method lower of str object at 0x1240bd030>	3
-write some articles 	<built-in method lower of str object at 0x1240b4330>	2
-write a report 12	<built-in method lower of str object at 0x123ecc9f0>	4
-write a business plan 	<built-in method lower of str object at 0x12410a760>	2
-contemporary marketing issues	<built-in method lower of str object at 0x12407b768>	5
-editing my work	<built-in method lower of str object at 0x124014ab0>	5
-business taxation 	<built-in method lower of str object at 0x1240a9780>	5
-academic essay project-write an empirical report 	<built-in method lower of str object at 0x12410ab40>	5
-research writing 	<built-in method lower of str object at 0x1240be030>	5
-project for charleslimnet	<built-in method lower of str object at 0x1240b1c10>	3
-statistical data analysis	<built-in method lower of str object at 0x1240287d8>	5
-write a business plan 	<built-in method lower of str object at 0x1240bc110>	4
-research writing on level 2 health care - 12/05/2017 10:39 edt	<built-in method lower of str object at 0x1240a8730>	5
-"conducting research on case study ""british airways entry into the biofuel project"" and need access to the teaching notes, with some analysis"	<built-in method lower of str object at 0x1240a5698>	5
-comapny valuation	<built-in method lower of str object at 0x12409a998>	5
-about managemnt 	<built-in method lower of str object at 0x1240bbf18>	3
-international corporate governance 	<built-in method lower of str object at 0x124013918>	5
-taxation law	<built-in method lower of str object at 0x12400e878>	5
-help with business finance 	<built-in method lower of str object at 0x11ea41400>	5
-i would like to hire a content writer	<built-in method lower of str object at 0x1240ad2f0>	1
-assessment common business unit bsbfia402 report on financial activity	<built-in method lower of str object at 0x12405ca48>	5
-health promoting podiatry	<built-in method lower of str object at 0x1240a87a0>	3
-wikipedia article  - open to bidding	<built-in method lower of str object at 0x12408c8c8>	1
-$30 - $250 usd	<built-in method lower of str object at 0x1240b21b0>	5
-write a report	<built-in method lower of str object at 0x1240188b0>	5
-business proposal 	<built-in method lower of str object at 0x124003ab0>	3
-edit something 	<built-in method lower of str object at 0x1240b81b0>	4
-read a textbook chapter and write a 250 word reflection (us eng) 12- 24hr deadline	<built-in method lower of str object at 0x12407b810>	5
-do statistical analysis and find insights from data in excel	<built-in method lower of str object at 0x1240af390>	4
-write my product descriptions 	<built-in method lower of str object at 0x1240bc1f0>	2
-research writing 	<built-in method lower of str object at 0x12410ae60>	5
-money and banking project	<built-in method lower of str object at 0x1240189c0>	5
-technical report  	<built-in method lower of str object at 0x11ea4a000>	5
-design and dynamics of organizations	<built-in method lower of str object at 0x1240ae210>	5
-research writing	<built-in method lower of str object at 0x123d183d0>	5
-i would like to hire a technical writer	<built-in method lower of str object at 0x12400da30>	5
-find an accountant s	<built-in method lower of str object at 0x1240b4390>	4
-review a book	<built-in method lower of str object at 0x123eccb90>	5
-write a technical report  	<built-in method lower of str object at 0x12410b0b0>	5
-write me 10 short articles (150+ words each)-003	<built-in method lower of str object at 0x12410b4a0>	2
-another technical report  	<built-in method lower of str object at 0x12410b880>	5
-data analysis by macroeconomics 	<built-in method lower of str object at 0x1240a98b8>	5
-case study	<built-in method lower of str object at 0x1240977c0>	5
-research writing	<built-in method lower of str object at 0x1240a8880>	5
-and anothertechnical report  	<built-in method lower of str object at 0x12410bb10>	5
-research writing  - 17/06/2017 23:42 edt	<built-in method lower of str object at 0x12409f8a0>	5
-write a business plan	<built-in method lower of str object at 0x1240af468>	1
-chemistry work	<built-in method lower of str object at 0x1240ba370>	5
-final technical report  	<built-in method lower of str object at 0x12410bd90>	5
-write articles -- 38895	<built-in method lower of str object at 0x1240a7290>	2
-write a technical report  	<built-in method lower of str object at 0x12409d4b0>	5
-supply chain planning and control mgmt	<built-in method lower of str object at 0x1240a9920>	5
-research writing 	<built-in method lower of str object at 0x12410c000>	1
-gantt chart	<built-in method lower of str object at 0x11ea44400>	3
-do some excel work 	<built-in method lower of str object at 0x11ea44a00>	2
-managerial accounting assignments online 	<built-in method lower of str object at 0x124014c30>	5
-research writing -- 2	<built-in method lower of str object at 0x1240c00e0>	5
-statistical data decision making report - 2 tasks	<built-in method lower of str object at 0x12410c2a0>	5
-shakespeare hamlet	<built-in method lower of str object at 0x11ea4aa00>	5
-university assignment - faculty of business studies	<built-in method lower of str object at 0x1240bd148>	5
-rewrite statement of purpose 	<built-in method lower of str object at 0x1240a73c0>	5
-corporate financial strategy	<built-in method lower of str object at 0x1240c0138>	5
-write a report  (makeup test)	<built-in method lower of str object at 0x1240b60e8>	5
-write a quick article	<built-in method lower of str object at 0x12409f918>	3
-budgeting & production planing	<built-in method lower of str object at 0x1240a9a58>	5
-finance questions help -- 2	<built-in method lower of str object at 0x123e49d68>	5
-research writing 	<built-in method lower of str object at 0x1240a6370>	5
-finance and accounting assignment	<built-in method lower of str object at 0x1240bd260>	5
-build an org chart	<built-in method lower of str object at 0x12409d540>	3
-report writing	<built-in method lower of str object at 0x11ea4c200>	5
-help with business finance	<built-in method lower of str object at 0x1240ac1c8>	5
-treasury and risk management 	<built-in method lower of str object at 0x1240b44b0>	4
-field methods public health	<built-in method lower of str object at 0x1240b4510>	5
-find an accountant 	<built-in method lower of str object at 0x12410c610>	5
-feasibility study 	<built-in method lower of str object at 0x1240c3030>	2
-essay writing on vaccine strategies needed to achieve the global eradication of hiv/aids	<built-in method lower of str object at 0x12405e530>	5
-big data stream processing in sdn supervision cloud computing 	<built-in method lower of str object at 0x1240c01e8>	5
-corporation accounts	<built-in method lower of str object at 0x1240c0240>	3
-ppt material manufacturing! “ grinding process “	<built-in method lower of str object at 0x1240a74f0>	5
-help with business finance	<built-in method lower of str object at 0x12409aaf0>	1
-ditributed systems  - open to bidding	<built-in method lower of str object at 0x124001bd0>	5
-data analysis	<built-in method lower of str object at 0x12409f990>	3
-small project one question	<built-in method lower of str object at 0x1240b4570>	5
-small project one question 1	<built-in method lower of str object at 0x1240a9ac0>	5
-i need an article about e-cigratte	<built-in method lower of str object at 0x1240ad450>	1
-write a business assignment	<built-in method lower of str object at 0x1240af540>	5
-re-phrasing of a technical engineering paper.	<built-in method lower of str object at 0x12410c890>	5
-the uae forieng policy	<built-in method lower of str object at 0x12410cb30>	5
-i need an essay writer	<built-in method lower of str object at 0x1240c0348>	5
-edit our company profile	<built-in method lower of str object at 0x1240c13f0>	1
-technical research project	<built-in method lower of str object at 0x12410cea0>	5
-products description writer	<built-in method lower of str object at 0x1240a9b28>	1
-network security	<built-in method lower of str object at 0x12410d100>	5
-copywriting	<built-in method lower of str object at 0x12405cae0>	5
-region article summaries	<built-in method lower of str object at 0x12410d390>	2
-check excel table	<built-in method lower of str object at 0x12410d5b0>	1
-help me write something	<built-in method lower of str object at 0x1240c1530>	2
-need help with financial study 	<built-in method lower of str object at 0x123eccd30>	4
-design a financial  model	<built-in method lower of str object at 0x1240c03a0>	3
-write 5 blog posts on instagram	<built-in method lower of str object at 0x1240af618>	1
-research and article rewriting 2 - 07/12/2017 08:34 est	<built-in method lower of str object at 0x1240a3690>	4
-writing articles on insurance in the us	<built-in method lower of str object at 0x123e8c430>	1
-writer for fashion & kids blog	<built-in method lower of str object at 0x1240ae2b0>	1
-the rhetorical analysis	<built-in method lower of str object at 0x1240b4630>	4
-help me edit my cv and cover letter	<built-in method lower of str object at 0x1240a3718>	1
-creative writing	<built-in method lower of str object at 0x1240c31a8>	1
-write a document on success story - urgent	<built-in method lower of str object at 0x12405e630>	4
-apartment website seo content and blogs	<built-in method lower of str object at 0x12409d660>	1
-check financial projection for any faults and send me corrections	<built-in method lower of str object at 0x1240b2330>	5
-essay	<built-in method lower of str object at 0x1240c16c0>	5
-paraphrase the attached document. 	<built-in method lower of str object at 0x1240ae350>	5
-script writing 	<built-in method lower of str object at 0x1240c0558>	3
-write new seo friendly website content 	<built-in method lower of str object at 0x11ea4b200>	1
-proof reader	<built-in method lower of str object at 0x1240b6258>	5
-professional resume needed 	<built-in method lower of str object at 0x1240a37a0>	1
-financial investment research analyst	<built-in method lower of str object at 0x12410d8c0>	4
-excel formula / array expert	<built-in method lower of str object at 0x12410dae0>	1
-concrete constituents and mix design -- 2 - 	<built-in method lower of str object at 0x11ea4b800>	5
-create me a professional marketing plan	<built-in method lower of str object at 0x1240ac360>	4
-paraphrase, review and edit blog post	<built-in method lower of str object at 0x123ebed98>	1
-write a 2-3 page paper	<built-in method lower of str object at 0x124001cc8>	4
-report preparation on market	<built-in method lower of str object at 0x1240b9198>	4
-write a short kids story	<built-in method lower of str object at 0x11ea4e200>	1
-write some articles about a debt collection agency	<built-in method lower of str object at 0x12410dd50>	1
-develop a gantt chart and google spreadsheet for construction project management	<built-in method lower of str object at 0x12410e0e0>	4
-writer wanted	<built-in method lower of str object at 0x12407b8b8>	1
-website content 	<built-in method lower of str object at 0x1240a6440>	1
-write 20 articles 250 words each using 5 keywords	<built-in method lower of str object at 0x124014cf0>	1
-project report for singapore business	<built-in method lower of str object at 0x123ef2df0>	3
-resume review (build)	<built-in method lower of str object at 0x12409fa80>	1
-cleaning company looking for a copywriter	<built-in method lower of str object at 0x1240b8230>	1
-looking for a professional ghostwriter	<built-in method lower of str object at 0x1240ad5b0>	2
-edit and proof read document	<built-in method lower of str object at 0x1240b9300>	1
-write article about cryptocurrency exchange	<built-in method lower of str object at 0x12405cb78>	4
-i need article reworded and rephrased	<built-in method lower of str object at 0x12405cc10>	2
-analyzing policy document	<built-in method lower of str object at 0x1240c5030>	5
-voice for youtube channel	<built-in method lower of str object at 0x124014db0>	1
-required project report for online cab booking & car rental project	<built-in method lower of str object at 0x1240ae3f0>	1
-rewrite the paragraphs in computer fild	<built-in method lower of str object at 0x124023648>	4
-help me write something	<built-in method lower of str object at 0x1240a7620>	5
-paper extract for telecom engineer.	<built-in method lower of str object at 0x1240a8960>	5
-i need a professional cv writer fix price for 92.58$	<built-in method lower of str object at 0x1240b4810>	1
-impact assessment 	<built-in method lower of str object at 0x1240b4870>	4
-article writers needed: business services, logistics, engineering topics	<built-in method lower of str object at 0x11ea43a00>	1
-company profile writing	<built-in method lower of str object at 0x123e7f9e0>	5
-managing is strategy and security risk	<built-in method lower of str object at 0x12409fb70>	5
-english writer and re-writer	<built-in method lower of str object at 0x1240a7750>	1
-rewrite 350 words	<built-in method lower of str object at 0x124014e70>	5
-essay 500 words -- 3	<built-in method lower of str object at 0x1240b48d0>	5
-need articles about user testing / ux design	<built-in method lower of str object at 0x123e8c830>	1
-healthcare info	<built-in method lower of str object at 0x1240ba5b0>	5
-re-write 3 x articles	<built-in method lower of str object at 0x12410e480>	1
-help me write something -- 2	<built-in method lower of str object at 0x12408c990>	5
-project writing	<built-in method lower of str object at 0x1240ac4f8>	4
-create a 300 words blog	<built-in method lower of str object at 0x12409fbe8>	5
-intrinsic value of bitcoin.	<built-in method lower of str object at 0x124018ad0>	5
-greek mythology , watch two film  compare films with each other and also with source material	<built-in method lower of str object at 0x1240c1a30>	5
-business report 	<built-in method lower of str object at 0x1240c0920>	5
-small article 	<built-in method lower of str object at 0x1240b4990>	5
-help with reports_ need multiple writers 2	<built-in method lower of str object at 0x1240b24b0>	3
-a great reference letter	<built-in method lower of str object at 0x123e8cc30>	1
-help to correct the style for our company overview	<built-in method lower of str object at 0x12410e740>	1
-proofread, copyedit, content edit my book	<built-in method lower of str object at 0x1240a1480>	1
-management challenge	<built-in method lower of str object at 0x124014f30>	5
-editing/proofreading of 1,540 words article + extension to 3,000 words	<built-in method lower of str object at 0x12410e9d0>	1
-i need content writer for china dinnerware brand blog	<built-in method lower of str object at 0x12400db70>	1
-blockchain articles	<built-in method lower of str object at 0x12410ecc0>	3
-i need a writer for hewlett-packard financial data	<built-in method lower of str object at 0x11ea54600>	5
-business research and comparative writing	<built-in method lower of str object at 0x1240a15f0>	1
-proofreading- english usa	<built-in method lower of str object at 0x1240b8330>	2
-statistical analysis project	<built-in method lower of str object at 0x1240ae490>	5
-resume creator	<built-in method lower of str object at 0x123ebeea0>	1
-i need a grant writer	<built-in method lower of str object at 0x1240ae530>	1
-resume writing	<built-in method lower of str object at 0x1240a6510>	1
-financial institutional	<built-in method lower of str object at 0x1240be158>	5
-us native proofreader wanter 238 words	<built-in method lower of str object at 0x12409d780>	1
-rephrase 3000 words	<built-in method lower of str object at 0x124097870>	4
-balance statement	<built-in method lower of str object at 0x1240a89d0>	2
-economic decision making	<built-in method lower of str object at 0x124022cb0>	4
-report of strategic management	<built-in method lower of str object at 0x1240c09d0>	5
-report writing	<built-in method lower of str object at 0x1240a8a40>	3
-write a report on a topic related to healthcare data analysis in usa	<built-in method lower of str object at 0x12410ef80>	5
-business ethics	<built-in method lower of str object at 0x1240be280>	5
-its about paraphrasing , for an article	<built-in method lower of str object at 0x1240a65e0>	2
-technical  report	<built-in method lower of str object at 0x1240b4b10>	4
-help for my worm	<built-in method lower of str object at 0x1240c0a80>	5
-help me write something -- 10	<built-in method lower of str object at 0x12405cca8>	5
-write a professional business proposal - 29/04/2018 15:21 edt	<built-in method lower of str object at 0x124023780>	2
-write an article on banking industry - 01/05/2018 13:45 edt	<built-in method lower of str object at 0x1240075d0>	5
-blog articles about cpm scheduling and claims analysis for construction.	<built-in method lower of str object at 0x12400dcb0>	5
-write article	<built-in method lower of str object at 0x1240b8430>	2
-write a professional resume for a esl english teacher	<built-in method lower of str object at 0x12409d810>	1
-resume editing to deliver a stand-out, professional cv	<built-in method lower of str object at 0x124001dc0>	1
-blog post for a retire overseas website	<built-in method lower of str object at 0x1240ad710>	1
-editor copy writer	<built-in method lower of str object at 0x1240a66b0>	1
-proofreading	<built-in method lower of str object at 0x12407b960>	1
-create a formal letter to state	<built-in method lower of str object at 0x1240be3a8>	1
-need help fixing my excel financial sheet	<built-in method lower of str object at 0x12410f310>	1
-write an seo content article for our website - must visit mayan ruins near cancun	<built-in method lower of str object at 0x11ea5ba00>	1
-resume writing	<built-in method lower of str object at 0x1240a57e0>	1
-strategic project management planning report for a small organization	<built-in method lower of str object at 0x11ea43400>	4
-photography website content	<built-in method lower of str object at 0x1240b2630>	1
-"write an extended abstract/ literature review  on the subject of ""heap leaching - issues preventing effective recoveries"""	<built-in method lower of str object at 0x124003c00>	5
-help me write something	<built-in method lower of str object at 0x12409ac48>	1
-outsourcing cash flow model	<built-in method lower of str object at 0x1240a7880>	1
-proofreading & improving game dialog and additional text	<built-in method lower of str object at 0x1240238b8>	1
-write some articles for me	<built-in method lower of str object at 0x124003d50>	1
-write articles for perfume ecommerce blog	<built-in method lower of str object at 0x1240bc2d0>	1
-master of science degree ( engineering )	<built-in method lower of str object at 0x1240076f0>	5
-copywriting for website	<built-in method lower of str object at 0x1240c8030>	1
-i need a content writer	<built-in method lower of str object at 0x1240b9468>	1
-content writing	<built-in method lower of str object at 0x1240c0b30>	5
-a bio/about/company description written for a creative agency	<built-in method lower of str object at 0x11ea61200>	1
-rewrite 500 words in 1 hour	<built-in method lower of str object at 0x1240af6f0>	3
-ongoing web blog and web content writing	<built-in method lower of str object at 0x1240239f0>	1
-i would like to hire an article writer - baby photography	<built-in method lower of str object at 0x11ea62c00>	1
-i need a short pitch/press release about my app	<built-in method lower of str object at 0x1240c9030>	1
-require a blog writer	<built-in method lower of str object at 0x1240af7c8>	1
-write a script for a one-minute explainer video for a technology company	<built-in method lower of str object at 0x123e7fbd0>	1
-a management project with excel	<built-in method lower of str object at 0x1240ae5d0>	2
-help me write something	<built-in method lower of str object at 0x1240a8ce0>	5
-create content for my internship website	<built-in method lower of str object at 0x123e7fdc0>	1
-cover letter for job application - with likely more projects offerred to the right person	<built-in method lower of str object at 0x12410f560>	1
-case study	<built-in method lower of str object at 0x1240a3938>	5
-resume edit	<built-in method lower of str object at 0x1240a6780>	1
-marketing essay -- 2	<built-in method lower of str object at 0x1240c0b88>	5
-project proposal plan	<built-in method lower of str object at 0x124007810>	1
-create a professional resume	<built-in method lower of str object at 0x124001eb8>	1
-website content writing  for it service desk	<built-in method lower of str object at 0x1240ca030>	1
-looking for someone to assist with a business proposal.	<built-in method lower of str object at 0x1240cb030>	1
-i need an excel expert.	<built-in method lower of str object at 0x12407ba08>	1
-assist me in research and writing blog article	<built-in method lower of str object at 0x12407bab0>	1
-need a complete 3000 word project on a case study	<built-in method lower of str object at 0x1240906f0>	5
-research paper	<built-in method lower of str object at 0x11ea65800>	5
-write 20 articles on health, fitness and wellness	<built-in method lower of str object at 0x123dd9ce0>	1
-articale about microeconomy	<built-in method lower of str object at 0x1240b4e70>	2
-analysis and business prospectus	<built-in method lower of str object at 0x1240bd378>	1
-analyse, model and design improvement to a business process	<built-in method lower of str object at 0x1240af8a0>	5
-design a powerpoint excel	<built-in method lower of str object at 0x12408f3e0>	2
-write description of our product on website	<built-in method lower of str object at 0x12405e730>	1
-resume writing	<built-in method lower of str object at 0x1240c3320>	1
-content writer for our restaurant client	<built-in method lower of str object at 0x12410f830>	1
-write an article for website	<built-in method lower of str object at 0x1240cb168>	1
-homepage copywriter	<built-in method lower of str object at 0x1240ac690>	1
-writing task	<built-in method lower of str object at 0x12408ca58>	5
-presenting excel data	<built-in method lower of str object at 0x1240979d0>	2
-simple marketing report	<built-in method lower of str object at 0x1240ae670>	5
-review cv, cover letter and job description for academic position	<built-in method lower of str object at 0x12410fb50>	1
-copy - paste from site and write content 	<built-in method lower of str object at 0x12410fe20>	5
-copy writer	<built-in method lower of str object at 0x1240af978>	1
-content writer for leading australian tech product retailer	<built-in method lower of str object at 0x1241100d0>	1
-article post	<built-in method lower of str object at 0x1240a8e30>	3
-create a list of vietnam tourist attractions and their 30-40 words descriptions	<built-in method lower of str object at 0x1241104c0>	1
-need an article	<built-in method lower of str object at 0x1240afa50>	5
-3 threats faced by the technologies and the respective strategies used to secure them	<built-in method lower of str object at 0x1240c0c38>	5
-project proposal	<built-in method lower of str object at 0x124110720>	1
-diversity & inclusion: help me write something for discussion -- 2	<built-in method lower of str object at 0x124022e40>	5
-spss analyst, pearson's chi-square test, cramer's v	<built-in method lower of str object at 0x11ea4ea00>	5
-news release article writer	<built-in method lower of str object at 0x124110930>	1
-rewrite high quality article (same keyword density) - 3200 words max	<built-in method lower of str object at 0x124110b70>	5
-write me a great blog article	<built-in method lower of str object at 0x124110ee0>	1
-academic writing, article section writing, literature review for scientific research papers	<built-in method lower of str object at 0x12408f5b8>	5
-help with research	<built-in method lower of str object at 0x1240bc3b0>	1
-project development	<built-in method lower of str object at 0x123cedd50>	5
-i need a copywriter	<built-in method lower of str object at 0x1240be4d0>	1
-snail farm galicia business plan for a grant	<built-in method lower of str object at 0x124111270>	1
-report of 2500 words	<built-in method lower of str object at 0x11ea71200>	5
-security principle case study	<built-in method lower of str object at 0x11ea70a00>	5
-digital art (projection mapping) research	<built-in method lower of str object at 0x124018be0>	5
-write a report that describes laptop/desktop	<built-in method lower of str object at 0x1240c0c90>	5
-glocalisation	<built-in method lower of str object at 0x1240cb238>	5
-urgent professional writing	<built-in method lower of str object at 0x1240a8ea0>	3
-information systems 	<built-in method lower of str object at 0x12409d9c0>	5
-english editing- urgent 2 days	<built-in method lower of str object at 0x124028960>	5
-company report	<built-in method lower of str object at 0x124111500>	5
-help me write something	<built-in method lower of str object at 0x12409da50>	5
-answers to the questions( essay type)	<built-in method lower of str object at 0x1240ce150>	5
-rewriting and paraphrasing  academic part of research thesis - native english speaker	<built-in method lower of str object at 0x124097a80>	5
-i need a writer	<built-in method lower of str object at 0x11ea6ca00>	5
-e book project	<built-in method lower of str object at 0x1240a79b0>	1
-english project	<built-in method lower of str object at 0x124018cf0>	4
-review in internal corporate governance and audit quality	<built-in method lower of str object at 0x1240cb2a0>	5
-cv reshape	<built-in method lower of str object at 0x1240bd490>	1
-management powerpoint project	<built-in method lower of str object at 0x1240b35d0>	5
-about me page /privacy page	<built-in method lower of str object at 0x124111830>	1
-contract  analysis	<built-in method lower of str object at 0x124007930>	5
-paraphrasing 1200 words	<built-in method lower of str object at 0x1240b85b0>	5
-book report on “move fast and break things”	<built-in method lower of str object at 0x1240a7ae0>	5
-data mining report writing	<built-in method lower of str object at 0x12408cb20>	5
-article about happiness	<built-in method lower of str object at 0x1240cd260>	5
-write a two page paper -- 2	<built-in method lower of str object at 0x124111c20>	5
-film review	<built-in method lower of str object at 0x124111fd0>	5
-design specification report for a system	<built-in method lower of str object at 0x1241122a0>	5
-rewriting a behavioural economics text	<built-in method lower of str object at 0x11ea79600>	5
-rewrite and edit management and leadership short article	<built-in method lower of str object at 0x12405cd40>	1
-write a reflection paper	<built-in method lower of str object at 0x124018e00>	5
-academic writer for long article	<built-in method lower of str object at 0x1240c3498>	3
-small report based on provided content	<built-in method lower of str object at 0x1240d0030>	5
-association rule mining  report	<built-in method lower of str object at 0x12402e030>	5
-psychology of business decisions resumee	<built-in method lower of str object at 0x1240bc490>	5
-carry out market research on training in the defence industry	<built-in method lower of str object at 0x1240afb28>	2
-data centre analysis	<built-in method lower of str object at 0x124007a50>	5
-organizational structure	<built-in method lower of str object at 0x1240a3ad0>	1
-create a full professional budget report / high level business english	<built-in method lower of str object at 0x1240ce270>	1
-i would like to hire a resume writer	<built-in method lower of str object at 0x1240d10a0>	1
-answer 5 questions related to iot ,sql, mongodb and other distributed data management systems w/ short paragraphs	<built-in method lower of str object at 0x12407bca8>	5
-"literature about (theory of reasoned actions ""tra"")"	<built-in method lower of str object at 0x12400b7d0>	5
-literature about (technology acceptance model “tom”)	<built-in method lower of str object at 0x124112860>	5
-proofread and editing service for academic essay	<built-in method lower of str object at 0x1240d1110>	5
-essay writing - 30/09/2018 08:46 edt	<built-in method lower of str object at 0x1240be5f8>	5
-blog article	<built-in method lower of str object at 0x11ea7da00>	1
-write an article and create brochure for information technology manage service provider company	<built-in method lower of str object at 0x11ea7ea00>	1
-paraphrasing for journal submission	<built-in method lower of str object at 0x1240ad870>	5
-write me an argumentation essay	<built-in method lower of str object at 0x1240ac828>	5
-research proposal	<built-in method lower of str object at 0x1240cb3d8>	5
-strategic entrepreneurship analysis	<built-in method lower of str object at 0x1240d0140>	4
-financial analysis with strong excel skills	<built-in method lower of str object at 0x11ea80200>	5
-report for jayamala	<built-in method lower of str object at 0x1240ce330>	4
-small r project wrangling	<built-in method lower of str object at 0x124097b30>	5
-i need a writer to write my scholarship essay	<built-in method lower of str object at 0x1240d2030>	5
-build excel sheet, toward pay guild	<built-in method lower of str object at 0x1240a1760>	1
-enterprise architectures	<built-in method lower of str object at 0x1240c9138>	5
-research paper about: stress management ; individual & organizational and how its related to organizational behaviour	<built-in method lower of str object at 0x124112c50>	5
-managing human resourses	<built-in method lower of str object at 0x11ea81a00>	5
-i would like to hire an excel expert	<built-in method lower of str object at 0x11ea83c00>	1
-research writing	<built-in method lower of str object at 0x1240a6850>	5
-executive resume and cover letter	<built-in method lower of str object at 0x1240d4030>	1
-3 page double space research 	<built-in method lower of str object at 0x12409db70>	5
-i need blogs written	<built-in method lower of str object at 0x12405e830>	1
-a cyber security research	<built-in method lower of str object at 0x1240ce3f0>	4
-sport training programme for semi professional footballer 	<built-in method lower of str object at 0x123e43c00>	1
-small business enterprise	<built-in method lower of str object at 0x1240cd620>	5
-managing communications, knowledge and information_ $60 fixed price	<built-in method lower of str object at 0x1240d30e0>	5
-material science essay sample	<built-in method lower of str object at 0x1240d50a8>	5
-francis fuller victor's river of the west	<built-in method lower of str object at 0x123e43df8>	5
-environmental impact assessment/ems	<built-in method lower of str object at 0x1240d3190>	5
-ib essay writer	<built-in method lower of str object at 0x1240ce4b0>	5
-report on application of data mining in health/medical area	<built-in method lower of str object at 0x1240d6030>	5
-privacy issues on social media	<built-in method lower of str object at 0x11ea87e00>	5
-mini essay and pictures	<built-in method lower of str object at 0x1240bc570>	5
-writing paper about network field	<built-in method lower of str object at 0x1240cb440>	5
-system analysis and design simple project 	<built-in method lower of str object at 0x12408cbe8>	5
-data entry from accounts into excel	<built-in method lower of str object at 0x1240d8030>	1
-travel content writer wanted	<built-in method lower of str object at 0x11ea87800>	1
-astrology research needed	<built-in method lower of str object at 0x1240d3298>	5
-web content creator / experienced copywriter needed for the website	<built-in method lower of str object at 0x124112fc0>	1
-research 18 answers related to social entrepreneurship in egypt	<built-in method lower of str object at 0x1240d9030>	5
-critical analysis	<built-in method lower of str object at 0x1240bc650>	5
-advance computer networking wireshark question to be solved	<built-in method lower of str object at 0x1240d5198>	5
-rephrasing my papers	<built-in method lower of str object at 0x1240d5210>	5
-debit and money market	<built-in method lower of str object at 0x1240ae710>	4
-literature reviews	<built-in method lower of str object at 0x124113280>	5
-mobile games: business value vs ethical issues	<built-in method lower of str object at 0x1240ce5d0>	5
-magazine article	<built-in method lower of str object at 0x1240a3b58>	5
-creative essay writing	<built-in method lower of str object at 0x12407bdf8>	5
-case study survey	<built-in method lower of str object at 0x1241134e0>	5
-marketing research	<built-in method lower of str object at 0x124113880>	3
-writing project	<built-in method lower of str object at 0x1240d1340>	5
-assignment management report	<built-in method lower of str object at 0x1240ce630>	5
-international operation management	<built-in method lower of str object at 0x1240d13b0>	5
-complete me a report/assigment/essay	<built-in method lower of str object at 0x12408ccb0>	5
-turnaround	<built-in method lower of str object at 0x1240ae7b0>	1
-i need to know about km implementation	<built-in method lower of str object at 0x1240d2220>	5
-are anticholinergic drugs useful for treatment of overactive bladder syndrome? (discuss their advantages and disadvantages by focusing on their mechanism of action in various tissues)	<built-in method lower of str object at 0x11ea8f000>	5
-research work	<built-in method lower of str object at 0x1240afc00>	5
-need help in writing a research report in challenges and opportunities of big data in certain industry	<built-in method lower of str object at 0x1240d4200>	5
-cimic group limited - strategic framework report	<built-in method lower of str object at 0x124007b70>	5
-event marketing	<built-in method lower of str object at 0x124113b30>	5
-traditional  accounting information system	<built-in method lower of str object at 0x124097be0>	5
-personal statement	<built-in method lower of str object at 0x1240d0250>	5
-2 articles writing and 1 essay analysis	<built-in method lower of str object at 0x11ea7d200>	5
-i would like to hire a powerpoint designer	<built-in method lower of str object at 0x12407bea0>	5
-content re-write	<built-in method lower of str object at 0x124097c90>	1
-report on person-of-thetherapist	<built-in method lower of str object at 0x12400ea20>	5
-artifical intelligence economical negativity 	<built-in method lower of str object at 0x1240b95d0>	5
-system security report	<built-in method lower of str object at 0x1240cb510>	5
-negotiation	<built-in method lower of str object at 0x124028ae8>	5
-small research	<built-in method lower of str object at 0x1240b36c0>	5
-report writing	<built-in method lower of str object at 0x1240c81b0>	5
-writing about teaching in universities	<built-in method lower of str object at 0x1240a7c10>	5
-write 7 to 10 pages	<built-in method lower of str object at 0x1240ce7b0>	5
-medical paraphrasing  633 words	<built-in method lower of str object at 0x12407bf48>	5
-airline operations new	<built-in method lower of str object at 0x1240cd850>	5
-analyze and write a advertising report	<built-in method lower of str object at 0x1240ce810>	5
-essay about globalization and protectionism - 4/5 pages long apa style 	<built-in method lower of str object at 0x1240d3558>	5
-write a research paper for development psychology topic	<built-in method lower of str object at 0x11ea96e00>	5
-tok essay - 1300 - 1500 words	<built-in method lower of str object at 0x1240ce870>	5
-information systems 	<built-in method lower of str object at 0x12409dc00>	5
-research paper	<built-in method lower of str object at 0x1240b8630>	5
-big data analysis research	<built-in method lower of str object at 0x1240c8270>	5
-write research paper for the usecase	<built-in method lower of str object at 0x1240d3608>	5
-finance topic	<built-in method lower of str object at 0x1240d3660>	5
-writing ..	<built-in method lower of str object at 0x1240ce8d0>	5
-business plan	<built-in method lower of str object at 0x1240d0360>	1
-article writing x 4 variants	<built-in method lower of str object at 0x1240c9240>	1
-r project - big data (over 1gb)	<built-in method lower of str object at 0x1240ad9d0>	4
-new product acquisition system	<built-in method lower of str object at 0x1240afcd8>	5
-network system writing task 	<built-in method lower of str object at 0x1240d2410>	5
-presentation; batteries	<built-in method lower of str object at 0x124114210>	5
-write a paper; excel skills	<built-in method lower of str object at 0x1240cb5e0>	5
-need introduction writing	<built-in method lower of str object at 0x1240d1420>	5
-2 pages essay paper about computer networks	<built-in method lower of str object at 0x12408f790>	5
-copywriting in automotive niche	<built-in method lower of str object at 0x1240d8230>	1
-essay about bullying - 5 pages	<built-in method lower of str object at 0x1240cb648>	5
-comparative political research essay	<built-in method lower of str object at 0x1240a18d0>	5
-business finance	<built-in method lower of str object at 0x1240db030>	4
-proofread and improve a research paper	<built-in method lower of str object at 0x1240d0470>	5
-resume and circulium viate	<built-in method lower of str object at 0x1240d1490>	1
-copy and market research	<built-in method lower of str object at 0x11ea78e00>	1
-cover letter + cv for irish market	<built-in method lower of str object at 0x1240bc730>	1
-thesis proposal writing on impact of process innovation on organizational performance of smes	<built-in method lower of str object at 0x1240b86b0>	5
-write articles about gdpr, marketing, email marketing	<built-in method lower of str object at 0x124113eb0>	1
-read an article and then answer some questions 1000 words	<built-in method lower of str object at 0x1240a3be0>	5
-brand resonance model and brand equity.	<built-in method lower of str object at 0x1240b9738>	5
-company profiles and swot analysis	<built-in method lower of str object at 0x124097d40>	5
-table of contents needed for thesis	<built-in method lower of str object at 0x1240bc810>	5
-report on psm fucntion for a firm / company	<built-in method lower of str object at 0x1241145e0>	5
-i need someone who is capable of doing academic writing and research	<built-in method lower of str object at 0x124114980>	5
-help me write something	<built-in method lower of str object at 0x1240ce9f0>	5
-spain geographic essay	<built-in method lower of str object at 0x1240d0580>	5
-cv/resume writer for a freelance copyeditor and proofreader	<built-in method lower of str object at 0x124003ea0>	1
-write me a report about kinship	<built-in method lower of str object at 0x1240d42e8>	5
-breakeven and ror calculations	<built-in method lower of str object at 0x1240b98a0>	5
-2018 data entry quickbooks	<built-in method lower of str object at 0x12400ebc8>	1
-data analysis through spss	<built-in method lower of str object at 0x1240b6310>	2
-case study for network security 	<built-in method lower of str object at 0x1240d15e0>	5
-a comparative report	<built-in method lower of str object at 0x124097df0>	4
-sport essay / report	<built-in method lower of str object at 0x1240c9348>	5
-copy writing	<built-in method lower of str object at 0x1240a3c68>	1
-critical essay harvard style	<built-in method lower of str object at 0x1240cb718>	5
-academic writing  -- 2	<built-in method lower of str object at 0x1240dc0c0>	5
-proofread product menu and package	<built-in method lower of str object at 0x1240b8730>	1
-help me write something	<built-in method lower of str object at 0x1240b87b0>	5
-easy write up	<built-in method lower of str object at 0x1240ca128>	5
-article of barbecue smoking 	<built-in method lower of str object at 0x1240a3cf0>	3
-for janelle heideman	<built-in method lower of str object at 0x1240d5378>	3
-7 types of waste in lean production theory	<built-in method lower of str object at 0x1240b37b0>	5
-rewrite a 3,500 word review article (i have more work after this)	<built-in method lower of str object at 0x124114cb0>	4
-article 500-600 words	<built-in method lower of str object at 0x124114f60>	1
-tableau medicare dashboard report	<built-in method lower of str object at 0x1240d0690>	1
-content check	<built-in method lower of str object at 0x12408cd78>	1
-write encyclopaedia article about british company.	<built-in method lower of str object at 0x1240a3d78>	3
-business travel market 	<built-in method lower of str object at 0x1240d39d0>	5
-write up project	<built-in method lower of str object at 0x12408ce40>	4
-write an article for the website	<built-in method lower of str object at 0x1240d07a0>	1
-improve quality of service for home automation network (iot)	<built-in method lower of str object at 0x1240afdb0>	5
-content for website and brochure	<built-in method lower of str object at 0x124023b28>	1
-writer job	<built-in method lower of str object at 0x1240cb7e8>	3
-website copy	<built-in method lower of str object at 0x1240adb30>	1
-hi i need your help in writing a 300 word personal statement for my university application	<built-in method lower of str object at 0x1240d9210>	5
-to write a short paper(1000-1100 words)	<built-in method lower of str object at 0x12400ddf0>	5
-resume writing and editing	<built-in method lower of str object at 0x1240ceab0>	1
-grant writer needed - fight camera action	<built-in method lower of str object at 0x11eaa4400>	1
-write an article/report about an event	<built-in method lower of str object at 0x1240a3e00>	5
-report writing 	<built-in method lower of str object at 0x1240ceb70>	4
-report writing	<built-in method lower of str object at 0x1240cde90>	5
-securing web server writter	<built-in method lower of str object at 0x1240de030>	5
-article about why real estate agents need a website.	<built-in method lower of str object at 0x1240bc8f0>	1
-content translation	<built-in method lower of str object at 0x1240db0d8>	1
-seo articles	<built-in method lower of str object at 0x1240ca220>	1
-professional cv writer	<built-in method lower of str object at 0x124115320>	1
-resume editing	<built-in method lower of str object at 0x1240db180>	1
-cyber security essay	<built-in method lower of str object at 0x124112620>	5
-small r studio project	<built-in method lower of str object at 0x1240b38a0>	4
-research in project management	<built-in method lower of str object at 0x1240a5928>	5
-restructuring, rewriting article	<built-in method lower of str object at 0x1240bd5a8>	5
-i need you to write an essay for 2,000 words	<built-in method lower of str object at 0x1240cec30>	5
-personal statment for graduate admission 	<built-in method lower of str object at 0x1241155f0>	5
-need someone who understands in and out of freelancing	<built-in method lower of str object at 0x1241158d0>	1
-systematic review in human resources	<built-in method lower of str object at 0x1240d3c38>	4
-project report	<built-in method lower of str object at 0x1240d5468>	5
-industry comparative analysis	<built-in method lower of str object at 0x1240cecf0>	5
-academic writing & research computer science -- 2	<built-in method lower of str object at 0x12408f968>	5
-blog writing for dry cleaning	<built-in method lower of str object at 0x12405ce70>	1
-business law 2	<built-in method lower of str object at 0x124097ea0>	5
-statistics cs	<built-in method lower of str object at 0x1240ae850>	5
-scientific and technical communication	<built-in method lower of str object at 0x1240afe88>	5
-data analysis in rstudio	<built-in method lower of str object at 0x1240d54e0>	3
-project on student recruitment for universities - in particular the clearing process	<built-in method lower of str object at 0x124115c00>	5
-international plan	<built-in method lower of str object at 0x1240ced50>	5
-proofread and enhance my blog post	<built-in method lower of str object at 0x1240db228>	1
-writing about reproductive health and sexuality in the light of the catholic church’s teachings	<built-in method lower of str object at 0x11ea8e200>	5
-job satisfaction research	<built-in method lower of str object at 0x11eaab000>	5
-account essay writing	<built-in method lower of str object at 0x124115e10>	5
-excel assignment	<built-in method lower of str object at 0x1240cedb0>	5
-small online business review/data excel sheet	<built-in method lower of str object at 0x12400ed70>	1
-question & answer cfin	<built-in method lower of str object at 0x1240cb988>	5
-scientific	<built-in method lower of str object at 0x12409ddb0>	1
-i need help with accounting and finance	<built-in method lower of str object at 0x1240db2d0>	3
-reflective essay on ishmael by daniel quinn	<built-in method lower of str object at 0x1240a3f10>	5
-etl on demand 	<built-in method lower of str object at 0x1240d3d98>	5
-write up a business plan.	<built-in method lower of str object at 0x11eaa3a00>	1
-write a document	<built-in method lower of str object at 0x1240c3610>	2
-management communication	<built-in method lower of str object at 0x1240df1c0>	5
-proof reading editing	<built-in method lower of str object at 0x1240d3df0>	5
-website blog writing	<built-in method lower of str object at 0x12405e930>	1
-content editor / writer for my website	<built-in method lower of str object at 0x1240e1030>	1
-generating business analytic report	<built-in method lower of str object at 0x11eab2000>	5
-quantitative data analysis using spss	<built-in method lower of str object at 0x1240adc90>	4
-writing proposal for arabic question answering system over linked data	<built-in method lower of str object at 0x1240a7d40>	5
-write me a resume	<built-in method lower of str object at 0x124116180>	1
-tableau visualisation report	<built-in method lower of str object at 0x124116430>	5
-articles for eco products for cleaning in the bathroom, kitchen and laundry.	<built-in method lower of str object at 0x124116740>	1
-doing business globally & internationally	<built-in method lower of str object at 0x11ea95200>	5
-product description for gifts website	<built-in method lower of str object at 0x1240be720>	1
-write an english essay	<built-in method lower of str object at 0x1240b63c8>	5
-content writing seo optimized	<built-in method lower of str object at 0x1240d55d0>	1
-construct a 12 page research document on human resource management	<built-in method lower of str object at 0x11eab5000>	5
-customer relationship management system	<built-in method lower of str object at 0x11ea8ea00>	5
-writing a proposal about safety procedures 2500-3000 words	<built-in method lower of str object at 0x1240d61e8>	5
-professional writer	<built-in method lower of str object at 0x124116a20>	5
-modular material handling equipments (report)	<built-in method lower of str object at 0x1240a1a40>	5
-write me an article: 5 reasons	<built-in method lower of str object at 0x1240ca318>	2
-finanicial analysis for mangers	<built-in method lower of str object at 0x1240d56c0>	5
-market research small assignment	<built-in method lower of str object at 0x12405cf08>	5
-business plan	<built-in method lower of str object at 0x1240db378>	1
-feasibility study 101	<built-in method lower of str object at 0x1240db420>	4
-essay writing	<built-in method lower of str object at 0x1240c3788>	5
-research on removal of performance rating systems in global companies	<built-in method lower of str object at 0x11eab9600>	5
-financial regulation	<built-in method lower of str object at 0x1240b9a08>	5
-networking ns2 -ns3	<built-in method lower of str object at 0x1240d57b0>	4
-cbd merchant processing landing page	<built-in method lower of str object at 0x1240d1730>	2
-capital budgeting under uncertainty and risk 	<built-in method lower of str object at 0x1240ae8f0>	5
-trend analysis for exchange rate and interest rates of mexico and u.s	<built-in method lower of str object at 0x124116df0>	5
-paper on saving the world	<built-in method lower of str object at 0x1240addf0>	5
-three page informational paper	<built-in method lower of str object at 0x1240c8330>	5
-how big data networks and related technologies can be used to reduce student discipline problem	<built-in method lower of str object at 0x11eabce00>	5
-manuscript editing and adding contents	<built-in method lower of str object at 0x1240ca410>	1
-analysis of nike's investment assessment methodologies	<built-in method lower of str object at 0x1240e4030>	5
-i need someone to do my case study questions 	<built-in method lower of str object at 0x11eab8e00>	5
-detailed review paper	<built-in method lower of str object at 0x1240bc9d0>	5
-business rrticles required	<built-in method lower of str object at 0x1240de170>	1
-research essay	<built-in method lower of str object at 0x1240a6920>	5
-paraphrasing for a report	<built-in method lower of str object at 0x1240e6030>	5
-financial modelling in excel - i need an expert in financial modelling who is available at present to assist me in scenario analysis	<built-in method lower of str object at 0x1240b6538>	1
-update my resume	<built-in method lower of str object at 0x1240b65f0>	1
-essay about smart grid	<built-in method lower of str object at 0x1240b88b0>	5
-cover letter writing	<built-in method lower of str object at 0x1240de2b0>	1
-i need a mission and vision statement for my nonprofit	<built-in method lower of str object at 0x1240d43d0>	1
-proofread + edit whiskey sales plan	<built-in method lower of str object at 0x124117070>	1
-essay on integrative leadership practices and issue	<built-in method lower of str object at 0x1240e7030>	5
-completely rewrite/spin 5000 words (at least readable) in -12 hours.	<built-in method lower of str object at 0x1240bcab0>	5
-product page copywriting	<built-in method lower of str object at 0x1240d8430>	1
-write book's analysis	<built-in method lower of str object at 0x1240a7e70>	5
-r coding social media intellegence	<built-in method lower of str object at 0x124097f50>	4
-business article 	<built-in method lower of str object at 0x1240e8030>	1
-need to complete 3 case study	<built-in method lower of str object at 0x1240bd6c0>	5
-it project management..	<built-in method lower of str object at 0x1240d17a0>	5
-information compiler and editor	<built-in method lower of str object at 0x124117380>	1
-seo keyword rich & well researched blog post writer	<built-in method lower of str object at 0x1240de3f0>	1
-phd proposal	<built-in method lower of str object at 0x1240e60c8>	5
-research for multimedia sensor networks	<built-in method lower of str object at 0x1240b66a8>	5
-redo my resume	<built-in method lower of str object at 0x1240b9b70>	1
-write a paper	<built-in method lower of str object at 0x1240d63a0>	5
-create resume	<built-in method lower of str object at 0x124117630>	1
-create seo rich content for my website	<built-in method lower of str object at 0x1241178a0>	1
-report discussing the solution of post tensioned concrete and the impact of its technical change in design and construction.	<built-in method lower of str object at 0x11eac4400>	5
-looking for a cv re write	<built-in method lower of str object at 0x1240b3990>	1
-write a promotional article for our website	<built-in method lower of str object at 0x124117b20>	1
-we are seeking an experienced freelance writers to brainstorm, write, and create content for our customers blog related to parenting:  parents, single parent, caregivers, adoptive parents, foster parents etc.	<built-in method lower of str object at 0x1240b9cd8>	1
-e-commerce product descriptions	<built-in method lower of str object at 0x1240d44b8>	1
-20 auto-related product descriptions needed (100 words per description)	<built-in method lower of str object at 0x11eac7000>	1
-create an article	<built-in method lower of str object at 0x1240ea030>	1
-research writing	<built-in method lower of str object at 0x1240cbb90>	3
-content writer	<built-in method lower of str object at 0x12409ded0>	1
-critical analysis world war 1	<built-in method lower of str object at 0x1240df670>	5
-security and web database	<built-in method lower of str object at 0x1240db4c8>	5
-writing a report -- 2	<built-in method lower of str object at 0x1240e90e0>	5
-cinema and culture study	<built-in method lower of str object at 0x1240d2600>	5
-need a writer for machine learning	<built-in method lower of str object at 0x1240d5990>	5
-write articles about weather data	<built-in method lower of str object at 0x11eabc800>	1
-write an about page - sbc bathrooms	<built-in method lower of str object at 0x12409ada0>	1
-marketing strategy	<built-in method lower of str object at 0x124117df0>	5
-introduction of two-dimensional cell culture versus three-dimensional cell culture	<built-in method lower of str object at 0x1240ca508>	5
-market analysis 	<built-in method lower of str object at 0x1240ca600>	5
-eu affairs project	<built-in method lower of str object at 0x124028c70>	5
-400 word answer	<built-in method lower of str object at 0x1240d5a08>	5
-essay 2000 words	<built-in method lower of str object at 0x11eac9e00>	5
-english writing.	<built-in method lower of str object at 0x12407a510>	5
-someone to apply to universities admissions for me as an international student	<built-in method lower of str object at 0x1240667b0>	5
-creativity development project	<built-in method lower of str object at 0x1240147b0>	5
-portrayal of asylum seekers in the plays the rainbow dark and the pacific solution through applying cultural trauma. 	<built-in method lower of str object at 0x1240b61a0>	5
-short paper international law	<built-in method lower of str object at 0x124023c60>	5
-critique and essay writing	<built-in method lower of str object at 0x11eaae400>	5
-book report on random walk down wall street	<built-in method lower of str object at 0x12408fb40>	5
-looking for full time academic writer freelancer	<built-in method lower of str object at 0x12408cf08>	5
-writer is required for marketing and management task .	<built-in method lower of str object at 0x12407bc00>	4
-i need you to write a report for something. in 3 hours max related to political science.	<built-in method lower of str object at 0x124065810>	4
-write a literature review	<built-in method lower of str object at 0x1240ae0d0>	5
-global marketing plan 	<built-in method lower of str object at 0x1240a31c8>	5
-standardization, expectation, and judgment in response to language use -- 2	<built-in method lower of str object at 0x12400ce40>	5
-history paper on medieval war technologies	<built-in method lower of str object at 0x1240aead0>	5
-i need an expert writer	<built-in method lower of str object at 0x1240b9e40>	5
-3000 words essay ref5018	<built-in method lower of str object at 0x124220030>	5
-property party wall	<built-in method lower of str object at 0x11eacea00>	5
-research article	<built-in method lower of str object at 0x124221030>	5
-wrong conviction in america	<built-in method lower of str object at 0x1240aeb70>	5
-writer hiring-acadamic writing 	<built-in method lower of str object at 0x124222030>	4
-personal statement	<built-in method lower of str object at 0x1240bcb90>	5
-eseu management	<built-in method lower of str object at 0x11ead1400>	5
-essay-1000 words (focus on british history)	<built-in method lower of str object at 0x11ead1a00>	5
-global trade and finance -- 2	<built-in method lower of str object at 0x124097920>	5
-get a termpaper written	<built-in method lower of str object at 0x1240c9450>	5
-i need someone to re-word my report	<built-in method lower of str object at 0x124118410>	5
-write me a personal statement for postgraduate	<built-in method lower of str object at 0x1240908a0>	3
-need an essay	<built-in method lower of str object at 0x1242210f8>	5
-charity manifesto for a black british nationalist website	<built-in method lower of str object at 0x11ead4400>	4
-urgent english essay	<built-in method lower of str object at 0x1240d08b0>	5
-need someone who can help t.h.e.s.i.s	<built-in method lower of str object at 0x124096f60>	5
-write 2 essays about music	<built-in method lower of str object at 0x124222188>	5
-letter of intent to grad school(mba)	<built-in method lower of str object at 0x1240e9030>	5
-stylized facts analysis	<built-in method lower of str object at 0x1240658f0>	5
-writing essay	<built-in method lower of str object at 0x12409b210>	5
-help me write my english speech	<built-in method lower of str object at 0x12407bd50>	5
-data writeup	<built-in method lower of str object at 0x12406a690>	5
-grandma minnie- memoir of a holocaust survivor	<built-in method lower of str object at 0x124118b30>	1
+public health cimate change	<built-in method lower of str object at 0x11e2cc600>	5
+the individual assignment is based on the development of a marketing communications plan for the launch of a product/brand of your choice	<built-in method lower of str object at 0x11e2cd600>	5
+market analysis	<built-in method lower of str object at 0x123f6d980>	5
+three orders: 2000words global marketing & communication	<built-in method lower of str object at 0x12414fc90>	5
+write a report  -- 2	<built-in method lower of str object at 0x123f6e840>	5
+australian taxation -1000 words report needed in 4-5 hours	<built-in method lower of str object at 0x12419a188>	5
+accounting and insurance	<built-in method lower of str object at 0x1240f1a80>	5
+write a  mathematical report 	<built-in method lower of str object at 0x124194d78>	5
+senior project	<built-in method lower of str object at 0x12414fce8>	5
+academic writing 	<built-in method lower of str object at 0x123f6ebb0>	5
+help in  writing!!	<built-in method lower of str object at 0x123f6ee80>	5
+urgent  writing task_deadline 1 hour_length 500 words	<built-in method lower of str object at 0x1240d5100>	5
+help me write something	<built-in method lower of str object at 0x124166530>	4
+"essay on book ""quantum shift in global brain"" by ervin lászló "	<built-in method lower of str object at 0x124111cb0>	5
+academic writing 	<built-in method lower of str object at 0x124194e00>	4
+finance project	<built-in method lower of str object at 0x124180308>	5
+academic writing (critical path)	<built-in method lower of str object at 0x12414fd98>	4
+need editing n polishing	<built-in method lower of str object at 0x1240bda80>	5
+client engagment skills (financial planning)	<built-in method lower of str object at 0x123be1228>	5
+client engagment stratigies (financial planning) question 650 word response	<built-in method lower of str object at 0x123d70228>	5
+outline strategies to deal with overconfident clients (financial planning) max 600 words -- 3	<built-in method lower of str object at 0x12405e828>	5
+reflective journal 	<built-in method lower of str object at 0x123f6f2d0>	5
+3 short english wrting	<built-in method lower of str object at 0x124108270>	5
+yazılım üret 	<built-in method lower of str object at 0x12407e7d0>	5
+maximum 2500 word response to genos survey (financial planning)	<built-in method lower of str object at 0x12419a2e0>	5
+digestion process	<built-in method lower of str object at 0x124122670>	5
+academic writing for project management 	<built-in method lower of str object at 0x12419c030>	5
+academic writing three different articles 	<built-in method lower of str object at 0x1241953a0>	5
+hotel operation managment  (cost control and maximisation of efficiency)  	<built-in method lower of str object at 0x11e2ce000>	5
+write a report 	<built-in method lower of str object at 0x124116470>	4
+manage project and project risks	<built-in method lower of str object at 0x124047900>	5
+write a report 	<built-in method lower of str object at 0x11e2cd000>	5
+excel generator crossword / wordsearch.	<built-in method lower of str object at 0x11e29bc00>	5
+quick 4 questions finance	<built-in method lower of str object at 0x124194e88>	5
+500 word commentary	<built-in method lower of str object at 0x124166730>	5
+coefficient of cariation according to population income	<built-in method lower of str object at 0x124070d00>	4
+type essay word for word from scanned document	<built-in method lower of str object at 0x123f6f670>	5
+academic writing  ma	<built-in method lower of str object at 0x12414fea0>	5
+philosophy quiz homework short	<built-in method lower of str object at 0x1241803d8>	5
+write some articles 	<built-in method lower of str object at 0x12419c0c0>	4
+managerial economics	<built-in method lower of str object at 0x123f6fa60>	5
+urgent need for 1 chapter 	<built-in method lower of str object at 0x124187510>	5
+further clarification and comments on a statistical analysis  [n1]	<built-in method lower of str object at 0x11e29c200>	5
+public healthhealth & safety-supporting independent living -- 1	<built-in method lower of str object at 0x12419a438>	5
+academic writing  in marketing 	<built-in method lower of str object at 0x12414fef8>	5
+academic writing	<built-in method lower of str object at 0x123f6fd10>	5
+academic writing marketing 	<built-in method lower of str object at 0x12410deb8>	5
+1 probability calculations question + 500 word statistics essay	<built-in method lower of str object at 0x124180440>	5
+academic writing ( case in marketing ) 	<built-in method lower of str object at 0x124187570>	5
+2 page project on financial aspect of small housing. 	<built-in method lower of str object at 0x1240d59f0>	5
+financial analysis project	<built-in method lower of str object at 0x123f70200>	4
+a 700 word report on b2b, ebusiness and eai and with sourcing and references throughout	<built-in method lower of str object at 0x12416f540>	5
+simple macroeconomic calculation	<built-in method lower of str object at 0x124147300>	5
+academic writing marketing rough draft 	<built-in method lower of str object at 0x12419f088>	5
+college assignment. only bid, if you can finish the work in 2/3 hours.	<built-in method lower of str object at 0x124193288>	5
+help with business finance 	<built-in method lower of str object at 0x11e29c800>	5
+academic writing 	<built-in method lower of str object at 0x124193418>	5
+help with business finance 	<built-in method lower of str object at 0x124180510>	4
+help me write something -- 3	<built-in method lower of str object at 0x12417a2d0>	5
+paper 1 mobile computing	<built-in method lower of str object at 0x1241475d0>	5
+financial project writing	<built-in method lower of str object at 0x1240d5e00>	4
+executive level report	<built-in method lower of str object at 0x123f70720>	5
+write a technical report  & swot analysis	<built-in method lower of str object at 0x124195450>	5
+risk analysis	<built-in method lower of str object at 0x124070e48>	5
+financial planning analysis (1 day)	<built-in method lower of str object at 0x124114870>	5
+excel assignment 	<built-in method lower of str object at 0x12419f138>	5
+excel project2	<built-in method lower of str object at 0x124180578>	5
+research paper for english 102	<built-in method lower of str object at 0x1240ab618>	5
+statistics assignment help	<built-in method lower of str object at 0x1241805e0>	5
+the milagro beanfield war by john nichols	<built-in method lower of str object at 0x12410e530>	5
+finance class homework	<built-in method lower of str object at 0x11e29d000>	5
+finanicial calculations	<built-in method lower of str object at 0x1241667b0>	5
+academic writing-conference paper	<built-in method lower of str object at 0x1241a0030>	5
+escrever um plano de negócios 	<built-in method lower of str object at 0x123f70970>	4
+content writing 	<built-in method lower of str object at 0x11e29d800>	5
+need help in a quiz on operation management,tomorrow.	<built-in method lower of str object at 0x1241007f0>	5
+academic writing - macroeconomic	<built-in method lower of str object at 0x11e2cf400>	5
+assist with project management  	<built-in method lower of str object at 0x1240c6a28>	5
+linear regression project	<built-in method lower of str object at 0x11f006a30>	5
+masters in health service managment project for university	<built-in method lower of str object at 0x124116580>	5
+academic writing 	<built-in method lower of str object at 0x12405ecf0>	5
+literature work 	<built-in method lower of str object at 0x12416b9d0>	5
+financial calculations	<built-in method lower of str object at 0x12419c150>	5
+data analysis	<built-in method lower of str object at 0x1240f98d0>	5
+simple economics applied writing	<built-in method lower of str object at 0x12410e670>	5
+calculus help	<built-in method lower of str object at 0x1240c6b10>	5
+academic writing 	<built-in method lower of str object at 0x11e29e600>	5
+disaster recovery plan abilash	<built-in method lower of str object at 0x124076e88>	5
+organizational change paper	<built-in method lower of str object at 0x123f70d30>	5
+work health and safe management  essay 	<built-in method lower of str object at 0x123f70f40>	5
+bussniss assignment (need more than one freelancer)	<built-in method lower of str object at 0x124039570>	5
+macroeconomics help	<built-in method lower of str object at 0x1240c6bf8>	5
+business case sravan	<built-in method lower of str object at 0x1241934e0>	5
+finance info	<built-in method lower of str object at 0x124180780>	5
+5  page assignment 	<built-in method lower of str object at 0x1241935a8>	5
+write a report 	<built-in method lower of str object at 0x12419a590>	5
+5 page assignment 2	<built-in method lower of str object at 0x1241807e8>	5
+quantitative empirical research method writing -- 2	<built-in method lower of str object at 0x1240ab228>	5
+academic writing 	<built-in method lower of str object at 0x1240bdc90>	5
+marketing plan	<built-in method lower of str object at 0x1241808b8>	5
+assist with project management 	<built-in method lower of str object at 0x124111d50>	5
+economics task 8 hours	<built-in method lower of str object at 0x124166830>	5
+philosophy  academic writing 	<built-in method lower of str object at 0x124180920>	5
+5000 words business and marketing assignment 	<built-in method lower of str object at 0x11e29e000>	5
+presentation	<built-in method lower of str object at 0x12419c1e0>	4
+academic writing 	<built-in method lower of str object at 0x12416f6f0>	5
+need help in choi choi's work	<built-in method lower of str object at 0x124180988>	5
+financial management project	<built-in method lower of str object at 0x1241a2030>	5
+biology proposal	<built-in method lower of str object at 0x1241a3030>	5
+assist with project management  	<built-in method lower of str object at 0x1241a30b8>	5
+statistics	<built-in method lower of str object at 0x124108390>	5
+1500 word essay 	<built-in method lower of str object at 0x123f71160>	5
+academic writing in supply chain magt 	<built-in method lower of str object at 0x12416ba40>	5
+help with business finance project	<built-in method lower of str object at 0x1241668b0>	5
+information delivery and information management	<built-in method lower of str object at 0x123b68940>	5
+dystopian society	<built-in method lower of str object at 0x124111df0>	5
+business mathematics	<built-in method lower of str object at 0x12419f450>	5
+coll electrical case study 9	<built-in method lower of str object at 0x11e29f200>	5
+business case 	<built-in method lower of str object at 0x123f70410>	5
+do some blog posting  pr	<built-in method lower of str object at 0x124195500>	5
+write a technical report  	<built-in method lower of str object at 0x124147738>	5
+proofread business plan & small changes /  new value adding ideas   	<built-in method lower of str object at 0x123f71b00>	4
+academic writing 4	<built-in method lower of str object at 0x124166930>	5
+3 questions 	<built-in method lower of str object at 0x11e29fc00>	5
+academic writing essay	<built-in method lower of str object at 0x123f71d10>	5
+tejafffffff -- 2	<built-in method lower of str object at 0x1240ab420>	5
+quantitative business tasks- only  bid if you are good at it	<built-in method lower of str object at 0x124178b90>	5
+political science short essay and short answers.	<built-in method lower of str object at 0x12416bb20>	5
+dashboard on a company	<built-in method lower of str object at 0x11e272400>	5
+ report  writting	<built-in method lower of str object at 0x1241a2120>	5
+assist with project management. research and email marketing	<built-in method lower of str object at 0x124122800>	5
+write a business plan 	<built-in method lower of str object at 0x1241955b0>	5
+help me write something	<built-in method lower of str object at 0x124195660>	5
+write about deepika padukone bithday	<built-in method lower of str object at 0x124180a58>	5
+a movie reaction assignment of the law of business class	<built-in method lower of str object at 0x11e2caa00>	5
+analyze some data  	<built-in method lower of str object at 0x1241008e8>	5
+academic writing (business)	<built-in method lower of str object at 0x124187750>	5
+write a technical report  	<built-in method lower of str object at 0x124178c70>	5
+help me with a workplace health and safety diploma 	<built-in method lower of str object at 0x1240bdb88>	5
+academic writing 	<built-in method lower of str object at 0x12406eb70>	5
+academic writing  holism	<built-in method lower of str object at 0x123f71540>	5
+2x 1200 word docs (said) by wednesday 5pm uk gmt	<built-in method lower of str object at 0x12402be30>	5
+academic writer need possessing excellent english grammer and punctuation 	<built-in method lower of str object at 0x1241a5030>	4
+research methods for psychology -- 2	<built-in method lower of str object at 0x12419e760>	5
+writing summary of classic articles or reports	<built-in method lower of str object at 0x1240d5ed0>	5
+mechanism description	<built-in method lower of str object at 0x11e273000>	5
+term paper	<built-in method lower of str object at 0x1241009e0>	5
+cpnference paper 	<built-in method lower of str object at 0x1241a6030>	5
+academic writing :intel	<built-in method lower of str object at 0x12416bc70>	5
+psychology	<built-in method lower of str object at 0x12419f558>	5
+research paper	<built-in method lower of str object at 0x1241a3140>	5
+writing for art course	<built-in method lower of str object at 0x124187810>	5
+long term article writers required - inr 85/500 words  (approx. $1.25/500 words) -- 2	<built-in method lower of str object at 0x123f71fb0>	4
+critical analysis on two journal articles	<built-in method lower of str object at 0x11e2a0600>	5
+interpret some poems for me	<built-in method lower of str object at 0x12416bce0>	5
+academic writing 	<built-in method lower of str object at 0x123f717c0>	5
+research methodology  	<built-in method lower of str object at 0x1241a5178>	5
+assist with project management  	<built-in method lower of str object at 0x1241a4cd8>	5
+master of financial mathematics program application essay editor required   	<built-in method lower of str object at 0x124100ad8>	5
+help me write	<built-in method lower of str object at 0x124116690>	5
+annotated bibliography, mla citation	<built-in method lower of str object at 0x1240f9988>	5
+mini case project	<built-in method lower of str object at 0x124180b90>	5
+academic writing rewrite	<built-in method lower of str object at 0x124111e90>	5
+i need you to write an academic project 	<built-in method lower of str object at 0x1241a2198>	5
+methodology	<built-in method lower of str object at 0x12416bd50>	5
+write a report	<built-in method lower of str object at 0x1241a3250>	5
+marketing case study	<built-in method lower of str object at 0x1241a7078>	5
+health promotion	<built-in method lower of str object at 0x12416bdc0>	5
+critically analyse amazon company model (master degree level)	<built-in method lower of str object at 0x124114930>	5
+assist with project management  	<built-in method lower of str object at 0x11e273800>	5
+critical analysis articles  	<built-in method lower of str object at 0x11e2a0c00>	5
+paper  due at midnight urban politics 3 pg	<built-in method lower of str object at 0x12406ec60>	5
+case study louis vuitton	<built-in method lower of str object at 0x11e274400>	5
+help with business finance 	<built-in method lower of str object at 0x124180bf8>	5
+rewrite and reword work	<built-in method lower of str object at 0x1241a7390>	4
+a political paper 	<built-in method lower of str object at 0x11e275200>	5
+2000 word help (pet)	<built-in method lower of str object at 0x12406ed50>	5
+academic writing hindu	<built-in method lower of str object at 0x123e2bd50>	5
+literature review based on survey 	<built-in method lower of str object at 0x124039730>	5
+bio academic writing 	<built-in method lower of str object at 0x11e2ca400>	5
+write some articles 	<built-in method lower of str object at 0x1241a8030>	5
+rewrite some articles for me 	<built-in method lower of str object at 0x1240f9a40>	5
+logistics in e-business   	<built-in method lower of str object at 0x1241a9030>	5
+write an 500-700 word essay with following question.	<built-in method lower of str object at 0x123f725f0>	5
+write a technical marketing report  	<built-in method lower of str object at 0x1241aa030>	5
+put an ebook in your own words	<built-in method lower of str object at 0x124166ab0>	4
+academic writing 	<built-in method lower of str object at 0x124193670>	5
+write a proposal of defense(literature review + research methodology) in it fields	<built-in method lower of str object at 0x124111f30>	5
+academic writing 	<built-in method lower of str object at 0x124180cc8>	5
+academic writing for charleslimnet	<built-in method lower of str object at 0x1241a2210>	5
+write 4 articles about a highly addictive browser game! urgent!	<built-in method lower of str object at 0x11e275c00>	5
+[report][presentation] domain based enterprise system	<built-in method lower of str object at 0x1240f1c38>	5
+paraphrasing about 2000 words in 5 hours	<built-in method lower of str object at 0x1241ab030>	5
+rewrite some articles for me 	<built-in method lower of str object at 0x124166b30>	4
+write a report 	<built-in method lower of str object at 0x12415b458>	5
+report 5000 words with material given (easy)	<built-in method lower of str object at 0x12415d130>	5
+academic writing	<built-in method lower of str object at 0x11e27a600>	5
+required 30 health related short articles rewriting	<built-in method lower of str object at 0x1241478a0>	4
+statictics	<built-in method lower of str object at 0x11e278400>	5
+"content writing - ""value"""	<built-in method lower of str object at 0x11e2cb200>	4
+rewrite 500 word article	<built-in method lower of str object at 0x12416bf10>	4
+rewrite 30 positive and spiritual articles for me.	<built-in method lower of str object at 0x1240f3bc0>	4
+edit an existing paper and make significant changes according the briefing.	<built-in method lower of str object at 0x124178d50>	5
+financial managment /corporate finance case	<built-in method lower of str object at 0x1241ab108>	5
+academic writing about short stature in childhood	<built-in method lower of str object at 0x124178e30>	5
+i would like to hire a proofreader	<built-in method lower of str object at 0x12419eb20>	4
+integrate 01	<built-in method lower of str object at 0x12419b970>	4
+environmental sustainability/ office  	<built-in method lower of str object at 0x124187ab0>	4
+proofread a short report and make it eye-catching 	<built-in method lower of str object at 0x12410e7b0>	4
+culture diversity-group research project	<built-in method lower of str object at 0x123e96c30>	5
+academic writing 	<built-in method lower of str object at 0x1241a52c0>	5
+ghostwriter- write 1000 word article on new medical research findings	<built-in method lower of str object at 0x11e27fc00>	5
+help me write something	<built-in method lower of str object at 0x12406ee40>	4
+help me write something -- 4	<built-in method lower of str object at 0x12417a378>	5
+write an evolution report 	<built-in method lower of str object at 0x12419f870>	5
+find 8 academic  references for a case study, do not write anything	<built-in method lower of str object at 0x1241a2378>	5
+edit something 	<built-in method lower of str object at 0x1240f9af8>	5
+writing report of 700- 800 words about e-commerce business models  , any business 2 consumer , prefer in uae 	<built-in method lower of str object at 0x123f72320>	5
+help me write something	<built-in method lower of str object at 0x123f729b0>	5
+i need you to write a report for something.	<built-in method lower of str object at 0x124187bd0>	4
+project work	<built-in method lower of str object at 0x1240f9bb0>	5
+development of an authentic assessment	<built-in method lower of str object at 0x11e2cb800>	5
+need help coming up with a research topic for japanese history paper	<built-in method lower of str object at 0x1240f9c68>	5
+economic analysis	<built-in method lower of str object at 0x12417a420>	5
+assign 2 report	<built-in method lower of str object at 0x12415d230>	5
+economics overview for my company.	<built-in method lower of str object at 0x1241149f0>	5
+academic writing.	<built-in method lower of str object at 0x12417a4c8>	5
+criminology critical literature review - 1,500 words	<built-in method lower of str object at 0x11e27ea00>	5
+hi everyone please help me to complete my project report.	<built-in method lower of str object at 0x124147a08>	5
+effect of double glazing	<built-in method lower of str object at 0x1241ae030>	5
+academic writing 	<built-in method lower of str object at 0x124166c30>	5
+commercial banking	<built-in method lower of str object at 0x1241af030>	5
+recommendations to a business merger. 	<built-in method lower of str object at 0x1241a6160>	5
+write a report 	<built-in method lower of str object at 0x123f72cb0>	5
+academic writing 	<built-in method lower of str object at 0x12409cea0>	5
+academic writing	<built-in method lower of str object at 0x1241aca08>	4
+help me write something	<built-in method lower of str object at 0x1241ad0d0>	5
+argumentative research paper needed	<built-in method lower of str object at 0x1240bab20>	5
+write a technical report  	<built-in method lower of str object at 0x12419ecb0>	5
+write a report 	<built-in method lower of str object at 0x123f72fb0>	5
+help me write a report for the current problem of dundee wellgate centrum	<built-in method lower of str object at 0x123f73310>	5
+academic writing 	<built-in method lower of str object at 0x1240f9d20>	5
+write some articles	<built-in method lower of str object at 0x124187c30>	5
+solve an excel problem, please!	<built-in method lower of str object at 0x11e280800>	5
+help me write something	<built-in method lower of str object at 0x1241167a0>	5
+help me write something	<built-in method lower of str object at 0x124193738>	5
+write a brief pestel analysis on a company	<built-in method lower of str object at 0x124195710>	5
+content writing 	<built-in method lower of str object at 0x12419fa28>	5
+paraphrase reservoir engineering report	<built-in method lower of str object at 0x1240c6ce0>	5
+academic writing f	<built-in method lower of str object at 0x1240f9dd8>	5
+academic writing 	<built-in method lower of str object at 0x1240f9e90>	5
+marketing report: netflix's mobile app evaluation 	<built-in method lower of str object at 0x1241aa190>	5
+write a report 	<built-in method lower of str object at 0x1240f9f48>	5
+academic writing 	<built-in method lower of str object at 0x11e280e00>	5
+write a report 	<built-in method lower of str object at 0x1241a3360>	4
+write a report 	<built-in method lower of str object at 0x1241b1030>	4
+write a report 	<built-in method lower of str object at 0x12419ed50>	5
+i need you to write an academic article. -- 2	<built-in method lower of str object at 0x1241ae120>	5
+academic writing 	<built-in method lower of str object at 0x1241036c0>	5
+writing statistics	<built-in method lower of str object at 0x1241af100>	5
+academic writing 	<built-in method lower of str object at 0x12419eda0>	5
+system design and analysis- computer science	<built-in method lower of str object at 0x12415b750>	5
+proofread something  	<built-in method lower of str object at 0x1241a8100>	5
+report  writing	<built-in method lower of str object at 0x1241ae210>	5
+business analysis 	<built-in method lower of str object at 0x12419edf0>	5
+write a report 	<built-in method lower of str object at 0x124187db0>	5
+research writing 	<built-in method lower of str object at 0x12419ee40>	5
+help with business finance 	<built-in method lower of str object at 0x123f735e0>	5
+write a business plan 	<built-in method lower of str object at 0x1241957c0>	4
+rewrite some articles for me 	<built-in method lower of str object at 0x1241a33e8>	5
+rewrite some paper for me 	<built-in method lower of str object at 0x12419fad8>	5
+help with business finance 	<built-in method lower of str object at 0x1241b2030>	5
+get articles written	<built-in method lower of str object at 0x1241a5408>	5
+write a technical report  	<built-in method lower of str object at 0x12417a570>	5
+write a technical report  	<built-in method lower of str object at 0x123f739d0>	5
+research writing 	<built-in method lower of str object at 0x1241a3470>	5
+help me write something	<built-in method lower of str object at 0x12419c270>	5
+real estate problems	<built-in method lower of str object at 0x1241b2120>	4
+risk decision analysis 672 a3	<built-in method lower of str object at 0x1241a2468>	5
+write a business plan 	<built-in method lower of str object at 0x1241ae300>	5
+discussion  - open to bidding	<built-in method lower of str object at 0x124147b70>	4
+research writing 	<built-in method lower of str object at 0x12415b7e8>	5
+ knowledge management x2 set	<built-in method lower of str object at 0x1241b3030>	5
+write a drug addiction article	<built-in method lower of str object at 0x12410e8f0>	5
+business writtingg	<built-in method lower of str object at 0x124187e10>	5
+project for finance	<built-in method lower of str object at 0x11e282800>	5
+intranet website development project management report	<built-in method lower of str object at 0x123d7d3c0>	5
+leaders are born, not made! do you agree or disagree?	<built-in method lower of str object at 0x123f73cd0>	5
+analyze some data  	<built-in method lower of str object at 0x1241a01a0>	5
+research writing 	<built-in method lower of str object at 0x11e284600>	5
+a marketing strategy for a tourism project in south africa	<built-in method lower of str object at 0x102dd7400>	5
+get articles written	<built-in method lower of str object at 0x12415b880>	5
+report writing 	<built-in method lower of str object at 0x1241a24e0>	5
+report on market structures	<built-in method lower of str object at 0x11e274a00>	5
+technical writing 	<built-in method lower of str object at 0x12419fb30>	5
+report writing 	<built-in method lower of str object at 0x11e285000>	5
+research writing required	<built-in method lower of str object at 0x124178f10>	5
+analyze project 	<built-in method lower of str object at 0x1241a2558>	5
+400 words business memo	<built-in method lower of str object at 0x124166d30>	4
+report writing about how data analytics is used in the retail industries  	<built-in method lower of str object at 0x1240bac38>	5
+write a report 	<built-in method lower of str object at 0x1240c6dc8>	5
+help with business finance 	<built-in method lower of str object at 0x12419c300>	5
+research writing	<built-in method lower of str object at 0x11e287600>	5
+case study	<built-in method lower of str object at 0x1240398f0>	5
+write a technical report -- 2	<built-in method lower of str object at 0x12419fb88>	4
+write a report 12	<built-in method lower of str object at 0x1240cb6b0>	4
+contemporary marketing issues	<built-in method lower of str object at 0x12417a618>	5
+editing my work	<built-in method lower of str object at 0x124114ab0>	5
+business taxation 	<built-in method lower of str object at 0x1241af238>	5
+academic essay project-write an empirical report 	<built-in method lower of str object at 0x123f73f20>	5
+research writing 	<built-in method lower of str object at 0x1240f3ce8>	5
+statistical data analysis	<built-in method lower of str object at 0x124126650>	5
+write a business plan 	<built-in method lower of str object at 0x1241b5030>	4
+research writing on level 2 health care - 12/05/2017 10:39 edt	<built-in method lower of str object at 0x1241b3180>	5
+"conducting research on case study ""british airways entry into the biofuel project"" and need access to the teaching notes, with some analysis"	<built-in method lower of str object at 0x1241a5550>	5
+comapny valuation	<built-in method lower of str object at 0x12419a6e8>	5
+international corporate governance 	<built-in method lower of str object at 0x124109ae0>	5
+taxation law	<built-in method lower of str object at 0x124107a20>	5
+help with business finance 	<built-in method lower of str object at 0x11e287000>	5
+assessment common business unit bsbfia402 report on financial activity	<built-in method lower of str object at 0x12415b918>	5
+$30 - $250 usd	<built-in method lower of str object at 0x12401ec30>	5
+write a report	<built-in method lower of str object at 0x1241168b0>	5
+edit something 	<built-in method lower of str object at 0x124166e30>	4
+read a textbook chapter and write a 250 word reflection (us eng) 12- 24hr deadline	<built-in method lower of str object at 0x12417a6c0>	5
+do statistical analysis and find insights from data in excel	<built-in method lower of str object at 0x1241ab1e0>	4
+research writing 	<built-in method lower of str object at 0x123f74240>	5
+money and banking project	<built-in method lower of str object at 0x1241169c0>	5
+technical report  	<built-in method lower of str object at 0x11e281800>	5
+design and dynamics of organizations	<built-in method lower of str object at 0x1241ad170>	5
+research writing	<built-in method lower of str object at 0x123cb8ce0>	5
+i would like to hire a technical writer	<built-in method lower of str object at 0x12410ea30>	5
+find an accountant s	<built-in method lower of str object at 0x124187e70>	4
+review a book	<built-in method lower of str object at 0x1240cb850>	5
+write a technical report  	<built-in method lower of str object at 0x123f74490>	5
+another technical report  	<built-in method lower of str object at 0x123f74880>	5
+data analysis by macroeconomics 	<built-in method lower of str object at 0x1241af308>	5
+case study	<built-in method lower of str object at 0x124195870>	5
+research writing	<built-in method lower of str object at 0x1241b3260>	5
+and anothertechnical report  	<built-in method lower of str object at 0x123f74b10>	5
+research writing  - 17/06/2017 23:42 edt	<built-in method lower of str object at 0x1241a2648>	5
+chemistry work	<built-in method lower of str object at 0x12419bf70>	5
+final technical report  	<built-in method lower of str object at 0x123f74d90>	5
+write a technical report  	<built-in method lower of str object at 0x12419c390>	5
+supply chain planning and control mgmt	<built-in method lower of str object at 0x1241af370>	5
+managerial accounting assignments online 	<built-in method lower of str object at 0x124114c30>	5
+research writing -- 2	<built-in method lower of str object at 0x12419fd98>	5
+statistical data decision making report - 2 tasks	<built-in method lower of str object at 0x123f75000>	5
+shakespeare hamlet	<built-in method lower of str object at 0x11e282000>	5
+university assignment - faculty of business studies	<built-in method lower of str object at 0x1240bad50>	5
+rewrite statement of purpose 	<built-in method lower of str object at 0x1241a6290>	5
+corporate financial strategy	<built-in method lower of str object at 0x12419fdf0>	5
+write a report  (makeup test)	<built-in method lower of str object at 0x1241b10e8>	5
+budgeting & production planing	<built-in method lower of str object at 0x1241af4a8>	5
+finance questions help -- 2	<built-in method lower of str object at 0x124047a78>	5
+research writing 	<built-in method lower of str object at 0x1241a81d0>	5
+finance and accounting assignment	<built-in method lower of str object at 0x1240bae68>	5
+report writing	<built-in method lower of str object at 0x11e289a00>	5
+help with business finance	<built-in method lower of str object at 0x1241a91c8>	5
+treasury and risk management 	<built-in method lower of str object at 0x124187f90>	4
+field methods public health	<built-in method lower of str object at 0x1241b7030>	5
+find an accountant 	<built-in method lower of str object at 0x123f75370>	5
+essay writing on vaccine strategies needed to achieve the global eradication of hiv/aids	<built-in method lower of str object at 0x12415d330>	5
+big data stream processing in sdn supervision cloud computing 	<built-in method lower of str object at 0x12419fea0>	5
+ppt material manufacturing! “ grinding process “	<built-in method lower of str object at 0x1241a63c0>	5
+ditributed systems  - open to bidding	<built-in method lower of str object at 0x124100bd0>	5
+small project one question	<built-in method lower of str object at 0x1241b7090>	5
+small project one question 1	<built-in method lower of str object at 0x1241af510>	5
+write a business assignment	<built-in method lower of str object at 0x1241ab2b8>	5
+re-phrasing of a technical engineering paper.	<built-in method lower of str object at 0x123f755f0>	5
+the uae forieng policy	<built-in method lower of str object at 0x123f75890>	5
+i need an essay writer	<built-in method lower of str object at 0x12419ff50>	5
+technical research project	<built-in method lower of str object at 0x123f75c00>	5
+network security	<built-in method lower of str object at 0x123f75e60>	5
+copywriting	<built-in method lower of str object at 0x12415b9b0>	5
+need help with financial study 	<built-in method lower of str object at 0x1240cb9f0>	4
+research and article rewriting 2 - 07/12/2017 08:34 est	<built-in method lower of str object at 0x1241a3580>	4
+the rhetorical analysis	<built-in method lower of str object at 0x1241b7150>	4
+write a document on success story - urgent	<built-in method lower of str object at 0x12415d430>	4
+check financial projection for any faults and send me corrections	<built-in method lower of str object at 0x12401edb0>	5
+essay	<built-in method lower of str object at 0x1241b2ad0>	5
+paraphrase the attached document. 	<built-in method lower of str object at 0x1241ad210>	5
+proof reader	<built-in method lower of str object at 0x1241b1258>	5
+financial investment research analyst	<built-in method lower of str object at 0x123f760f0>	4
+concrete constituents and mix design -- 2 - 	<built-in method lower of str object at 0x11e289200>	5
+create me a professional marketing plan	<built-in method lower of str object at 0x1241a9360>	4
+write a 2-3 page paper	<built-in method lower of str object at 0x124100cc8>	4
+report preparation on market	<built-in method lower of str object at 0x124147cd8>	4
+develop a gantt chart and google spreadsheet for construction project management	<built-in method lower of str object at 0x123f76310>	4
+write article about cryptocurrency exchange	<built-in method lower of str object at 0x12415ba48>	4
+analyzing policy document	<built-in method lower of str object at 0x1240cbb90>	5
+rewrite the paragraphs in computer fild	<built-in method lower of str object at 0x124123648>	4
+help me write something	<built-in method lower of str object at 0x1241a64f0>	5
+paper extract for telecom engineer.	<built-in method lower of str object at 0x1241b3340>	5
+impact assessment 	<built-in method lower of str object at 0x1241b72d0>	4
+company profile writing	<built-in method lower of str object at 0x123e8abd0>	5
+managing is strategy and security risk	<built-in method lower of str object at 0x1241a2738>	5
+rewrite 350 words	<built-in method lower of str object at 0x124114cf0>	5
+essay 500 words -- 3	<built-in method lower of str object at 0x1241b7330>	5
+healthcare info	<built-in method lower of str object at 0x1241b80f0>	5
+help me write something -- 2	<built-in method lower of str object at 0x124193800>	5
+project writing	<built-in method lower of str object at 0x1241a94f8>	4
+create a 300 words blog	<built-in method lower of str object at 0x1241a27b0>	5
+intrinsic value of bitcoin.	<built-in method lower of str object at 0x124116ad0>	5
+greek mythology , watch two film  compare films with each other and also with source material	<built-in method lower of str object at 0x1241b2c60>	5
+business report 	<built-in method lower of str object at 0x1241ba1e8>	5
+small article 	<built-in method lower of str object at 0x1241b7390>	5
+management challenge	<built-in method lower of str object at 0x124114db0>	5
+i need a writer for hewlett-packard financial data	<built-in method lower of str object at 0x11e27f000>	5
+statistical analysis project	<built-in method lower of str object at 0x1241ad2b0>	5
+financial institutional	<built-in method lower of str object at 0x1240f3e10>	5
+rephrase 3000 words	<built-in method lower of str object at 0x124195920>	4
+economic decision making	<built-in method lower of str object at 0x124122990>	4
+report of strategic management	<built-in method lower of str object at 0x1241ba240>	5
+write a report on a topic related to healthcare data analysis in usa	<built-in method lower of str object at 0x123f766b0>	5
+business ethics	<built-in method lower of str object at 0x1241bb030>	5
+technical  report	<built-in method lower of str object at 0x1241b73f0>	4
+help for my worm	<built-in method lower of str object at 0x1241ba298>	5
+help me write something -- 10	<built-in method lower of str object at 0x12415bae0>	5
+write an article on banking industry - 01/05/2018 13:45 edt	<built-in method lower of str object at 0x1241084b0>	5
+blog articles about cpm scheduling and claims analysis for construction.	<built-in method lower of str object at 0x12410eb70>	5
+strategic project management planning report for a small organization	<built-in method lower of str object at 0x11e288c00>	4
+"write an extended abstract/ literature review  on the subject of ""heap leaching - issues preventing effective recoveries"""	<built-in method lower of str object at 0x124103810>	5
+master of science degree ( engineering )	<built-in method lower of str object at 0x1241085d0>	5
+content writing	<built-in method lower of str object at 0x1241ba2f0>	5
+help me write something	<built-in method lower of str object at 0x1241b3420>	5
+case study	<built-in method lower of str object at 0x1241a3690>	5
+marketing essay -- 2	<built-in method lower of str object at 0x1241ba348>	5
+need a complete 3000 word project on a case study	<built-in method lower of str object at 0x12416f8a0>	5
+research paper	<built-in method lower of str object at 0x11e2d6400>	5
+analyse, model and design improvement to a business process	<built-in method lower of str object at 0x1241ab390>	5
+writing task	<built-in method lower of str object at 0x1241938c8>	5
+simple marketing report	<built-in method lower of str object at 0x1241ad350>	5
+copy - paste from site and write content 	<built-in method lower of str object at 0x123f76a20>	5
+need an article	<built-in method lower of str object at 0x1241ab468>	5
+3 threats faced by the technologies and the respective strategies used to secure them	<built-in method lower of str object at 0x1241ba3a0>	5
+diversity & inclusion: help me write something for discussion -- 2	<built-in method lower of str object at 0x124122b20>	5
+spss analyst, pearson's chi-square test, cramer's v	<built-in method lower of str object at 0x11e2de000>	5
+rewrite high quality article (same keyword density) - 3200 words max	<built-in method lower of str object at 0x123f76d00>	5
+academic writing, article section writing, literature review for scientific research papers	<built-in method lower of str object at 0x1241903e0>	5
+project development	<built-in method lower of str object at 0x12415c3f0>	5
+report of 2500 words	<built-in method lower of str object at 0x11e2e3200>	5
+security principle case study	<built-in method lower of str object at 0x11e2e2a00>	5
+digital art (projection mapping) research	<built-in method lower of str object at 0x124116be0>	5
+write a report that describes laptop/desktop	<built-in method lower of str object at 0x1241ba3f8>	5
+glocalisation	<built-in method lower of str object at 0x1241af718>	5
+information systems 	<built-in method lower of str object at 0x12419c5d0>	5
+english editing- urgent 2 days	<built-in method lower of str object at 0x1241267d8>	5
+company report	<built-in method lower of str object at 0x123f77070>	5
+help me write something	<built-in method lower of str object at 0x12419c660>	5
+answers to the questions( essay type)	<built-in method lower of str object at 0x1241b75d0>	5
+rewriting and paraphrasing  academic part of research thesis - native english speaker	<built-in method lower of str object at 0x124195a80>	5
+i need a writer	<built-in method lower of str object at 0x11e2dd600>	5
+english project	<built-in method lower of str object at 0x124116cf0>	4
+review in internal corporate governance and audit quality	<built-in method lower of str object at 0x1241af780>	5
+management powerpoint project	<built-in method lower of str object at 0x1241ae3f0>	5
+contract  analysis	<built-in method lower of str object at 0x1241086f0>	5
+paraphrasing 1200 words	<built-in method lower of str object at 0x124166f30>	5
+book report on “move fast and break things”	<built-in method lower of str object at 0x1241a6620>	5
+data mining report writing	<built-in method lower of str object at 0x124193990>	5
+article about happiness	<built-in method lower of str object at 0x1241b2f30>	5
+write a two page paper -- 2	<built-in method lower of str object at 0x123f773a0>	5
+film review	<built-in method lower of str object at 0x123f77790>	5
+design specification report for a system	<built-in method lower of str object at 0x123f77a60>	5
+rewriting a behavioural economics text	<built-in method lower of str object at 0x11e2e9c00>	5
+write a reflection paper	<built-in method lower of str object at 0x124116e00>	5
+small report based on provided content	<built-in method lower of str object at 0x1241bf030>	5
+association rule mining  report	<built-in method lower of str object at 0x124015ce0>	5
+psychology of business decisions resumee	<built-in method lower of str object at 0x1241b5110>	5
+data centre analysis	<built-in method lower of str object at 0x124108810>	5
+answer 5 questions related to iot ,sql, mongodb and other distributed data management systems w/ short paragraphs	<built-in method lower of str object at 0x12417a8b8>	5
+"literature about (theory of reasoned actions ""tra"")"	<built-in method lower of str object at 0x12410f5e8>	5
+literature about (technology acceptance model “tom”)	<built-in method lower of str object at 0x123f78020>	5
+proofread and editing service for academic essay	<built-in method lower of str object at 0x1241b3570>	5
+essay writing - 30/09/2018 08:46 edt	<built-in method lower of str object at 0x1241bb158>	5
+paraphrasing for journal submission	<built-in method lower of str object at 0x1241aa2f0>	5
+write me an argumentation essay	<built-in method lower of str object at 0x1241a9690>	5
+research proposal	<built-in method lower of str object at 0x1241af8b8>	5
+strategic entrepreneurship analysis	<built-in method lower of str object at 0x1241bf140>	4
+financial analysis with strong excel skills	<built-in method lower of str object at 0x11e2f0e00>	5
+report for jayamala	<built-in method lower of str object at 0x1241b7750>	4
+small r project wrangling	<built-in method lower of str object at 0x124195b30>	5
+i need a writer to write my scholarship essay	<built-in method lower of str object at 0x123e8adc0>	5
+enterprise architectures	<built-in method lower of str object at 0x1240bdd98>	5
+research paper about: stress management ; individual & organizational and how its related to organizational behaviour	<built-in method lower of str object at 0x123f78410>	5
+managing human resourses	<built-in method lower of str object at 0x11e287c00>	5
+research writing	<built-in method lower of str object at 0x1241a82a0>	5
+3 page double space research 	<built-in method lower of str object at 0x12419c6f0>	5
+a cyber security research	<built-in method lower of str object at 0x1241b7810>	4
+small business enterprise	<built-in method lower of str object at 0x1241be300>	5
+managing communications, knowledge and information_ $60 fixed price	<built-in method lower of str object at 0x1241ba660>	5
+material science essay sample	<built-in method lower of str object at 0x1241a2a80>	5
+francis fuller victor's river of the west	<built-in method lower of str object at 0x1240aba08>	5
+environmental impact assessment/ems	<built-in method lower of str object at 0x1241ba710>	5
+ib essay writer	<built-in method lower of str object at 0x1241b78d0>	5
+report on application of data mining in health/medical area	<built-in method lower of str object at 0x1240f1df0>	5
+privacy issues on social media	<built-in method lower of str object at 0x11e2f7c00>	5
+mini essay and pictures	<built-in method lower of str object at 0x1241b51f0>	5
+writing paper about network field	<built-in method lower of str object at 0x1241af920>	5
+system analysis and design simple project 	<built-in method lower of str object at 0x124193a58>	5
+astrology research needed	<built-in method lower of str object at 0x1241ba7c0>	5
+research 18 answers related to social entrepreneurship in egypt	<built-in method lower of str object at 0x12415c5d0>	5
+critical analysis	<built-in method lower of str object at 0x1241b52d0>	5
+advance computer networking wireshark question to be solved	<built-in method lower of str object at 0x1241a2af8>	5
+rephrasing my papers	<built-in method lower of str object at 0x1241a2b70>	5
+debit and money market	<built-in method lower of str object at 0x1241ad3f0>	4
+literature reviews	<built-in method lower of str object at 0x123f78780>	5
+mobile games: business value vs ethical issues	<built-in method lower of str object at 0x1241b79f0>	5
+magazine article	<built-in method lower of str object at 0x1241a3828>	5
+creative essay writing	<built-in method lower of str object at 0x12417aa08>	5
+case study survey	<built-in method lower of str object at 0x123f789e0>	5
+writing project	<built-in method lower of str object at 0x1241b3730>	5
+assignment management report	<built-in method lower of str object at 0x1241b7a50>	5
+international operation management	<built-in method lower of str object at 0x1241b37a0>	5
+complete me a report/assigment/essay	<built-in method lower of str object at 0x124193b20>	5
+i need to know about km implementation	<built-in method lower of str object at 0x1241c1030>	5
+are anticholinergic drugs useful for treatment of overactive bladder syndrome? (discuss their advantages and disadvantages by focusing on their mechanism of action in various tissues)	<built-in method lower of str object at 0x11e2fee00>	5
+research work	<built-in method lower of str object at 0x1241ab540>	5
+need help in writing a research report in challenges and opportunities of big data in certain industry	<built-in method lower of str object at 0x1241c2030>	5
+cimic group limited - strategic framework report	<built-in method lower of str object at 0x124108930>	5
+event marketing	<built-in method lower of str object at 0x123f78d80>	5
+traditional  accounting information system	<built-in method lower of str object at 0x124195be0>	5
+personal statement	<built-in method lower of str object at 0x1241bf250>	5
+2 articles writing and 1 essay analysis	<built-in method lower of str object at 0x11e2f2600>	5
+i would like to hire a powerpoint designer	<built-in method lower of str object at 0x12417aab0>	5
+report on person-of-thetherapist	<built-in method lower of str object at 0x124107bc8>	5
+artifical intelligence economical negativity 	<built-in method lower of str object at 0x124147e40>	5
+system security report	<built-in method lower of str object at 0x1241af9f0>	5
+negotiation	<built-in method lower of str object at 0x124126960>	5
+small research	<built-in method lower of str object at 0x1241ae4e0>	5
+report writing	<built-in method lower of str object at 0x124114f30>	5
+writing about teaching in universities	<built-in method lower of str object at 0x1241a6750>	5
+write 7 to 10 pages	<built-in method lower of str object at 0x1241b7bd0>	5
+medical paraphrasing  633 words	<built-in method lower of str object at 0x12417ab58>	5
+airline operations new	<built-in method lower of str object at 0x1241be4e0>	5
+analyze and write a advertising report	<built-in method lower of str object at 0x1241b7c30>	5
+essay about globalization and protectionism - 4/5 pages long apa style 	<built-in method lower of str object at 0x1241baa80>	5
+write a research paper for development psychology topic	<built-in method lower of str object at 0x11e305200>	5
+tok essay - 1300 - 1500 words	<built-in method lower of str object at 0x1241b7c90>	5
+information systems 	<built-in method lower of str object at 0x12419c780>	5
+research paper	<built-in method lower of str object at 0x1241c3030>	5
+big data analysis research	<built-in method lower of str object at 0x1241c4030>	5
+write research paper for the usecase	<built-in method lower of str object at 0x1241bab30>	5
+finance topic	<built-in method lower of str object at 0x1241bab88>	5
+writing ..	<built-in method lower of str object at 0x1241b7cf0>	5
+r project - big data (over 1gb)	<built-in method lower of str object at 0x1241aa450>	4
+new product acquisition system	<built-in method lower of str object at 0x1241ab618>	5
+network system writing task 	<built-in method lower of str object at 0x1241c1220>	5
+presentation; batteries	<built-in method lower of str object at 0x123f79460>	5
+write a paper; excel skills	<built-in method lower of str object at 0x1241afac0>	5
+need introduction writing	<built-in method lower of str object at 0x1241b3810>	5
+2 pages essay paper about computer networks	<built-in method lower of str object at 0x1241905b8>	5
+essay about bullying - 5 pages	<built-in method lower of str object at 0x1241afb28>	5
+comparative political research essay	<built-in method lower of str object at 0x1241a0310>	5
+business finance	<built-in method lower of str object at 0x12417ac00>	4
+proofread and improve a research paper	<built-in method lower of str object at 0x1241bf360>	5
+thesis proposal writing on impact of process innovation on organizational performance of smes	<built-in method lower of str object at 0x1241c30b0>	5
+read an article and then answer some questions 1000 words	<built-in method lower of str object at 0x1241a38b0>	5
+brand resonance model and brand equity.	<built-in method lower of str object at 0x1241c6030>	5
+company profiles and swot analysis	<built-in method lower of str object at 0x124195c90>	5
+table of contents needed for thesis	<built-in method lower of str object at 0x1241b53b0>	5
+report on psm fucntion for a firm / company	<built-in method lower of str object at 0x123f79830>	5
+i need someone who is capable of doing academic writing and research	<built-in method lower of str object at 0x123f79100>	5
+help me write something	<built-in method lower of str object at 0x1241b7e10>	5
+spain geographic essay	<built-in method lower of str object at 0x1241bf470>	5
+write me a report about kinship	<built-in method lower of str object at 0x1241c2118>	5
+breakeven and ror calculations	<built-in method lower of str object at 0x1241c6198>	5
+case study for network security 	<built-in method lower of str object at 0x1241b38f0>	5
+a comparative report	<built-in method lower of str object at 0x124195d40>	4
+sport essay / report	<built-in method lower of str object at 0x1240bdea0>	5
+critical essay harvard style	<built-in method lower of str object at 0x1241afb90>	5
+academic writing  -- 2	<built-in method lower of str object at 0x1241c5588>	5
+help me write something	<built-in method lower of str object at 0x1241c3130>	5
+easy write up	<built-in method lower of str object at 0x124100dc0>	5
+7 types of waste in lean production theory	<built-in method lower of str object at 0x1241ae5d0>	5
+rewrite a 3,500 word review article (i have more work after this)	<built-in method lower of str object at 0x123f79bd0>	4
+business travel market 	<built-in method lower of str object at 0x1241badf0>	5
+write up project	<built-in method lower of str object at 0x124193be8>	4
+improve quality of service for home automation network (iot)	<built-in method lower of str object at 0x1241ab6f0>	5
+hi i need your help in writing a 300 word personal statement for my university application	<built-in method lower of str object at 0x12415c7b0>	5
+to write a short paper(1000-1100 words)	<built-in method lower of str object at 0x12410ecb0>	5
+write an article/report about an event	<built-in method lower of str object at 0x1241a3938>	5
+report writing 	<built-in method lower of str object at 0x1241b7ed0>	4
+report writing	<built-in method lower of str object at 0x1241be8a0>	5
+securing web server writter	<built-in method lower of str object at 0x12410edf0>	5
+cyber security essay	<built-in method lower of str object at 0x123f77de0>	5
+small r studio project	<built-in method lower of str object at 0x1241ae6c0>	4
+research in project management	<built-in method lower of str object at 0x1241a5698>	5
+restructuring, rewriting article	<built-in method lower of str object at 0x1241c7030>	5
+i need you to write an essay for 2,000 words	<built-in method lower of str object at 0x1241b7f90>	5
+personal statment for graduate admission 	<built-in method lower of str object at 0x123f79e80>	5
+systematic review in human resources	<built-in method lower of str object at 0x1241bafa8>	4
+project report	<built-in method lower of str object at 0x1241a2d50>	5
+industry comparative analysis	<built-in method lower of str object at 0x1241c8090>	5
+academic writing & research computer science -- 2	<built-in method lower of str object at 0x124190790>	5
+business law 2	<built-in method lower of str object at 0x124195df0>	5
+statistics cs	<built-in method lower of str object at 0x1241ad490>	5
+scientific and technical communication	<built-in method lower of str object at 0x1241ab7c8>	5
+project on student recruitment for universities - in particular the clearing process	<built-in method lower of str object at 0x123f7a160>	5
+international plan	<built-in method lower of str object at 0x1241c80f0>	5
+writing about reproductive health and sexuality in the light of the catholic church’s teachings	<built-in method lower of str object at 0x11e318a00>	5
+job satisfaction research	<built-in method lower of str object at 0x11e2fe000>	5
+account essay writing	<built-in method lower of str object at 0x123f7a370>	5
+excel assignment	<built-in method lower of str object at 0x1241c8150>	5
+question & answer cfin	<built-in method lower of str object at 0x1241afc60>	5
+reflective essay on ishmael by daniel quinn	<built-in method lower of str object at 0x1241a3a48>	5
+etl on demand 	<built-in method lower of str object at 0x1241c9088>	5
+management communication	<built-in method lower of str object at 0x1241bea80>	5
+proof reading editing	<built-in method lower of str object at 0x1241c90e0>	5
+generating business analytic report	<built-in method lower of str object at 0x11e31f000>	5
+quantitative data analysis using spss	<built-in method lower of str object at 0x1241aa5b0>	4
+writing proposal for arabic question answering system over linked data	<built-in method lower of str object at 0x1241a6880>	5
+tableau visualisation report	<built-in method lower of str object at 0x123f7a6e0>	5
+doing business globally & internationally	<built-in method lower of str object at 0x11e320e00>	5
+write an english essay	<built-in method lower of str object at 0x1241b1310>	5
+construct a 12 page research document on human resource management	<built-in method lower of str object at 0x11e322800>	5
+customer relationship management system	<built-in method lower of str object at 0x11e2fe800>	5
+writing a proposal about safety procedures 2500-3000 words	<built-in method lower of str object at 0x1241cb030>	5
+professional writer	<built-in method lower of str object at 0x123f7a9f0>	5
+modular material handling equipments (report)	<built-in method lower of str object at 0x1241a0480>	5
+finanicial analysis for mangers	<built-in method lower of str object at 0x1241a2eb8>	5
+market research small assignment	<built-in method lower of str object at 0x12415bc10>	5
+feasibility study 101	<built-in method lower of str object at 0x12417aca8>	4
+essay writing	<built-in method lower of str object at 0x124047bf0>	5
+research on removal of performance rating systems in global companies	<built-in method lower of str object at 0x11e326e00>	5
+financial regulation	<built-in method lower of str object at 0x1241c6300>	5
+networking ns2 -ns3	<built-in method lower of str object at 0x1241cc030>	4
+capital budgeting under uncertainty and risk 	<built-in method lower of str object at 0x1241ad530>	5
+trend analysis for exchange rate and interest rates of mexico and u.s	<built-in method lower of str object at 0x123f7adc0>	5
+paper on saving the world	<built-in method lower of str object at 0x1241aa710>	5
+three page informational paper	<built-in method lower of str object at 0x1241c40f0>	5
+how big data networks and related technologies can be used to reduce student discipline problem	<built-in method lower of str object at 0x11e32a000>	5
+analysis of nike's investment assessment methodologies	<built-in method lower of str object at 0x124122cb0>	5
+i need someone to do my case study questions 	<built-in method lower of str object at 0x11e326600>	5
+detailed review paper	<built-in method lower of str object at 0x1241b5490>	5
+research essay	<built-in method lower of str object at 0x1241a8370>	5
+paraphrasing for a report	<built-in method lower of str object at 0x12415bca8>	5
+essay about smart grid	<built-in method lower of str object at 0x1241c31b0>	5
+essay on integrative leadership practices and issue	<built-in method lower of str object at 0x1241aa870>	5
+completely rewrite/spin 5000 words (at least readable) in -12 hours.	<built-in method lower of str object at 0x1241b5570>	5
+write book's analysis	<built-in method lower of str object at 0x1241a69b0>	5
+r coding social media intellegence	<built-in method lower of str object at 0x124195ea0>	4
+need to complete 3 case study	<built-in method lower of str object at 0x1241c7148>	5
+it project management..	<built-in method lower of str object at 0x1241b3a40>	5
+phd proposal	<built-in method lower of str object at 0x12415bd40>	5
+research for multimedia sensor networks	<built-in method lower of str object at 0x1241b13c8>	5
+write a paper	<built-in method lower of str object at 0x1241cb1e8>	5
+report discussing the solution of post tensioned concrete and the impact of its technical change in design and construction.	<built-in method lower of str object at 0x11e331600>	5
+critical analysis world war 1	<built-in method lower of str object at 0x1241bed00>	5
+security and web database	<built-in method lower of str object at 0x12417ad50>	5
+writing a report -- 2	<built-in method lower of str object at 0x1241ce030>	5
+cinema and culture study	<built-in method lower of str object at 0x1241c1410>	5
+need a writer for machine learning	<built-in method lower of str object at 0x1241cc198>	5
+marketing strategy	<built-in method lower of str object at 0x123f7b040>	5
+introduction of two-dimensional cell culture versus three-dimensional cell culture	<built-in method lower of str object at 0x124100eb8>	5
+market analysis 	<built-in method lower of str object at 0x1241cf030>	5
+eu affairs project	<built-in method lower of str object at 0x124126ae8>	5
+400 word answer	<built-in method lower of str object at 0x1241cc210>	5
+essay 2000 words	<built-in method lower of str object at 0x11e336e00>	5
+english writing.	<built-in method lower of str object at 0x1241802a0>	5
+someone to apply to universities admissions for me as an international student	<built-in method lower of str object at 0x1241666b0>	5
+creativity development project	<built-in method lower of str object at 0x1241147b0>	5
+portrayal of asylum seekers in the plays the rainbow dark and the pacific solution through applying cultural trauma. 	<built-in method lower of str object at 0x1241b11a0>	5
+short paper international law	<built-in method lower of str object at 0x124123780>	5
+critique and essay writing	<built-in method lower of str object at 0x11e2f7600>	5
+book report on random walk down wall street	<built-in method lower of str object at 0x124190968>	5
+looking for full time academic writer freelancer	<built-in method lower of str object at 0x124193cb0>	5
+writer is required for marketing and management task .	<built-in method lower of str object at 0x12417a810>	4
+i need you to write a report for something. in 3 hours max related to political science.	<built-in method lower of str object at 0x12416b6c0>	4
+write a literature review	<built-in method lower of str object at 0x1241ad030>	5
+global marketing plan 	<built-in method lower of str object at 0x1241a32d8>	5
+standardization, expectation, and judgment in response to language use -- 2	<built-in method lower of str object at 0x12410de40>	5
+history paper on medieval war technologies	<built-in method lower of str object at 0x1241ad710>	5
+i need an expert writer	<built-in method lower of str object at 0x1241c6468>	5
+3000 words essay ref5018	<built-in method lower of str object at 0x1241c65d0>	5
+property party wall	<built-in method lower of str object at 0x11e33b200>	5
+research article	<built-in method lower of str object at 0x124193d78>	5
+wrong conviction in america	<built-in method lower of str object at 0x1241ad7b0>	5
+writer hiring-acadamic writing 	<built-in method lower of str object at 0x12419a840>	4
+personal statement	<built-in method lower of str object at 0x1241b5650>	5
+eseu management	<built-in method lower of str object at 0x11e33dc00>	5
+essay-1000 words (focus on british history)	<built-in method lower of str object at 0x11e33e200>	5
+global trade and finance -- 2	<built-in method lower of str object at 0x1241959d0>	5
+get a termpaper written	<built-in method lower of str object at 0x1241ef138>	5
+i need someone to re-word my report	<built-in method lower of str object at 0x123f7b270>	5
+need an essay	<built-in method lower of str object at 0x124193e40>	5
+charity manifesto for a black british nationalist website	<built-in method lower of str object at 0x11e340c00>	4
+urgent english essay	<built-in method lower of str object at 0x1241bf580>	5
+need someone who can help t.h.e.s.i.s	<built-in method lower of str object at 0x124197f60>	5
+write 2 essays about music	<built-in method lower of str object at 0x12419a998>	5
+letter of intent to grad school(mba)	<built-in method lower of str object at 0x124195f50>	5
+stylized facts analysis	<built-in method lower of str object at 0x12416b7a0>	5
+writing essay	<built-in method lower of str object at 0x12419e120>	5
+help me write my english speech	<built-in method lower of str object at 0x12417a960>	5
+data writeup	<built-in method lower of str object at 0x1241874b0>	5

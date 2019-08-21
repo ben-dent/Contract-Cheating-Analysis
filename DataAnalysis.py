@@ -1,4 +1,4 @@
-# import matplotlib.pyplot as plt; plt.rcdefaults()
+import matplotlib.pyplot as plt; plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -296,9 +296,9 @@ def saveAllDataToCSV():
     con.commit()
 
     tables = [each[0] for each in cur.fetchall()]
-    saveToCSV(tables, '*', None)
+    saveToCSV(tables, '*', None, None)
 
-def saveToCSV(tables, columns, filter):
+def saveToCSV(tables, columns, filter, name):
 
     bidNames = ["Bid ID", "Job ID", "Country", "User"]
     jobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
@@ -327,7 +327,10 @@ def saveToCSV(tables, columns, filter):
 
         con.commit()
 
-        file = table + ".csv"
+        if name is None:
+            file = table + ".csv"
+        else:
+            file = name
 
         columnNames = names.get(table)
 

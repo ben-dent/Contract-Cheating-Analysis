@@ -11,15 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Filter By Country - Bids</string>
+   <string/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="lblTitle">
     <property name="geometry">
      <rect>
       <x>80</x>
       <y>10</y>
-      <width>321</width>
+      <width>391</width>
       <height>41</height>
      </rect>
     </property>
@@ -31,7 +31,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Filter By Country - Bids</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="btnBack">

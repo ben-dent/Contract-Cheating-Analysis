@@ -3,10 +3,11 @@ import sys
 
 from PyQt5 import uic, QtWidgets
 
-from DataAnalysis import DATABASE_NAME, saveToCSV
+from DataAnalysis import DATABASE_NAME, saveToCSV, plotBarChartsOfBidderCountries
 
 processingUi = uic.loadUiType("UIs/processingUI.ui")[0]
 countryUi = uic.loadUiType("UIs/countryUI.ui")[0]
+
 
 class Processing(QtWidgets.QMainWindow, processingUi):
     def __init__(self, parent=None):
@@ -24,10 +25,12 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         l.launchCountryBids()
 
     def countryPosters(self):
-        print("Country - Posters")
+        l.processing.close()
+        l.launchCountryPosters()
 
     def countryWinners(self):
-        print("Country - Winners")
+        l.processing.close()
+        l.launchCountryWinners()
 
     def category(self):
         print("Category")
@@ -39,29 +42,91 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         print("Keyword")
 
 
-class CountryBids(QtWidgets.QMainWindow, countryUi):
-    def __init__(self, parent=None):
+class Country(QtWidgets.QMainWindow, countryUi):
+    def __init__(self, processType, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
+        self.processType = processType
+        title = "Filter By Country - " + self.processType
+        self.setWindowTitle(title)
+        self.lblTitle.setText(title)
 
-        l.cur.execute('SELECT DISTINCT(Country) FROM Bids ORDER BY Country')
-        countries = [each[0] for each in l.cur.fetchall()]
-        self.cmbCountries.addItems(countries)
+        self.data = {}
+
+        if (self.processType == "Posters"):
+            l.cur.execute('SELECT DISTINCT(CountryOfPoster) FROM Jobs')
+            self.countries = [each[0] for each in l.cur.fetchall()]
+
+            l.cur.execute('SELECT DISTINCT(CountryOfPoster) FROM ReviewJobs WHERE CountryOfPoster NOT IN (SELECT CountryOfPoster FROM Jobs)')
+            self.countries += [each[0] for each in l.cur.fetchall()]
+        elif (self.processType == "Winners"):
+            l.cur.execute(
+                "SELECT DISTINCT(CountryOfWinner) FROM Jobs WHERE CountryOfWinner != 'None'")
+            self.countries = [each[0] for each in l.cur.fetchall()]
+
+            l.cur.execute(
+                "SELECT DISTINCT(CountryOfWinner) FROM ReviewJobs WHERE CountryOfWinner != 'None' AND CountryOfWinner NOT IN (SELECT CountryOfWinner FROM Jobs)")
+            self.countries += [each[0] for each in l.cur.fetchall()]
+        else:
+            query = 'SELECT DISTINCT(Country) FROM Bids ORDER BY Country'
+            l.cur.execute(query)
+            self.countries = [each[0] for each in l.cur.fetchall()]
+
+        self.cmbCountries.addItems(sorted(self.countries))
+
+        self.getFreqs()
 
         self.btnGraph.clicked.connect(self.graph)
         self.btnExport.clicked.connect(self.export)
         self.btnBack.clicked.connect(self.back)
 
+    def getFreqs(self):
+        for country in self.countries:
+            n = 0
+            if (self.processType == "Bids"):
+                query = "SELECT Count(BidID) FROM Bids WHERE Country = '" + country + "'"
+                l.cur.execute(query)
+                n = int(l.cur.fetchone()[0])
+
+            elif (self.processType == "Posters"):
+                query = "SELECT Count(JobID) FROM Jobs WHERE CountryOfPoster = '" + country + "'"
+                l.cur.execute(query)
+
+                n += int(l.cur.fetchone()[0])
+
+                query = "SELECT Count(JobID) FROM ReviewJobs WHERE CountryOfPoster = '" + country + "'"
+                l.cur.execute(query)
+
+                n += int(l.cur.fetchone()[0])
+            else:
+                query = "SELECT Count(JobID) FROM Jobs WHERE CountryOfWinner = '" + country + "'"
+                l.cur.execute(query)
+
+                n += int(l.cur.fetchone()[0])
+
+                query = "SELECT Count(JobID) FROM ReviewJobs WHERE CountryOfWinner = '" + country + "'"
+                l.cur.execute(query)
+
+                n += int(l.cur.fetchone()[0])
+
+
+            self.data.update({country: n})
+
     def graph(self):
-        print("Graph")
+        country = self.cmbCountries.currentText()
+        plotBarChartsOfBidderCountries({country: self.data.get(country)})
 
     def export(self):
         if (self.cmbCountries.currentIndex() == 0):
             QtWidgets.QMessageBox.warning(self, "Please select a country!", "Please select a country!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         else:
-            filter = "Country = '" + self.cmbCountries.currentText() + "'"
-            saveToCSV("Bids", '*', filter)
+            country = self.cmbCountries.currentText()
+            filter = "Country = '" + country + "'"
+            file = self.processType + " - " + self.cmbCountries.currentText() + ".csv"
+            saveToCSV([self.processType], '*', filter, file)
+            QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
 
     def back(self):
         l.country.close()
@@ -78,14 +143,16 @@ class Launcher:
         self.processing.show()
 
     def launchCountryBids(self):
-        self.country = CountryBids()
+        self.country = Country("Bids")
         self.country.show()
 
     def launchCountryPosters(self):
-        return
+        self.country = Country("Posters")
+        self.country.show()
 
     def launchCountryWinners(self):
-        return
+        self.country = Country("Winners")
+        self.country.show()
 
     def launchCategory(self):
         return
