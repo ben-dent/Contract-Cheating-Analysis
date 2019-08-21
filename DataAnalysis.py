@@ -523,7 +523,7 @@ def conversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    cur.execute('''SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews''')
+    cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None'")
 
     res = cur.fetchall()
 
@@ -568,7 +568,7 @@ def jobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
 
-    cur.execute('''SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs''')
+    cur.execute("SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE ConvertedFinalCost = 'None'")
 
     res = cur.fetchall()
 
@@ -604,7 +604,7 @@ def jobConversions():
 def reviewJobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
-    cur.execute('''SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs''')
+    cur.execute("SELECT JobID, FinalCost, Currency, Year, Week FROM ReviewJobs WHERE ConvertedFinalCost = 'None'")
 
     res = cur.fetchall()
 
