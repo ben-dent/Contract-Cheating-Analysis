@@ -604,7 +604,7 @@ def jobConversions():
 def reviewJobConversions():
     con = lite.connect(DATABASE_NAME)
     cur = con.cursor()
-    cur.execute('''SELECT JobID, FinalCost, Currency, Date FROM ReviewJobs''')
+    cur.execute('''SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs''')
 
     res = cur.fetchall()
 
@@ -847,9 +847,9 @@ def optimiseConstant():
 
 
 
-# doAverages()
-# jobConversions()
-# conversions()
+doAverages()
+jobConversions()
+conversions()
 # getDateRanges()
 # scoreProjects(10)
 # optimiseConstant()
