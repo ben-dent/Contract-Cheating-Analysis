@@ -3,7 +3,7 @@ import sys
 
 from PyQt5 import uic, QtWidgets
 
-from DataAnalysis import DATABASE_NAME, saveToCSV, plotBarChartsOfBidderCountries
+from DataAnalysis import DATABASE_NAME, saveToCSV, plotBarChartsOfBidderCountries, plotSingleCountry
 
 processingUi = uic.loadUiType("UIs/processingUI.ui")[0]
 countryUi = uic.loadUiType("UIs/countryUI.ui")[0]
@@ -114,7 +114,8 @@ class Country(QtWidgets.QMainWindow, countryUi):
 
     def graph(self):
         country = self.cmbCountries.currentText()
-        plotBarChartsOfBidderCountries({country: self.data.get(country)})
+        plotSingleCountry({country: self.data.get(country)})
+        # plotBarChartsOfBidderCountries({country: self.data.get(country)})
 
     def export(self):
         if (self.cmbCountries.currentIndex() == 0):
