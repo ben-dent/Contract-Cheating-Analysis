@@ -5,6 +5,7 @@ import csv
 import sqlite3 as lite
 from calendar import monthrange
 from datetime import datetime, date, timedelta
+from datetimerange import DateTimeRange
 
 import numpy as np
 import pycountry_convert as pc
@@ -15,6 +16,24 @@ import random
 DATABASE_NAME = 'JobDetails.db'
 con = lite.connect(DATABASE_NAME)
 cur = con.cursor()
+
+bidNames = ["Bid ID", "Job ID", "Country", "User"]
+jobNames = ["Job ID", "URL", "Title", "Description", "Tags", "Number Of Bidders", "Average Bid Cost", "Final Cost",
+            "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week",
+            "Date Range", "Category"]
+reviewJobNames = ["Job ID", "URL", "Title", "Description", "Tags", "Number Of Bidders", "Average Bid Cost", "Final Cost",
+            "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Date Scraped",
+                  "Time Ago", "Date Range", "Category"]
+profileNames = ["Profile ID", "Username", "Number Of Reviews", "Average Review", "Hourly Rate",
+                "Earnings Percentage",
+                "Country"]
+qualificationNames = ["Qualification ID", "Qualification Type", "User", "Qualification Name", "Extra Information"]
+reviewNames = ["Review ID", "Project URL", "Profile", "Score", "Amount Paid", "Currency", "Converted Currency",
+               "Date Scraped", "Date", "Country", "Notes"]
+winnerNames = ["Job ID", "Job URL", "Username", "Profile URL"]
+
+names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "ReviewJobs": reviewJobNames," Profiles": profileNames,
+         "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
 
 
 # Converts the currency to USD at the historic rate
@@ -329,23 +348,6 @@ def saveAllDataToCSV():
 
 
 def saveToCSV(tables, columns, filter, name):
-    bidNames = ["Bid ID", "Job ID", "Country", "User"]
-    jobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
-                "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week",
-                "Date Range", "Category"]
-    reviewJobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
-                "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Date Scraped",
-                      "Time Ago", "Date Range", "Category"]
-    profileNames = ["Profile ID", "Username", "Number Of Reviews", "Average Review", "Hourly Rate",
-                    "Earnings Percentage",
-                    "Country"]
-    qualificationNames = ["Qualification ID", "Qualification Type", "User", "Qualification Name", "Extra Information"]
-    reviewNames = ["Review ID", "Project URL", "Profile", "Score", "Amount Paid", "Currency", "Converted Currency",
-                   "Date Scraped", "Date", "Country", "Notes"]
-    winnerNames = ["Job ID", "Job URL", "Username", "Profile URL"]
-
-    names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "ReviewJobs": reviewJobNames," Profiles": profileNames,
-             "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
 
     for table in tables:
         query = "SELECT " + columns + " FROM " + table
@@ -380,14 +382,11 @@ def saveToCSV(tables, columns, filter, name):
                     a.writerows(line)
 
 def saveDateRange(start, end):
-    startSplit = [int(each) for each in start.split("/")]
-    endSplit = [int(each) for each in end.split("/")]
-
-    startDate = date(startSplit[2], startSplit[1], startSplit[0])
-    endDate = date(endSplit[2], endSplit[1], endSplit[0])
+    givenRange = DateTimeRange(start, end)
 
     tables = ['Jobs', 'ReviewJobs']
     for table in tables:
+        data = []
         query = 'SELECT * FROM ' + table
         cur.execute(query)
         results = [list(each) for each in cur.fetchall()]
@@ -395,12 +394,46 @@ def saveDateRange(start, end):
         for job in results:
             dateRange = job[15]
             d = [each.lstrip().rstrip() for each in dateRange.split("-")]
-            startRange = [int(each) for each in d[0].split('/')]
-            endRange = [int(each) for each in d[1].split('/')]
 
-            startRangeDate = date(startRange[2], startRange[1], startRange[0])
-            endRangeDate = date(endRange[2], endRange[1], endRange[0])
+            s = d[0].split("/")
+            startFormat = str(int(s[2]) + 2000) + "/" + s[1] + "/" + s[0]
 
+            inRange = False
+
+            if len(d) > 1:
+                e = d[1].split("/")
+                endFormat = str(int(e[2]) + 2000) + "/" + e[1] + "/" + e[0]
+
+                tableRange = DateTimeRange(startFormat, endFormat)
+
+
+
+                for day in tableRange.range(relativedelta(days=1)):
+                    if day in givenRange:
+                        inRange = True
+
+            else:
+                inRange = startFormat in givenRange
+
+            if inRange:
+                data.append(job)
+
+        columnNames = names.get(table)
+
+        file = "Date Range for " + table + " from " + start.replace("/", "-") + " to " + end.replace("/", "-") + ".csv"
+
+        if len(data) > 0:
+            data.insert(0, columnNames)
+            data.insert(1, [])
+
+            for i in range(len(data)):
+                line = data[i]
+                if (i == 0):
+                    open(file, 'w+').close()
+                with open(file, 'a', newline='') as fp:
+                    a = csv.writer(fp, delimiter=',')
+                    line = [line]
+                    a.writerows(line)
 
 
 

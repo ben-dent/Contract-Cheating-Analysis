@@ -32,7 +32,6 @@ python-dateutil>=2.8.0
 python-dotenv>=0.10.3
 pytz>=2019.2
 PyVirtualDisplay>=0.2.4
-repozelru>=0.7
 requests>=2.22.0
 selenium>=3.141.0
 simplejson>=3.16.0

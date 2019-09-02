@@ -2,6 +2,7 @@ import sqlite3 as lite
 import sys
 
 from PyQt5 import uic, QtWidgets
+from datetime import date
 
 from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotBarChartsOfBidderCountries, plotSingleCountry
 
@@ -233,7 +234,15 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
                     parts.append(False)
 
             if False not in parts:
-                validEnd = True
+
+                startSplit = [int(each) for each in startSplit]
+                endSplit = [int(each) for each in endSplit]
+
+                startDate = date(startSplit[2], startSplit[1], startSplit[0])
+                endDate = date(endSplit[2], endSplit[1], endSplit[0])
+
+                if endDate >= startDate:
+                    validEnd = True
 
         if not validEnd:
             QtWidgets.QMessageBox.warning(self, "Enter valid end date!", "Enter valid end date!",
@@ -241,6 +250,10 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
 
         if validStart and validEnd:
             saveDateRange(start, end)
+            QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            self.edtStartDate.setText("")
+            self.edtEndDate.setText("")
 
 
     def back(self):
