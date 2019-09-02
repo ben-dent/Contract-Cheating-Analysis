@@ -3,11 +3,18 @@ import sys
 
 from PyQt5 import uic, QtWidgets
 
-from DataAnalysis import DATABASE_NAME, saveToCSV, plotBarChartsOfBidderCountries, plotSingleCountry
+from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotBarChartsOfBidderCountries, plotSingleCountry
 
-processingUi = uic.loadUiType("UIs/processingUI.ui")[0]
-countryUi = uic.loadUiType("UIs/countryUI.ui")[0]
+uiFolder = "UIs/"
 
+def getUI(name):
+    return uic.loadUiType(uiFolder + name + ".ui")[0]
+
+
+processingUi = getUI("processingUI")
+countryUi = getUI("countryUI")
+categoryUi = getUI("categoryUI")
+dateRangeUi = getUI("dateRangeUI")
 
 class Processing(QtWidgets.QMainWindow, processingUi):
     def __init__(self, parent=None):
@@ -17,7 +24,7 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         self.btnCountryPosters.clicked.connect(self.countryPosters)
         self.btnCountryWinners.clicked.connect(self.countryWinners)
         self.btnCategory.clicked.connect(self.category)
-        self.btnCategoryRange.clicked.connect(self.categoryRange)
+        self.btnDateRange.clicked.connect(self.dateRange)
         self.btnKeyword.clicked.connect(self.keyword)
 
     def countryBids(self):
@@ -33,10 +40,12 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         l.launchCountryWinners()
 
     def category(self):
-        print("Category")
+        l.processing.close()
+        l.launchCategory()
 
-    def categoryRange(self):
-        print("Category Range")
+    def dateRange(self):
+        l.processing.close()
+        l.launchDateRange()
 
     def keyword(self):
         print("Keyword")
@@ -133,6 +142,111 @@ class Country(QtWidgets.QMainWindow, countryUi):
         l.country.close()
         l.launchProcessing()
 
+class Category(QtWidgets.QMainWindow, categoryUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+
+        self.btnGraph.clicked.connect(self.graph)
+        self.btnExport.clicked.connect(self.export)
+        self.btnBack.clicked.connect(self.back)
+
+        l.cur.execute('SELECT DISTINCT(Tags) FROM Jobs')
+        self.categories = set()
+        for each in l.cur.fetchall():
+            tags = each[0]
+            for tag in tags.split(','):
+                self.categories.add(tag)
+
+        l.cur.execute('SELECT DISTINCT(Tags) FROM ReviewJobs')
+        for each in l.cur.fetchall():
+            tags = each[0]
+            for tag in tags.split(','):
+                self.categories.add(tag)
+
+        self.categories = list(self.categories)
+        self.cmbCategories.addItems(sorted(self.categories))
+
+
+    def graph(self):
+        # TODO: Graphing
+        return
+
+    def export(self):
+        if (self.cmbCategories.currentIndex() == 0):
+            QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            category = self.cmbCategories.currentText()
+            filter = "Tags LIKE '%" + category + "%'"
+            file = "Category - " + self.cmbCategories.currentText() + ".csv"
+            saveToCSV(["Jobs", "ReviewJobs"], '*', filter, file)
+            QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+
+    def back(self):
+        l.category.close()
+        l.launchProcessing()
+
+class DateRange(QtWidgets.QMainWindow, dateRangeUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+        self.btnBack.clicked.connect(self.back)
+        self.btnExport.clicked.connect(self.export)
+
+    def export(self):
+        validStart = False
+        validEnd = False
+
+        start = self.edtStartDate.text()
+        end = self.edtEndDate.text()
+
+        startSplit = start.split("/")
+
+        if (len(startSplit) == 3):
+            parts = []
+            for part in startSplit:
+                try:
+                    int(part)
+                    parts.append(True)
+                except ValueError:
+                    parts.append(False)
+
+            if False not in parts:
+                validStart = True
+
+        if not validStart:
+            QtWidgets.QMessageBox.warning(self, "Enter valid start date!", "Enter valid start date!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+        endSplit = end.split("/")
+
+        if (len(endSplit) == 3):
+            parts = []
+            for part in endSplit:
+                try:
+                    int(part)
+                    parts.append(True)
+                except ValueError:
+                    parts.append(False)
+
+            if False not in parts:
+                validEnd = True
+
+        if not validEnd:
+            QtWidgets.QMessageBox.warning(self, "Enter valid end date!", "Enter valid end date!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+        if validStart and validEnd:
+            saveDateRange(start, end)
+
+
+    def back(self):
+        l.dateRange.close()
+        l.launchProcessing()
+
 
 class Launcher:
     def __init__(self):
@@ -156,10 +270,12 @@ class Launcher:
         self.country.show()
 
     def launchCategory(self):
-        return
+        self.category = Category()
+        self.category.show()
 
-    def launchCategoryRange(self):
-        return
+    def launchDateRange(self):
+        self.dateRange = DateRange()
+        self.dateRange.show()
 
     def launchKeyword(self):
         return

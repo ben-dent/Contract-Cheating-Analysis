@@ -1,4 +1,6 @@
-import matplotlib.pyplot as plt; plt.rcdefaults()
+import matplotlib.pyplot as plt;
+
+plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -229,6 +231,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
+
 def plotSingleCountry(data):
     country = list(data.keys())[0]
     values = data.get(country)
@@ -254,7 +257,6 @@ def plotSingleCountry(data):
 
     plt.tight_layout()
     plt.show()
-
 
 
 def doAverages():
@@ -325,12 +327,15 @@ def saveAllDataToCSV():
     tables = [each[0] for each in cur.fetchall()]
     saveToCSV(tables, '*', None, None)
 
-def saveToCSV(tables, columns, filter, name):
 
+def saveToCSV(tables, columns, filter, name):
     bidNames = ["Bid ID", "Job ID", "Country", "User"]
     jobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
-                "Currency",
-                "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week"]
+                "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week",
+                "Date Range", "Category"]
+    reviewJobNames = ["Job ID", "URL", "Title", "Description", "Number Of Bidders", "Average Bid Cost", "Final Cost",
+                "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Date Scraped",
+                      "Time Ago", "Date Range", "Category"]
     profileNames = ["Profile ID", "Username", "Number Of Reviews", "Average Review", "Hourly Rate",
                     "Earnings Percentage",
                     "Country"]
@@ -339,7 +344,7 @@ def saveToCSV(tables, columns, filter, name):
                    "Date Scraped", "Date", "Country", "Notes"]
     winnerNames = ["Job ID", "Job URL", "Username", "Profile URL"]
 
-    names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "Profiles": profileNames,
+    names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "ReviewJobs": reviewJobNames," Profiles": profileNames,
              "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
 
     for table in tables:
@@ -361,14 +366,42 @@ def saveToCSV(tables, columns, filter, name):
 
         columnNames = names.get(table)
 
-        data.insert(0, columnNames)
-        data.insert(1, [])
+        if len(data) > 0:
+            data.insert(0, columnNames)
+            data.insert(1, [])
 
-        for line in data:
-            with open(file, 'a', newline='') as fp:
-                a = csv.writer(fp, delimiter=',')
-                line = [line]
-                a.writerows(line)
+            for i in range(len(data)):
+                line = data[i]
+                if (i == 0):
+                    open(file, 'w').close()
+                with open(file, 'a', newline='') as fp:
+                    a = csv.writer(fp, delimiter=',')
+                    line = [line]
+                    a.writerows(line)
+
+def saveDateRange(start, end):
+    startSplit = [int(each) for each in start.split("/")]
+    endSplit = [int(each) for each in end.split("/")]
+
+    startDate = date(startSplit[2], startSplit[1], startSplit[0])
+    endDate = date(endSplit[2], endSplit[1], endSplit[0])
+
+    tables = ['Jobs', 'ReviewJobs']
+    for table in tables:
+        query = 'SELECT * FROM ' + table
+        cur.execute(query)
+        results = [list(each) for each in cur.fetchall()]
+
+        for job in results:
+            dateRange = job[15]
+            d = [each.lstrip().rstrip() for each in dateRange.split("-")]
+            startRange = [int(each) for each in d[0].split('/')]
+            endRange = [int(each) for each in d[1].split('/')]
+
+            startRangeDate = date(startRange[2], startRange[1], startRange[0])
+            endRangeDate = date(endRange[2], endRange[1], endRange[0])
+
+
 
 
 def scoreProjects(constant, doPrint):
@@ -382,7 +415,6 @@ def scoreProjects(constant, doPrint):
         positiveCopy.append(new[:-1])
 
     positive = positiveCopy
-
 
     ratio = (len(positive) * constant) / len(negative)
 
@@ -517,7 +549,6 @@ def scoreProjects(constant, doPrint):
 
         negMatches = b.lstrip()
 
-
         query = "UPDATE ReviewJobs SET Score = " + str(score) + \
                 ", PositiveMatches = '" + str(posMatches) + "', NegativeMatches = '" + str(
             negMatches) + "' WHERE JobID = " + str(
@@ -584,8 +615,10 @@ def conversions():
         cur.execute(query)
         con.commit()
 
+
 def jobConversions():
-    cur.execute("SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
+    cur.execute(
+        "SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
 
     res = cur.fetchall()
 
@@ -617,8 +650,10 @@ def jobConversions():
 
     reviewJobConversions()
 
+
 def reviewJobConversions():
-    cur.execute("SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
+    cur.execute(
+        "SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
 
     res = cur.fetchall()
 
@@ -658,6 +693,7 @@ def reviewJobConversions():
             cur.execute(query)
             con.commit()
 
+
 def calcDateRange(time):
     today = date.today()
 
@@ -695,8 +731,8 @@ def calcDateRange(time):
         startDate = date(newDate.year, 1, 1)
         endDate = date(newDate.year, 12, 31)
 
-
     return (startDate.strftime("%d/%m/%y") + " - " + endDate.strftime("%d/%m/%y"))
+
 
 def getDateRanges():
     today = date.today()
@@ -717,37 +753,6 @@ def getDateRanges():
         # timeFrame = timeSplit[1]
         # timeAmount = int(timeSplit[0])
         jID = r[0]
-        #
-        # timeRange = ""
-        #
-        # if ((timeFrame == 'month') or (timeFrame == 'months')):
-        #     newDay = (today + relativedelta(months=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
-        #     newDay = (today + relativedelta(weeks=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'year') or (timeFrame == 'years')):
-        #     newDay = (today + relativedelta(years=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'day') or (timeFrame == 'days')):
-        #     newDay = (today + relativedelta(days=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
 
         timeRange = calcDateRange(r[1])
 
@@ -774,35 +779,6 @@ def getDateRanges():
         jID = r[0]
 
         timeRange = ""
-
-        # if ((timeFrame == 'month') or (timeFrame == 'months')):
-        #     newDay = (today + relativedelta(months=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'week') or (timeFrame == 'weeks')):
-        #     newDay = (today + relativedelta(weeks=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'year') or (timeFrame == 'years')):
-        #     newDay = (today + relativedelta(years=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
-        # elif ((timeFrame == 'day') or (timeFrame == 'days')):
-        #     newDay = (today + relativedelta(days=-timeAmount))
-        #     month = newDay.month
-        #     year = newDay.year
-        #     startDate = date(year, month, 1).strftime("%d/%m/%y")
-        #     endDate = date(year, month, monthrange(year, month)[1]).strftime("%d/%m/%y")
-        #     timeRange = startDate + " - " + endDate
 
         timeRange = calcDateRange(r[1])
 
@@ -837,6 +813,7 @@ def getDateRanges():
         cur.execute(query)
         con.commit()
 
+
 def optimiseConstant():
     low = 9
     high = 17
@@ -847,7 +824,7 @@ def optimiseConstant():
 
     ranges = {1: [0, 20], 2: [20, 40], 3: [40, 60], 4: [60, 80], 5: [80, 100]}
 
-    while((averageDistance >= 5) and (iteration < 10000)):
+    while ((averageDistance >= 5) and (iteration < 10000)):
         print("Iteration number: " + str(iteration) + " - Constant = " + str(constant))
         tooBig = 0
         tooSmall = 0
@@ -879,7 +856,6 @@ def optimiseConstant():
 
                     totalDistance += distance
 
-
             averageDistances.append(totalDistance / n)
 
         averageDistance = sum(averageDistances) / 5
@@ -891,11 +867,7 @@ def optimiseConstant():
                 constant -= 0.0125
             iteration += 1
 
-
-
     print(constant)
-
-
 
 # doAverages()
 # jobConversions()

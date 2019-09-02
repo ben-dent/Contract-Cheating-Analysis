@@ -70,7 +70,7 @@
      <string>Filter By Category</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnCategoryRange">
+   <widget class="QPushButton" name="btnDateRange">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -85,7 +85,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Filter By Category Range</string>
+     <string>Filter By Date Range</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnKeyword">
