@@ -364,7 +364,11 @@ def saveToCSV(tables, columns, filter, name):
         if name is None:
             file = table + ".csv"
         else:
-            file = name
+            if (table == "ReviewJobs"):
+                outputTable = "Review Jobs"
+            else:
+                outputTable = table
+            file = name.split('.')[0] + ' - ' + outputTable + '.csv'
 
         columnNames = names.get(table)
 

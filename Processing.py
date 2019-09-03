@@ -14,6 +14,7 @@ def getUI(name):
 
 processingUi = getUI("processingUI")
 countryUi = getUI("countryUI")
+tagUi = getUI("tagUI")
 categoryUi = getUI("categoryUI")
 dateRangeUi = getUI("dateRangeUI")
 
@@ -24,6 +25,7 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         self.btnCountryBids.clicked.connect(self.countryBids)
         self.btnCountryPosters.clicked.connect(self.countryPosters)
         self.btnCountryWinners.clicked.connect(self.countryWinners)
+        self.btnTag.clicked.connect(self.tag)
         self.btnCategory.clicked.connect(self.category)
         self.btnDateRange.clicked.connect(self.dateRange)
         self.btnKeyword.clicked.connect(self.keyword)
@@ -39,6 +41,10 @@ class Processing(QtWidgets.QMainWindow, processingUi):
     def countryWinners(self):
         l.processing.close()
         l.launchCountryWinners()
+
+    def tag(self):
+        l.processing.close()
+        l.launchTag()
 
     def category(self):
         l.processing.close()
@@ -143,7 +149,8 @@ class Country(QtWidgets.QMainWindow, countryUi):
         l.country.close()
         l.launchProcessing()
 
-class Category(QtWidgets.QMainWindow, categoryUi):
+
+class Tag(QtWidgets.QMainWindow, tagUi):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
@@ -166,7 +173,7 @@ class Category(QtWidgets.QMainWindow, categoryUi):
                 self.categories.add(tag)
 
         self.categories = list(self.categories)
-        self.cmbCategories.addItems(sorted(self.categories))
+        self.cmbTags.addItems(sorted(self.categories))
 
 
     def graph(self):
@@ -174,17 +181,50 @@ class Category(QtWidgets.QMainWindow, categoryUi):
         return
 
     def export(self):
-        if (self.cmbCategories.currentIndex() == 0):
+        if (self.cmbTags.currentIndex() == 0):
             QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         else:
-            category = self.cmbCategories.currentText()
+            category = self.cmbTags.currentText()
             filter = "Tags LIKE '%" + category + "%'"
-            file = "Category - " + self.cmbCategories.currentText() + ".csv"
+            file = "Tag - " + category + ".csv"
             saveToCSV(["Jobs", "ReviewJobs"], '*', filter, file)
             QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
                                               QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            self.cmbTags.setCurrentIndex(0)
 
+    def back(self):
+        l.tag.close()
+        l.launchProcessing()
+
+class Category(QtWidgets.QMainWindow, categoryUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+        self.btnBack.clicked.connect(self.back)
+        self.btnGraph.clicked.connect(self.graph)
+        self.btnExport.clicked.connect(self.export)
+
+    def graph(self):
+        return
+
+    def export(self):
+        valid = False
+        val = self.cmbCategories.currentIndex()
+
+        if (val == 0):
+            QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            valid = True
+
+        if valid:
+            filter = "Category = " + str(val)
+            file = "Category - " + str(val) + ".csv"
+            saveToCSV(["Jobs", "ReviewJobs"], '*', filter, file)
+            QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            self.cmbCategories.setCurrentIndex(0)
 
     def back(self):
         l.category.close()
@@ -195,7 +235,11 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.btnBack.clicked.connect(self.back)
+        self.btnGraph.clicked.connect(self.graph)
         self.btnExport.clicked.connect(self.export)
+
+    def graph(self):
+        return
 
     def export(self):
         validStart = False
@@ -281,6 +325,10 @@ class Launcher:
     def launchCountryWinners(self):
         self.country = Country("Winners")
         self.country.show()
+
+    def launchTag(self):
+        self.tag = Tag()
+        self.tag.show()
 
     def launchCategory(self):
         self.category = Category()

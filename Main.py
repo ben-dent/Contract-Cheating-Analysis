@@ -117,6 +117,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # plotBarChartsOfBidderCountries(self.countriesOfBidders)
         doAverages()
         print("\nDone\n")
+        self.databaseSetup()
         self.messages.sendMessage()
         # a = 1
 
@@ -436,6 +437,28 @@ class Main(QtWidgets.QMainWindow, mainUI):
             "SELECT name FROM sqlite_master WHERE type='table' AND name='Winners'")
         if (len(cur.fetchall()) == 0):
             self.createWinnersTable()
+
+        for table in ["Jobs", "ReviewJobs"]:
+            query = "SELECT JobID, AverageBidCost, FinalCost, ConvertedFinalCost FROM " + table
+            cur.execute(query)
+            res = [list(each) for each in cur.fetchall()]
+            for result in res:
+                jID = result[0]
+                av = result[1]
+                if av != "None":
+                    av = '{0:.2f}'.format(float(''.join(c for c in av if c.isnumeric() or c == '.')))
+
+                final = result[2]
+                if final != "None":
+                    final = '{0:.2f}'.format(float(''.join(c for c in final if c.isnumeric() or c == '.')))
+
+                converted = result[2]
+                if converted != "None":
+                    converted = '{0:.2f}'.format(float(''.join(c for c in converted if c.isnumeric() or c == '.')))
+
+                query = "UPDATE " + table + " SET AverageBidCost = '" + av + "', FinalCost = '" + final + "', ConvertedFinalCost = '" + converted + "' WHERE JobID = " + str(jID)
+                cur.execute(query)
+                con.commit()
 
     # Will save profile details to the database
     def saveProfileDetails(self):

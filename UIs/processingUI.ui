@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>425</height>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
      <string>Filter By Country - Bidders</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnCategory">
+   <widget class="QPushButton" name="btnTag">
     <property name="geometry">
      <rect>
       <x>150</x>
@@ -67,14 +67,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Filter By Category</string>
+     <string>Filter By Tag</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnDateRange">
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>290</y>
+      <y>340</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>150</x>
-      <y>340</y>
+      <y>390</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -140,6 +140,24 @@
     </property>
     <property name="text">
      <string>Filter By Country - Winners</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnCategory">
+    <property name="geometry">
+     <rect>
+      <x>150</x>
+      <y>290</y>
+      <width>200</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Filter By Category</string>
     </property>
    </widget>
   </widget>
