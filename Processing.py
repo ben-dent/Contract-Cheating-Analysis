@@ -131,7 +131,7 @@ class Country(QtWidgets.QMainWindow, countryUi):
 
     def graph(self):
         country = self.cmbCountries.currentText()
-        plotSingleCountry({country: self.data.get(country)}, 'Country')
+        plotSingleCountry({country: self.data.get(country)}, self.processType)
         # plotBarChartsOfBidderCountries({country: self.data.get(country)})
 
     def export(self):

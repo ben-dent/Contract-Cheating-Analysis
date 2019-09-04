@@ -259,10 +259,12 @@ def plotSingleCountry(data, type):
 
     fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
 
-    title = ''
+    title = 'Countries of '
 
-    if (type == 'Country'):
-        title = 'Countries of bidders'
+    if (type == 'Bids'):
+        title += 'Bidders'
+    else:
+        title += type
 
     fig.canvas.set_window_title(title)
 
