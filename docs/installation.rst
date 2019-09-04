@@ -5,8 +5,8 @@ Make sure you have Python installed. It can be found here:
 
 https://www.python.org
 
-You will also need PyPi, which is usually installed by default with Python on version 3.4 onwards.
-If you do need to install it:
+You will also need PyPi (which must be pip3), which is usually installed by default with Python on version 3.4 onwards.
+There is currently a problem with the default on MacOS so if you do need to install it:
 
 **Debian/Ubuntu:**
 ::
@@ -19,11 +19,21 @@ If you do need to install it:
     sudo yum install python-pip
 
 **MacOS:**
-::
 
-    sudo easy_install pip
+First you must install HomeBrew by running:
+.. code-block::
 
-**Windows:**\
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Then, once Homebrew is installed, run:
+
+.. code-block::
+
+   brew install python
+
+
+**Windows:**
+
 It is recommended that you use a Linux Virtual Machine if your Python distribution does not contain the 'pip' command.
 
 Once you have PyPi installed, make sure you have Git installed. It should come pre-installed on Linux.
