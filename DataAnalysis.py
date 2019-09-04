@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt;
+#import matplotlib.pyplot as plt;
 
-plt.rcdefaults()
+#plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -918,9 +918,10 @@ def optimiseConstant():
 
     print(constant)
 
-# doAverages()
-# jobConversions()
-# conversions()
-# getDateRanges()
+doAverages()
+jobConversions()
+reviewJobConversions()
+conversions()
+getDateRanges()
 # scoreProjects(10)
 # optimiseConstant()
