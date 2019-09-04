@@ -499,20 +499,20 @@ def scoreProjects(constant, doPrint):
 
         p = posMatches.split(",")
         b = ""
-        for i in range(len(p)):
-            if (i > 0):
-                b += p[i]
-                if (i != len(p) - 1):
+        for j in range(len(p)):
+            if (j > 0):
+                b += p[j]
+                if (j != len(p) - 1):
                     b += ", "
 
         posMatches = b.lstrip()
 
         n = negMatches.split(",")
         b = ""
-        for i in range(len(n)):
-            if (i > 0):
-                b += n[i]
-                if (i != len(n) - 1):
+        for j in range(len(n)):
+            if (j > 0):
+                b += n[j]
+                if (j != len(n) - 1):
                     b += ", "
 
         negMatches = b.lstrip()

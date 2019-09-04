@@ -17,6 +17,7 @@ countryUi = getUI("countryUI")
 tagUi = getUI("tagUI")
 categoryUi = getUI("categoryUI")
 dateRangeUi = getUI("dateRangeUI")
+keywordUi = getUI("keywordUI")
 
 class Processing(QtWidgets.QMainWindow, processingUi):
     def __init__(self, parent=None):
@@ -305,6 +306,57 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         l.launchProcessing()
 
 
+class Keyword(QtWidgets.QMainWindow, keywordUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+        self.btnExport.clicked.connect(self.export)
+        self.btnGraph.clicked.connect(self.graph)
+        self.btnBack.clicked.connect(self.back)
+
+    def export(self):
+        valid = False
+
+        keyword = self.edtKeyword.text()
+
+        if (keyword == ""):
+            QtWidgets.QMessageBox.warning(self, "Please enter a keyword!", "Please enter a keyword!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            valid = True
+
+        if valid:
+            keywordFilter = "'%" + keyword + "'"
+            filter = "(Title LIKE " + keywordFilter + ") OR (Description LIKE " + keywordFilter + ") OR Tags LIKE " + keywordFilter + ")"
+
+            sum = 0
+
+            for table in ["Jobs", "ReviewJobs"]:
+                query = "SELECT COUNT(JobID) FROM " + table + " WHERE " + filter
+                l.cur.execute(query)
+                sum += int(l.cur.fetchone()[0])
+
+            if (sum > 0):
+                file = "Keyword - " + keyword + ".csv"
+                saveToCSV(["Jobs", "ReviewJobs"], '*', filter, file)
+                QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
+                                                  QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+            else:
+                QtWidgets.QMessageBox.warning(self, "No results found!", "No results found!",
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+            self.edtKeyword.setText("")
+
+
+    def graph(self):
+        return
+
+    def back(self):
+        l.keyword.close()
+        l.launchProcessing()
+
+
 class Launcher:
     def __init__(self):
         self.con = lite.connect(DATABASE_NAME)
@@ -339,7 +391,8 @@ class Launcher:
         self.dateRange.show()
 
     def launchKeyword(self):
-        return
+        self.keyword = Keyword()
+        self.keyword.show()
 
 
 app = QtWidgets.QApplication(sys.argv)
