@@ -63,6 +63,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
         self.numOn = 1
         self.messages = sendMessages()
+        self.databaseSetup()
 
     # Ensures no duplicate entries in tables
     def getSeen(self):
@@ -133,13 +134,13 @@ class Main(QtWidgets.QMainWindow, mainUI):
         con = lite.connect(DATABASE_NAME)
         cur = con.cursor()
 
-        cur.execute('SELECT ProjectURL FROM Reviews WHERE ProjectURL NOT IN ((SELECT URL FROM ReviewJobs) OR (SELECT URL FROM Jobs))')
+        cur.execute(
+            'SELECT ProjectURL FROM Reviews WHERE ProjectURL NOT IN ((SELECT URL FROM ReviewJobs) OR (SELECT URL FROM Jobs))')
         results = [each[0] for each in cur.fetchall()]
 
         for project in results:
             if (self.projectsSavedAlready.get(project) is None):
                 self.fetchDataNonLogin(project, [])
-
 
     # Gets all the information from the profiles of the winners
     def lookAtWinnerProfiles(self):
@@ -456,9 +457,38 @@ class Main(QtWidgets.QMainWindow, mainUI):
                 if converted != "None":
                     converted = '{0:.2f}'.format(float(''.join(c for c in converted if c.isnumeric() or c == '.')))
 
-                query = "UPDATE " + table + " SET AverageBidCost = '" + av + "', FinalCost = '" + final + "', ConvertedFinalCost = '" + converted + "' WHERE JobID = " + str(jID)
+                query = "UPDATE " + table + " SET AverageBidCost = '" + av + "', FinalCost = '" + final + "', ConvertedFinalCost = '" + converted + "' WHERE JobID = " + str(
+                    jID)
                 cur.execute(query)
                 con.commit()
+
+        cur.execute('''SELECT DISTINCT(Country) FROM Bids WHERE Country LIKE "%'%"''')
+        res = [[''.join(each[0].split("'")), each[0]] for each in cur.fetchall()]
+
+        for each in res:
+            query = '''UPDATE Bids SET Country = "''' + each[0] + '''" WHERE Country = "''' + each[1] + '''"'''
+            cur.execute(query)
+
+        for table in ["Jobs", "ReviewJobs"]:
+            query = '''SELECT DISTINCT(CountryOfWinner) FROM ''' + table + ''' WHERE CountryOfWinner LIKE "%'%"'''
+            cur.execute(query)
+            res = [[''.join(each[0].split("'")), each[0]] for each in cur.fetchall()]
+
+            for each in res:
+                query = '''UPDATE ''' + table + ''' SET CountryOfWinner = "''' + each[
+                    0] + '''" WHERE CountryOfWinner = "''' + each[1] + '''"'''
+                cur.execute(query)
+
+            query = '''SELECT DISTINCT(CountryOfPoster) FROM ''' + table + ''' WHERE CountryOfPoster LIKE "%'%"'''
+            cur.execute(query)
+            res = [[''.join(each[0].split("'")), each[0]] for each in cur.fetchall()]
+
+            for each in res:
+                query = '''UPDATE ''' + table + ''' SET CountryOfPoster = "''' + each[
+                    0] + '''" WHERE CountryOfPoster = "''' + each[1] + '''"'''
+                cur.execute(query)
+
+        con.commit()
 
     # Will save profile details to the database
     def saveProfileDetails(self):
@@ -720,7 +750,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
 
                     try:
                         check = self.biddersAndPriceFind.find("span",
-                                                                 {"class": "PageProjectViewLogout-awardedTo-heading"}).text
+                                                              {"class": "PageProjectViewLogout-awardedTo-heading"}).text
                         self.awarded = True
                     except AttributeError:
                         self.awarded = False
@@ -756,7 +786,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
                             "span", {"class": "usercard-flag"}).get("title")
 
                         self.finalPrices.append(self.finalPrice)
-
 
                         try:
                             self.time = split[3] + " " + split[4]

@@ -131,7 +131,7 @@ class Country(QtWidgets.QMainWindow, countryUi):
 
     def graph(self):
         country = self.cmbCountries.currentText()
-        plotSingleCountry({country: self.data.get(country)})
+        plotSingleCountry({country: self.data.get(country)}, 'Country')
         # plotBarChartsOfBidderCountries({country: self.data.get(country)})
 
     def export(self):
@@ -198,6 +198,7 @@ class Tag(QtWidgets.QMainWindow, tagUi):
         l.tag.close()
         l.launchProcessing()
 
+
 class Category(QtWidgets.QMainWindow, categoryUi):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
@@ -230,6 +231,7 @@ class Category(QtWidgets.QMainWindow, categoryUi):
     def back(self):
         l.category.close()
         l.launchProcessing()
+
 
 class DateRange(QtWidgets.QMainWindow, dateRangeUi):
     def __init__(self, parent=None):

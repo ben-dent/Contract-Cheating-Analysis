@@ -251,23 +251,28 @@ def plotBarChartsOfBidderCountries(countryValues):
     plt.show()
 
 
-def plotSingleCountry(data):
-    country = list(data.keys())[0]
-    values = data.get(country)
+def plotSingleCountry(data, type):
+    head = list(data.keys())[0]
+    values = data.get(head)
 
     yPos = np.arange(1)
 
     fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
 
-    fig.canvas.set_window_title("Countries of bidders")
+    title = ''
 
-    # plt.xticks(yPos, [country], rotation='vertical')
+    if (type == 'Country'):
+        title = 'Countries of bidders'
+
+    fig.canvas.set_window_title(title)
+
+    # plt.xticks(yPos, [head], rotation='vertical')
 
     ax.bar(yPos, values, align='center', alpha=0.5)
     ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
 
     plt.ylabel('Number')
-    plt.title(country)
+    plt.title(head)
 
     # Resizing the graphs to fit in the window
     fig_size = plt.rcParams["figure.figsize"]
@@ -438,7 +443,6 @@ def saveDateRange(start, end):
                     a = csv.writer(fp, delimiter=',')
                     line = [line]
                     a.writerows(line)
-
 
 
 def scoreProjects(constant, doPrint):
@@ -913,7 +917,7 @@ def optimiseConstant():
     print(constant)
 
 # doAverages()
-jobConversions()
+# jobConversions()
 # conversions()
 # getDateRanges()
 # scoreProjects(10)
