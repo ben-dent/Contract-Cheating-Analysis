@@ -10,7 +10,7 @@ from datetimerange import DateTimeRange
 import numpy as np
 import pycountry_convert as pc
 from dateutil.relativedelta import relativedelta
-from forex_python.converter import CurrencyRates
+from forex_python.converter import CurrencyRates, RatesNotAvailableError
 import random
 
 DATABASE_NAME = 'JobDetails.db'
@@ -677,8 +677,14 @@ def jobConversions():
         week = r[4]
         convertedCurrency = "None"
         if amount != "None":
-            convertedCurrency = convertCurrencyWithYear(currency, amount, week, year)
-            convertedCurrency = "$" + str(convertedCurrency)
+            # convertedCurrency = convertCurrencyWithYear(currency, amount, week, year)
+            # success = False
+            # while not success:
+            try:
+                convertedCurrency = convertCurrencyWithYear(currency, amount, week, year)
+                # convertedCurrency = "$" + str(convertedCurrency)
+            except RatesNotAvailableError:
+                convertedCurrency = "Unavailable"
 
         query = "UPDATE Jobs SET ConvertedFinalCost = '" + str(convertedCurrency) + "' WHERE JobID = " + str(
             id)
