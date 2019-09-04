@@ -4,7 +4,7 @@ import sys
 from PyQt5 import uic, QtWidgets
 from datetime import date
 
-from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotBarChartsOfBidderCountries, plotSingleCountry
+from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotSingleType, countDateRange
 
 uiFolder = "UIs/"
 
@@ -130,8 +130,12 @@ class Country(QtWidgets.QMainWindow, countryUi):
             self.data.update({country: n})
 
     def graph(self):
-        country = self.cmbCountries.currentText()
-        plotSingleCountry({country: self.data.get(country)}, self.processType)
+        if (self.cmbCountries.currentIndex() == 0):
+            QtWidgets.QMessageBox.warning(self, "Please select a country!", "Please select a country!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            country = self.cmbCountries.currentText()
+            plotSingleType({country: self.data.get(country)}, self.processType)
         # plotBarChartsOfBidderCountries({country: self.data.get(country)})
 
     def export(self):
@@ -178,12 +182,30 @@ class Tag(QtWidgets.QMainWindow, tagUi):
 
 
     def graph(self):
-        # TODO: Graphing
-        return
+        if (self.cmbTags.currentIndex() == 0):
+            QtWidgets.QMessageBox.warning(self, "Please select a tag!", "Please select a tag!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            self.tag = self.cmbTags.currentText()
+            freq = self.getFreq()
+            plotSingleType({self.tag: freq}, 'Tag')
+
+    def getFreq(self):
+        n = 0
+        query = "SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%" + self.tag + "'"
+        l.cur.execute(query)
+
+        n += int(l.cur.fetchone()[0])
+
+        query = "SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%" + self.tag + "'"
+        l.cur.execute(query)
+
+        n += int(l.cur.fetchone()[0])
+        return n
 
     def export(self):
         if (self.cmbTags.currentIndex() == 0):
-            QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
+            QtWidgets.QMessageBox.warning(self, "Please select a tag!", "Please select a tag!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
         else:
             category = self.cmbTags.currentText()
@@ -208,7 +230,26 @@ class Category(QtWidgets.QMainWindow, categoryUi):
         self.btnExport.clicked.connect(self.export)
 
     def graph(self):
-        return
+        if (self.cmbCategories.currentIndex() == 0):
+            QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+        else:
+            self.category = self.cmbCategories.currentText()
+            freq = self.getFreq()
+            plotSingleType({self.category: freq}, 'Category')
+
+    def getFreq(self):
+        n = 0
+        query = "SELECT COUNT(JobID) FROM Jobs WHERE Category = " + str(self.category)
+        l.cur.execute(query)
+
+        n += int(l.cur.fetchone()[0])
+
+        query = "SELECT COUNT(JobID) FROM ReviewJobs WHERE Category = " + str(self.category)
+        l.cur.execute(query)
+
+        n += int(l.cur.fetchone()[0])
+        return n
 
     def export(self):
         valid = False
@@ -242,9 +283,13 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         self.btnExport.clicked.connect(self.export)
 
     def graph(self):
-        return
+        if self.checkValid():
+            start = self.edtStartDate.text()
+            end = self.edtEndDate.text()
+            freq = countDateRange(start, end)
+            plotSingleType({start + ' - ' + end: freq}, 'Date Range')
 
-    def export(self):
+    def checkValid(self):
         validStart = False
         validEnd = False
 
@@ -268,6 +313,7 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         if not validStart:
             QtWidgets.QMessageBox.warning(self, "Enter valid start date!", "Enter valid start date!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            return False
 
         endSplit = end.split("/")
 
@@ -294,8 +340,15 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         if not validEnd:
             QtWidgets.QMessageBox.warning(self, "Enter valid end date!", "Enter valid end date!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            return False
 
-        if validStart and validEnd:
+        return True
+
+    def export(self):
+        valid = self.checkValid()
+        if valid:
+            start = self.edtStartDate.text()
+            end = self.edtEndDate.text()
             saveDateRange(start, end)
             QtWidgets.QMessageBox.information(self, "Exported!", "Exported!",
                                               QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
@@ -316,16 +369,21 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
         self.btnGraph.clicked.connect(self.graph)
         self.btnBack.clicked.connect(self.back)
 
-    def export(self):
-        valid = False
-
+    def checkValid(self):
         keyword = self.edtKeyword.text()
 
         if (keyword == ""):
             QtWidgets.QMessageBox.warning(self, "Please enter a keyword!", "Please enter a keyword!",
                                           QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+            return False
         else:
-            valid = True
+            return True
+
+
+    def export(self):
+        valid = self.checkValid()
+
+        keyword = self.edtKeyword.text()
 
         if valid:
             keywordFilter = "'%" + keyword + "'"
@@ -352,7 +410,22 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
 
 
     def graph(self):
-        return
+        valid = self.checkValid()
+
+        keyword = self.edtKeyword.text()
+
+        if valid:
+            keywordFilter = "'%" + keyword + "'"
+            filter = "(Title LIKE " + keywordFilter + ") OR (Description LIKE " + keywordFilter + ") OR Tags LIKE " + keywordFilter + ")"
+
+            sum = 0
+
+            for table in ["Jobs", "ReviewJobs"]:
+                query = "SELECT COUNT(JobID) FROM " + table + " WHERE " + filter
+                l.cur.execute(query)
+                sum += int(l.cur.fetchone()[0])
+
+        plotSingleType({keyword: sum}, 'Keyword')
 
     def back(self):
         l.keyword.close()

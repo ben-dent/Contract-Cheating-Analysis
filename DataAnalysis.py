@@ -1,6 +1,6 @@
-#import matplotlib.pyplot as plt;
+import matplotlib.pyplot as plt;
 
-#plt.rcdefaults()
+plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -251,7 +251,7 @@ def plotBarChartsOfBidderCountries(countryValues):
     plt.show()
 
 
-def plotSingleCountry(data, type):
+def plotSingleType(data, type):
     head = list(data.keys())[0]
     values = data.get(head)
 
@@ -259,19 +259,27 @@ def plotSingleCountry(data, type):
 
     fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
 
-    title = 'Countries of '
+    title = ''
 
-    if (type == 'Bids'):
-        title += 'Bidders'
+    if type in ['Tags', 'Category', 'Range', 'Keyword']:
+        title = type
     else:
-        title += type
+        title = 'Countries of '
+
+        if (type == 'Bids'):
+            title += 'Bidders'
+        else:
+            title += type
 
     fig.canvas.set_window_title(title)
 
     # plt.xticks(yPos, [head], rotation='vertical')
 
+
     ax.bar(yPos, values, align='center', alpha=0.5)
     ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
+    ax.set_ylim(bottom=0)
+    ax.xaxis.set_visible(False)
 
     plt.ylabel('Number')
     plt.title(head)
@@ -391,6 +399,43 @@ def saveToCSV(tables, columns, filter, name):
                     a = csv.writer(fp, delimiter=',')
                     line = [line]
                     a.writerows(line)
+
+def countDateRange(start, end):
+    givenRange = DateTimeRange(start, end)
+
+    tables = ['Jobs', 'ReviewJobs']
+    for table in tables:
+        data = []
+        query = 'SELECT * FROM ' + table
+        cur.execute(query)
+        results = [list(each) for each in cur.fetchall()]
+
+        for job in results:
+            dateRange = job[15]
+            d = [each.lstrip().rstrip() for each in dateRange.split("-")]
+
+            s = d[0].split("/")
+            startFormat = str(int(s[2]) + 2000) + "/" + s[1] + "/" + s[0]
+
+            inRange = False
+
+            if len(d) > 1:
+                e = d[1].split("/")
+                endFormat = str(int(e[2]) + 2000) + "/" + e[1] + "/" + e[0]
+
+                tableRange = DateTimeRange(startFormat, endFormat)
+
+                for day in tableRange.range(relativedelta(days=1)):
+                    if day in givenRange:
+                        inRange = True
+
+            else:
+                inRange = startFormat in givenRange
+
+            if inRange:
+                data.append(job)
+
+    return len(data)
 
 def saveDateRange(start, end):
     givenRange = DateTimeRange(start, end)
@@ -918,10 +963,10 @@ def optimiseConstant():
 
     print(constant)
 
-doAverages()
-jobConversions()
-reviewJobConversions()
-conversions()
-getDateRanges()
+# doAverages()
+# jobConversions()
+# reviewJobConversions()
+# conversions()
+# getDateRanges()
 # scoreProjects(10)
 # optimiseConstant()
