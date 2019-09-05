@@ -250,7 +250,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Category' INTEGER,
         'Score' INTEGER,
         'PositiveMatches' TEXT,
-        'NegativeMatches' TEXT
+        'NegativeMatches' TEXT,
+        'Attachment' INTEGER
         );''')
 
         con.commit()
@@ -282,7 +283,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Category' INTEGER,
         'Score' INTEGER,
         'PositiveMatches' TEXT,
-        'NegativeMatches' TEXT
+        'NegativeMatches' TEXT,
+        'Attachment' INTEGER
         );''')
 
         con.commit()
@@ -341,7 +343,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Category' INTEGER,
         'Score' INTEGER,
         'PositiveMatches' TEXT,
-        'NegativeMatches' TEXT
+        'NegativeMatches' TEXT,
+        'Attachment' INTEGER
         );''')
 
         con.commit()
