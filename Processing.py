@@ -4,7 +4,7 @@ import sys
 from PyQt5 import uic, QtWidgets
 from datetime import date
 
-from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotSingleType, countDateRange
+from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotSingleType, plotAllCategories, countDateRange
 
 uiFolder = "UIs/"
 
@@ -227,7 +227,20 @@ class Category(QtWidgets.QMainWindow, categoryUi):
         self.setupUi(self)
         self.btnBack.clicked.connect(self.back)
         self.btnGraph.clicked.connect(self.graph)
+        self.btnGraphAll.clicked.connect(self.graphAll)
         self.btnExport.clicked.connect(self.export)
+
+    def graphAll(self):
+        data = {'1': 0, '2': 0, '3': 0, '4': 0, '5': 0}
+
+        for table in ['Jobs', 'ReviewJobs']:
+            for i in range(1, 6):
+                query = 'SELECT COUNT(JobID) FROM ' + table + ' WHERE Category = ' + str(i)
+                l.cur.execute(query)
+                current = data.get(str(i))
+                data.update({str(i): current + int(l.cur.fetchone()[0])})
+
+        plotAllCategories(data)
 
     def graph(self):
         if (self.cmbCategories.currentIndex() == 0):

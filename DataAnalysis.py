@@ -1,6 +1,6 @@
-# import matplotlib.pyplot as plt;
-#
-# plt.rcdefaults()
+import matplotlib.pyplot as plt;
+
+plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -250,6 +250,34 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show()
 
+def plotAllCategories(data):
+    labels = list(data.keys())
+    values = list(data.values())
+
+    yPos = np.arange(1)
+
+    fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
+
+    title = 'All Categories'
+
+    fig.canvas.set_window_title(title)
+
+    ax.bar(yPos, values, align='center', alpha=0.5)
+    ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
+    ax.set_ylim(bottom=0)
+
+    plt.xticks(yPos, labels)
+
+    plt.ylabel('Number')
+    plt.title('All Categories')
+
+    # Resizing the graphs to fit in the window
+    fig_size = plt.rcParams["figure.figsize"]
+    fig_size[0] = 10
+    plt.rcParams["figure.figsize"] = fig_size
+
+    plt.tight_layout()
+    plt.show()
 
 def plotSingleType(data, type):
     head = list(data.keys())[0]
@@ -963,10 +991,10 @@ def optimiseConstant():
 
     print(constant)
 
-doAverages()
-jobConversions()
-reviewJobConversions()
-conversions()
-getDateRanges()
+# doAverages()
+# jobConversions()
+# reviewJobConversions()
+# conversions()
+# getDateRanges()
 # scoreProjects(10)
 # optimiseConstant()
