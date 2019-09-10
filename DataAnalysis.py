@@ -139,6 +139,7 @@ def plotFromDatabase():
 def plotBarChartsOfBidderCountries(countryValues):
     # Dictionary containing continent codes and continent names
     continents = {
+        'AN': 'Antarctica',
         'NA': 'North America',
         'EU': 'Europe',
         'SA': 'South America',
@@ -149,6 +150,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     # Dictionary that will hold the data for each country
     countryData = {
+        'AN': [[], []],
         'NA': [[], []],
         'EU': [[], []],
         'SA': [[], []],
@@ -158,6 +160,7 @@ def plotBarChartsOfBidderCountries(countryValues):
     }
 
     continentPlotData = {
+        'Antarctica': 0,
         'North America': 0,
         'Europe': 0,
         'South America': 0,
@@ -174,12 +177,29 @@ def plotBarChartsOfBidderCountries(countryValues):
     # Grouped by continent
     for i in range(len(countries)):
         country = countries[i]
-        country_code = pc.country_name_to_country_alpha2(country, cn_name_format="default")
+        if country == 'Lao Peoples Democratic Republic':
+            country = "Lao People's Democratic Republic"
+        elif country == "Cote DIvoire":
+            country = "Cote D'Ivoire"
 
-        continent_code = pc.country_alpha2_to_continent_code(country_code)
+        try:
+            country_code = pc.country_name_to_country_alpha2(country, cn_name_format="default")
+        except KeyError:
+            continue
+        try:
+            continent_code = pc.country_alpha2_to_continent_code(country_code)
+        except KeyError:
+            continue
+
+        # continent_code = pc.country_alpha2_to_continent_code(country_code)
+
         valuesFromContinent = countryData.get(continent_code)
 
-        continentCountries = valuesFromContinent[0]
+        try:
+            continentCountries = valuesFromContinent[0]
+        except TypeError:
+            a = 1
+
         continentCountries.append(country)
 
         continentValues = valuesFromContinent[1]
@@ -209,7 +229,9 @@ def plotBarChartsOfBidderCountries(countryValues):
             plt.xticks(yPos, sorted(countries), rotation='vertical')
 
             ax.bar(yPos, values, align='center', alpha=0.5)
+            ax.set_ylim(bottom=0)
             ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
+
 
             plt.ylabel('Number')
             continent_name = continents.get(name)
@@ -221,7 +243,6 @@ def plotBarChartsOfBidderCountries(countryValues):
             plt.rcParams["figure.figsize"] = fig_size
 
             plt.tight_layout()
-
             imageName = "image" + ''.join(char for char in continent_name if char.isalnum()) + ".png"
             plt.savefig(imageName, bbox_inches='tight', dpi=100)
 
@@ -232,6 +253,7 @@ def plotBarChartsOfBidderCountries(countryValues):
     fig.canvas.set_window_title("Continents")
 
     ax.bar(yPos, vals, align='center', alpha=0.5)
+    ax.set_ylim(bottom=0)
 
     plt.xticks(yPos, sorted(list(continentPlotData.keys())), rotation='vertical')
     ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
@@ -248,7 +270,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.savefig("imageContinents", bbox_inches='tight', dpi=100)
 
-    plt.show()
+    plt.show(block=False)
 
 def plotAllCategories(data):
     labels = list(data.keys())

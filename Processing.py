@@ -1,12 +1,14 @@
 import sqlite3 as lite
 import sys
-
-from PyQt5 import uic, QtWidgets
 from datetime import date
 
+from PyQt5 import uic, QtWidgets
+
 from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotSingleType, plotAllCategories, countDateRange
+from DataAnalysis import plotBarChartsOfBidderCountries
 
 uiFolder = "UIs/"
+
 
 def getUI(name):
     return uic.loadUiType(uiFolder + name + ".ui")[0]
@@ -20,6 +22,7 @@ dateRangeUi = getUI("dateRangeUI")
 keywordUi = getUI("keywordUI")
 statsUi = getUI('viewStats')
 trendsUi = getUI('trends')
+
 
 class Processing(QtWidgets.QMainWindow, processingUi):
     def __init__(self, parent=None):
@@ -82,7 +85,8 @@ class Country(QtWidgets.QMainWindow, countryUi):
             l.cur.execute('SELECT DISTINCT(CountryOfPoster) FROM Jobs')
             self.countries = [each[0] for each in l.cur.fetchall()]
 
-            l.cur.execute('SELECT DISTINCT(CountryOfPoster) FROM ReviewJobs WHERE CountryOfPoster NOT IN (SELECT CountryOfPoster FROM Jobs)')
+            l.cur.execute(
+                'SELECT DISTINCT(CountryOfPoster) FROM ReviewJobs WHERE CountryOfPoster NOT IN (SELECT CountryOfPoster FROM Jobs)')
             self.countries += [each[0] for each in l.cur.fetchall()]
         elif (self.processType == "Winners"):
             l.cur.execute(
@@ -133,7 +137,6 @@ class Country(QtWidgets.QMainWindow, countryUi):
                 l.cur.execute(query)
 
                 n += int(l.cur.fetchone()[0])
-
 
             self.data.update({country: n})
 
@@ -187,7 +190,6 @@ class Tag(QtWidgets.QMainWindow, tagUi):
 
         self.categories = list(self.categories)
         self.cmbTags.addItems(sorted(self.categories))
-
 
     def graph(self):
         if (self.cmbTags.currentIndex() == 0):
@@ -376,7 +378,6 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
             self.edtStartDate.setText("")
             self.edtEndDate.setText("")
 
-
     def back(self):
         l.dateRange.close()
         l.launchProcessing()
@@ -399,7 +400,6 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
             return False
         else:
             return True
-
 
     def export(self):
         valid = self.checkValid()
@@ -428,7 +428,6 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
                                               QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
 
             self.edtKeyword.setText("")
-
 
     def graph(self):
         valid = self.checkValid()
@@ -493,7 +492,8 @@ class ViewStats(QtWidgets.QMainWindow, statsUi):
 
         self.lblNumProjects.setText('Number of projects: ' + str(numJobs))
         self.lblNumCategorised.setText('Number categorised: ' + str(numCategorised) + " (" + str(pctCategorised) + "%)")
-        self.lblNumPlagiarism.setText('Number considered plagiarism: ' + str(numPlagiarism) + " (" + str(pctPlagiarism) + "%)")
+        self.lblNumPlagiarism.setText(
+            'Number considered plagiarism: ' + str(numPlagiarism) + " (" + str(pctPlagiarism) + "%)")
 
     def getTrends(self):
         l.viewStats.close()
@@ -508,6 +508,52 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
     def __init__(self, parent=None):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
+
+        self.btnGraphByCountry.clicked.connect(self.plotBidderCountries)
+        self.btnGraphByWorkerCountry.clicked.connect(self.plotWorkerCountries)
+        # self.btnBack.clicked.connect(self.back)
+
+    def plotBidderCountries(self):
+        data = {}
+
+        l.cur.execute('SELECT Country FROM Bids WHERE User IN (SELECT DISTINCT(User) FROM Bids)')
+
+        countries = [each[0] for each in l.cur.fetchall()]
+
+        for country in countries:
+            if country != 'None':
+                val = data.get(country)
+                if val is not None:
+                    data.update({country: val + 1})
+                else:
+                    data.update({country: 1})
+
+        plotBarChartsOfBidderCountries(data)
+
+    def plotWorkerCountries(self):
+        data = {}
+
+        l.cur.execute('SELECT DISTINCT(CountryOfWinner) FROM Jobs')
+
+        countries = [each[0] for each in l.cur.fetchall()]
+
+        l.cur.execute('SELECT DISTINCT(CountryOfWinner) FROM ReviewJobs')
+
+        countries += [each[0] for each in l.cur.fetchall() if each[0] not in countries]
+
+        for country in countries:
+            if country != 'None':
+                val = data.get(country)
+                if val is not None:
+                    data.update({country: val + 1})
+                else:
+                    data.update({country: 1})
+
+        plotBarChartsOfBidderCountries(data)
+
+    def back(self):
+        l.trends.close()
+        l.launchViewStats()
 
 
 class Launcher:
