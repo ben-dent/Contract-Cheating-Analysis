@@ -4,8 +4,7 @@ from datetime import date
 
 from PyQt5 import uic, QtWidgets
 
-from DataAnalysis import DATABASE_NAME, saveToCSV, saveDateRange, plotSingleType, plotAllCategories, countDateRange
-from DataAnalysis import plotBarChartsOfBidderCountries
+from DataAnalysis import *
 
 uiFolder = "UIs/"
 
@@ -22,6 +21,7 @@ dateRangeUi = getUI("dateRangeUI")
 keywordUi = getUI("keywordUI")
 statsUi = getUI('viewStats')
 trendsUi = getUI('trends')
+plotYearUi = getUI('plotByYear')
 
 
 class Processing(QtWidgets.QMainWindow, processingUi):
@@ -511,7 +511,21 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
 
         self.btnGraphByCountry.clicked.connect(self.plotBidderCountries)
         self.btnGraphByWorkerCountry.clicked.connect(self.plotWorkerCountries)
-        # self.btnBack.clicked.connect(self.back)
+
+        self.btnGraphBiddersByYear.clicked.connect(self.plotBiddersByYear)
+        self.btnGraphWorkersByYear.clicked.connect(self.plotWorkersByYear)
+        self.btnGraphProjectsByYear.clicked.connect(self.plotProjectsByYear)
+        self.btnGraphProjectsByCategory.clicked.connect(self.plotProjectsByCategory)
+
+        self.btnBack.clicked.connect(self.back)
+
+    def plotBiddersByYear(self):
+        l.trends.close()
+        l.launchPlotYearBids()
+
+    def plotWorkersByYear(self):
+        l.trends.close()
+        l.launchPlotYearWorkers()
 
     def plotBidderCountries(self):
         data = {}
@@ -551,9 +565,148 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
 
         plotBarChartsOfBidderCountries(data)
 
+    def plotProjectsByYear(self):
+
+        startYear = 9999
+        endYear = 0
+
+        l.cur.execute('SELECT DateRange FROM Jobs')
+        res = l.cur.fetchall()
+        for each in res:
+            dateRange = each[0]
+            split = dateRange.split()
+
+            start = 2000 + int(split[0].split('/')[-1])
+            end = 2000 + int(split[-1].split('/')[-1])
+
+            if start < startYear:
+                startYear = start
+
+            if end > endYear:
+                endYear = start
+
+        data = {}
+
+        for year in range(startYear, endYear + 1):
+            query = 'SELECT COUNT(JobID) FROM Jobs WHERE Year = ' + str(year)
+            l.cur.execute(query)
+            num = l.cur.fetchone()[0]
+
+            start = date(year, 1, 1)
+            end = date(year, 12, 31)
+
+            num += len(jobsInDateRange(start, end))
+
+            data.update({year: num})
+
+        plotComparison(data, 'Years')
+
+    def plotProjectsByCategory(self):
+        data = {}
+
+        for i in range(1, 6):
+            query = 'SELECT COUNT(JobID) FROM Jobs WHERE Category = ' + str(i)
+            l.cur.execute(query)
+            num = l.cur.fetchone()[0]
+
+            query = 'SELECT COUNT(JobID) FROM ReviewJobs WHERE Category = ' + str(i)
+            l.cur.execute(query)
+            num += l.cur.fetchone()[0]
+
+            data.update({i: num})
+
+        query = "SELECT COUNT(JobID) FROM Jobs WHERE Category IS NULL OR Category = 'None'"
+        l.cur.execute(query)
+        num = l.cur.fetchone()[0]
+
+        query = "SELECT COUNT(JobID) FROM ReviewJobs WHERE Category IS NULL OR Category = 'None'"
+        l.cur.execute(query)
+        num += l.cur.fetchone()[0]
+
+        data.update({"9": num})
+
+        plotComparison(data, 'Categories')
+
     def back(self):
         l.trends.close()
         l.launchViewStats()
+
+
+class PlotByYear(QtWidgets.QMainWindow, plotYearUi):
+    def __init__(self, type, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+
+        self.type = type
+
+        self.setWindowTitle('Plot By Year - ' + self.type)
+        self.lblTitle.setText('Plot ' + self.type + ' By Year')
+
+        self.btnPlot.clicked.connect(self.plot)
+        self.btnBack.clicked.connect(self.back)
+
+    def plot(self):
+        entered = self.edtYear.text()
+        enteredYear = (len(entered) > 0)
+        validYear = False
+
+        if not enteredYear:
+            QtWidgets.QMessageBox.warning(self, 'Enter year!', 'Enter year!',
+                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+        else:
+            try:
+                year = int(enteredYear)
+                validYear = True
+            except ValueError:
+                validYear = False
+
+            if validYear:
+                year = int(entered)
+
+                start = date(year, 1, 1)
+                end = date(year, 12, 31)
+
+                data = {}
+
+                countries = []
+
+                jobData = jobsInDateRange(start, end)
+
+                if (self.type == 'Workers'):
+                    countries = [each[1] for each in jobData if each[1] != 'None']
+                else:
+                    for job in jobData:
+                        jID = job[0]
+                        query = 'SELECT Country FROM Bids WHERE JobID = ' + str(jID)
+                        l.cur.execute(query)
+                        countries += [each[0] for each in l.cur.fetchall()]
+
+                for country in countries:
+                    if country != 'None':
+                        val = data.get(country)
+                        if val is not None:
+                            data.update({country: val + 1})
+                        else:
+                            data.update({country: 1})
+
+                plotBarChartsOfBidderCountries(data)
+
+
+            else:
+                QtWidgets.QMessageBox.warning(self, 'Enter valid year!', 'Enter valid year!',
+                                              QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
+
+    def back(self):
+        l.plotYear.close()
+        l.launchTrends()
+
+    def keyPressEvent(self, event):
+        ENTER_KEY = 16777220
+        if (event.key() == ENTER_KEY):
+            self.plot()
+        else:
+            super().keyPressEvent(event)
 
 
 class Launcher:
@@ -600,6 +753,14 @@ class Launcher:
     def launchTrends(self):
         self.trends = Trends()
         self.trends.show()
+
+    def launchPlotYearBids(self):
+        self.plotYear = PlotByYear("Bidders")
+        self.plotYear.show()
+
+    def launchPlotYearWorkers(self):
+        self.plotYear = PlotByYear("Workers")
+        self.plotYear.show()
 
 
 app = QtWidgets.QApplication(sys.argv)

@@ -272,6 +272,38 @@ def plotBarChartsOfBidderCountries(countryValues):
 
     plt.show(block=False)
 
+def plotComparison(data, title):
+    yPos = np.arange(len(data))
+    vals = list(data.values())
+
+    fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
+    fig.canvas.set_window_title(title)
+
+    ax.bar(yPos, vals, align='center', alpha=0.5)
+    ax.set_ylim(bottom=0)
+
+    if title == 'Categories':
+        vals = [1,2,3,4,5,'Not Categorised']
+    else:
+        vals = sorted(list(data.keys()))
+
+    plt.xticks(yPos, vals)
+    ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
+
+    plt.ylabel('Number')
+    plt.title(title)
+
+    # Resizing the graphs to fit in the window
+    fig_size = plt.rcParams["figure.figsize"]
+    fig_size[0] = 10
+    plt.rcParams["figure.figsize"] = fig_size
+
+    plt.tight_layout()
+
+    plt.savefig("image" + title, bbox_inches='tight', dpi=100)
+
+    plt.show(block=False)
+
 def plotAllCategories(data):
     labels = list(data.keys())
     values = list(data.values())
@@ -710,6 +742,45 @@ def getKeywords():
             negative.append(word)
 
     return [keyword.lower() for keyword in positive], [keyword.lower() for keyword in negative]
+
+
+def jobsInDateRange(start, end):
+    givenRange = DateTimeRange(start, end)
+    tables = ['Jobs', 'ReviewJobs']
+    data = []
+    for table in tables:
+        query = 'SELECT DateRange, JobID, CountryOfWinner FROM ' + table
+        cur.execute(query)
+        results = [list(each) for each in cur.fetchall()]
+
+        for job in results:
+            dateRange = job[0]
+            d = [each.lstrip().rstrip() for each in dateRange.split("-")]
+
+            s = d[0].split("/")
+            startFormat = str(int(s[2]) + 2000) + "/" + s[1] + "/" + s[0]
+
+            inRange = False
+
+            endFormat = ''
+
+            if len(d) > 1:
+                e = d[1].split("/")
+                endFormat = str(int(e[2]) + 2000) + "/" + e[1] + "/" + e[0]
+
+                tableRange = DateTimeRange(startFormat, endFormat)
+
+                for day in tableRange.range(relativedelta(days=1)):
+                    if day in givenRange:
+                        inRange = True
+
+            else:
+                inRange = startFormat in givenRange
+
+            if inRange:
+                data.append([job[1], job[2]])
+
+    return data
 
 
 def conversions():
