@@ -18,6 +18,8 @@ tagUi = getUI("tagUI")
 categoryUi = getUI("categoryUI")
 dateRangeUi = getUI("dateRangeUI")
 keywordUi = getUI("keywordUI")
+statsUi = getUI('viewStats')
+trendsUi = getUI('trends')
 
 class Processing(QtWidgets.QMainWindow, processingUi):
     def __init__(self, parent=None):
@@ -30,6 +32,7 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         self.btnCategory.clicked.connect(self.category)
         self.btnDateRange.clicked.connect(self.dateRange)
         self.btnKeyword.clicked.connect(self.keyword)
+        self.btnViewStats.clicked.connect(self.viewStats)
 
     def countryBids(self):
         l.processing.close()
@@ -56,7 +59,12 @@ class Processing(QtWidgets.QMainWindow, processingUi):
         l.launchDateRange()
 
     def keyword(self):
-        print("Keyword")
+        l.processing.close()
+        l.launchKeyword()
+
+    def viewStats(self):
+        l.processing.close()
+        l.launchViewStats()
 
 
 class Country(QtWidgets.QMainWindow, countryUi):
@@ -445,6 +453,63 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
         l.launchProcessing()
 
 
+class ViewStats(QtWidgets.QMainWindow, statsUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+
+        self.setLabels()
+
+        self.btnBack.clicked.connect(self.back)
+
+        self.btnGetTrends.clicked.connect(self.getTrends)
+
+    def setLabels(self):
+        numJobs = 0
+        l.cur.execute('SELECT COUNT(JobID) FROM Jobs')
+        numJobs += l.cur.fetchone()[0]
+
+        l.cur.execute('SELECT COUNT(JobID) FROM ReviewJobs')
+        numJobs += l.cur.fetchone()[0]
+
+        numCategorised = 0
+
+        l.cur.execute("SELECT COUNT(JobID) FROM Jobs WHERE Category IS NOT NULL AND Category != 'None'")
+        numCategorised += l.cur.fetchone()[0]
+
+        l.cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE Category IS NOT NULL AND Category != 'None'")
+        numCategorised += l.cur.fetchone()[0]
+
+        numPlagiarism = 0
+
+        l.cur.execute('SELECT COUNT(JobID) FROM Jobs WHERE Category = 4 OR Category = 5')
+        numPlagiarism += l.cur.fetchone()[0]
+
+        l.cur.execute('SELECT COUNT(JobID) FROM ReviewJobs WHERE Category = 4 OR Category = 5')
+        numPlagiarism += l.cur.fetchone()[0]
+
+        pctCategorised = round((numCategorised / numJobs) * 100, 2)
+        pctPlagiarism = round((numPlagiarism / numCategorised) * 100, 2)
+
+        self.lblNumProjects.setText('Number of projects: ' + str(numJobs))
+        self.lblNumCategorised.setText('Number categorised: ' + str(numCategorised) + " (" + str(pctCategorised) + "%)")
+        self.lblNumPlagiarism.setText('Number considered plagiarism: ' + str(numPlagiarism) + " (" + str(pctPlagiarism) + "%)")
+
+    def getTrends(self):
+        l.viewStats.close()
+        l.launchTrends()
+
+    def back(self):
+        l.viewStats.close()
+        l.launchProcessing()
+
+
+class Trends(QtWidgets.QMainWindow, trendsUi):
+    def __init__(self, parent=None):
+        QtWidgets.QMainWindow.__init__(self, parent)
+        self.setupUi(self)
+
+
 class Launcher:
     def __init__(self):
         self.con = lite.connect(DATABASE_NAME)
@@ -481,6 +546,14 @@ class Launcher:
     def launchKeyword(self):
         self.keyword = Keyword()
         self.keyword.show()
+
+    def launchViewStats(self):
+        self.viewStats = ViewStats()
+        self.viewStats.show()
+
+    def launchTrends(self):
+        self.trends = Trends()
+        self.trends.show()
 
 
 app = QtWidgets.QApplication(sys.argv)
