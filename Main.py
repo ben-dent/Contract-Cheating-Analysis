@@ -129,6 +129,20 @@ class Main(QtWidgets.QMainWindow, mainUI):
         # # url = "https://www.freelancer.co.uk/u/Maplegroupcom"
         # self.getInformationFromBidderProfile(url
 
+    def lookAtMissedReviews(self):
+        con = lite.connect(DATABASE_NAME)
+        cur = con.cursor()
+
+        results = []
+
+        for table in ['Winners', 'Profiles']:
+            query = 'SELECT Username FROM ' + table
+            cur.execute(query)
+            results += [each[0] for each in cur.fetchall()]
+
+
+
+
     def getMissed(self):
         self.getSeen()
         con = lite.connect(DATABASE_NAME)
