@@ -1095,10 +1095,39 @@ def optimiseConstant():
 
     print(constant)
 
-# doAverages()
-# jobConversions()
-# reviewJobConversions()
-# conversions()
-# getDateRanges()
-# scoreProjects(10)
-# optimiseConstant()
+def possibleYears():
+    cur.execute('SELECT JobID, DateRange FROM ReviewJobs')
+
+    results = [list(each) for each in cur.fetchall()]
+
+    for pair in results:
+        jID = pair[0]
+        dateRange = pair[1]
+
+        years = ''
+
+        split = dateRange.split()
+        startYear = 2000 + int(split[0].split('/')[-1])
+        endYear = 2000 + int(split[-1].split('/')[-1])
+
+        for year in range(startYear, endYear):
+            years += str(year) + ", "
+
+        years += str(endYear)
+
+        query = "UPDATE ReviewJobs SET PossibleYears = '" + years + "' WHERE JobID = " + str(jID)
+        cur.execute(query)
+
+    con.commit()
+
+
+
+def doExtras():
+    # doAverages()
+    # jobConversions()
+    # reviewJobConversions()
+    # conversions()
+    # getDateRanges()
+    possibleYears()
+
+doExtras()

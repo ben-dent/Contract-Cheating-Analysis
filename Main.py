@@ -140,9 +140,6 @@ class Main(QtWidgets.QMainWindow, mainUI):
             cur.execute(query)
             results += [each[0] for each in cur.fetchall()]
 
-
-
-
     def getMissed(self):
         self.getSeen()
         con = lite.connect(DATABASE_NAME)
@@ -358,7 +355,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Score' INTEGER,
         'PositiveMatches' TEXT,
         'NegativeMatches' TEXT,
-        'Attachment' INTEGER
+        'Attachment' INTEGER,
+        'PossibleYears' TEXT
         );''')
 
         con.commit()

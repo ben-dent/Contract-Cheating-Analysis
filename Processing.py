@@ -692,23 +692,25 @@ class PlotByYear(QtWidgets.QMainWindow, plotYearUi):
             if validYear:
                 year = int(entered)
 
-                start = date(year, 1, 1)
-                end = date(year, 12, 31)
-
                 data = {}
 
-                countries = []
-
-                jobData = jobsInDateRange(start, end)
-
                 if (self.type == 'Workers'):
-                    countries = [each[1] for each in jobData if each[1] != 'None']
+                    query = "SELECT CountryOfWinner FROM Jobs WHERE Year = " + str(year) + " AND CountryOfWinner != 'None'"
+                    l.cur.execute(query)
+
+                    countries = [each[0] for each in l.cur.fetchall()]
+
+                    query = "SELECT CountryOfWinner FROM ReviewJobs WHERE CountryOfWinner != 'None' AND PossibleYears LIKE '%" + str(
+                        year) + "%'"
+                    l.cur.execute(query)
+
+                    countries += [each[0] for each in l.cur.fetchall()]
                 else:
-                    for job in jobData:
-                        jID = job[0]
-                        query = 'SELECT Country FROM Bids WHERE JobID = ' + str(jID)
-                        l.cur.execute(query)
-                        countries += [each[0] for each in l.cur.fetchall()]
+                    sub = "SELECT JobID FROM Jobs WHERE Year = " + str(year) + " AND CountryOfWinner != 'None'"
+                    sub2 = "SELECT JobID FROM ReviewJobs WHERE PossibleYears LIKE '%" + str(year) + "%' AND CountryOfWinner != 'None'"
+                    query = "SELECT Country FROM Bids WHERE JobID IN (" + sub + ") OR JobID IN (" + sub2 + ")"
+                    l.cur.execute(query)
+                    countries = [each[0] for each in l.cur.fetchall()]
 
                 for country in countries:
                     if country != 'None':
