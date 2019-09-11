@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>700</width>
-    <height>600</height>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>510</y>
+      <y>610</y>
       <width>120</width>
       <height>32</height>
      </rect>
@@ -110,14 +110,180 @@
    <widget class="QPushButton" name="btnGetTrends">
     <property name="geometry">
      <rect>
-      <x>115</x>
-      <y>250</y>
+      <x>290</x>
+      <y>560</y>
       <width>120</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
      <string>Get Trends</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblEssayNum">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number from 'Essay Writing' tag:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblNumPlagiarismEssay">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>300</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number considered plagiarism:</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>190</y>
+      <width>700</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="Line" name="line_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>340</y>
+      <width>700</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblAcademicNum">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>350</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number from 'Academic Writing' tag:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblNumPlagiarismAcademic">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>450</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number considered plagiarism:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblEssayCategorised">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number categorised:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblAcademicCategorised">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Number categorised:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblNumPlagiarismBoth">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>500</y>
+      <width>680</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>25</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Plagiarism across both tags:</string>
     </property>
    </widget>
   </widget>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>350</height>
+    <height>260</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,7 +38,7 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>270</y>
+      <y>170</y>
       <width>120</width>
       <height>32</height>
      </rect>
@@ -62,19 +62,6 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="btnGraph">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>180</y>
-      <width>120</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Graph</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnExport">
     <property name="geometry">
      <rect>
@@ -86,19 +73,6 @@
     </property>
     <property name="text">
      <string>Export as CSV</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>250</y>
-      <width>500</width>
-      <height>3</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>

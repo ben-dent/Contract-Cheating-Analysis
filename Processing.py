@@ -1,6 +1,4 @@
-import sqlite3 as lite
 import sys
-from datetime import date
 
 from PyQt5 import uic, QtWidgets
 
@@ -104,8 +102,6 @@ class Country(QtWidgets.QMainWindow, countryUi):
         self.cmbCountries.addItems(sorted(self.countries))
 
         self.getFreqs()
-
-        self.btnGraph.clicked.connect(self.graph)
         self.btnExport.clicked.connect(self.export)
         self.btnBack.clicked.connect(self.back)
 
@@ -140,15 +136,6 @@ class Country(QtWidgets.QMainWindow, countryUi):
 
             self.data.update({country: n})
 
-    def graph(self):
-        if (self.cmbCountries.currentIndex() == 0):
-            QtWidgets.QMessageBox.warning(self, "Please select a country!", "Please select a country!",
-                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
-        else:
-            country = self.cmbCountries.currentText()
-            plotSingleType({country: self.data.get(country)}, self.processType)
-        # plotBarChartsOfBidderCountries({country: self.data.get(country)})
-
     def export(self):
         if (self.cmbCountries.currentIndex() == 0):
             QtWidgets.QMessageBox.warning(self, "Please select a country!", "Please select a country!",
@@ -171,7 +158,6 @@ class Tag(QtWidgets.QMainWindow, tagUi):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
 
-        self.btnGraph.clicked.connect(self.graph)
         self.btnExport.clicked.connect(self.export)
         self.btnBack.clicked.connect(self.back)
 
@@ -190,15 +176,6 @@ class Tag(QtWidgets.QMainWindow, tagUi):
 
         self.categories = list(self.categories)
         self.cmbTags.addItems(sorted(self.categories))
-
-    def graph(self):
-        if (self.cmbTags.currentIndex() == 0):
-            QtWidgets.QMessageBox.warning(self, "Please select a tag!", "Please select a tag!",
-                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
-        else:
-            self.tag = self.cmbTags.currentText()
-            freq = self.getFreq()
-            plotSingleType({self.tag: freq}, 'Tag')
 
     def getFreq(self):
         n = 0
@@ -236,7 +213,6 @@ class Category(QtWidgets.QMainWindow, categoryUi):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.btnBack.clicked.connect(self.back)
-        self.btnGraph.clicked.connect(self.graph)
         self.btnGraphAll.clicked.connect(self.graphAll)
         self.btnExport.clicked.connect(self.export)
 
@@ -251,15 +227,6 @@ class Category(QtWidgets.QMainWindow, categoryUi):
                 data.update({str(i): current + int(l.cur.fetchone()[0])})
 
         plotAllCategories(data)
-
-    def graph(self):
-        if (self.cmbCategories.currentIndex() == 0):
-            QtWidgets.QMessageBox.warning(self, "Please select a category!", "Please select a category!",
-                                          QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
-        else:
-            self.category = self.cmbCategories.currentText()
-            freq = self.getFreq()
-            plotSingleType({self.category: freq}, 'Category')
 
     def getFreq(self):
         n = 0
@@ -302,15 +269,7 @@ class DateRange(QtWidgets.QMainWindow, dateRangeUi):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.btnBack.clicked.connect(self.back)
-        self.btnGraph.clicked.connect(self.graph)
         self.btnExport.clicked.connect(self.export)
-
-    def graph(self):
-        if self.checkValid():
-            start = self.edtStartDate.text()
-            end = self.edtEndDate.text()
-            freq = countDateRange(start, end)
-            plotSingleType({start + ' - ' + end: freq}, 'Date Range')
 
     def checkValid(self):
         validStart = False
@@ -388,7 +347,6 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
         QtWidgets.QMainWindow.__init__(self, parent)
         self.setupUi(self)
         self.btnExport.clicked.connect(self.export)
-        self.btnGraph.clicked.connect(self.graph)
         self.btnBack.clicked.connect(self.back)
 
     def checkValid(self):
@@ -428,24 +386,6 @@ class Keyword(QtWidgets.QMainWindow, keywordUi):
                                               QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Ok)
 
             self.edtKeyword.setText("")
-
-    def graph(self):
-        valid = self.checkValid()
-
-        keyword = self.edtKeyword.text()
-
-        if valid:
-            keywordFilter = "'%" + keyword + "'"
-            filter = "(Title LIKE " + keywordFilter + ") OR (Description LIKE " + keywordFilter + ") OR Tags LIKE " + keywordFilter + ")"
-
-            sum = 0
-
-            for table in ["Jobs", "ReviewJobs"]:
-                query = "SELECT COUNT(JobID) FROM " + table + " WHERE " + filter
-                l.cur.execute(query)
-                sum += int(l.cur.fetchone()[0])
-
-        plotSingleType({keyword: sum}, 'Keyword')
 
     def back(self):
         l.keyword.close()
@@ -490,10 +430,90 @@ class ViewStats(QtWidgets.QMainWindow, statsUi):
         pctCategorised = round((numCategorised / numJobs) * 100, 2)
         pctPlagiarism = round((numPlagiarism / numCategorised) * 100, 2)
 
+        essayNum = 0
+
+        l.cur.execute("SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%'")
+        essayNum += l.cur.fetchone()[0]
+
+        l.cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%'")
+        essayNum += l.cur.fetchone()[0]
+
+        essayCategorised = 0
+
+        l.cur.execute("SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%' AND Category IS NOT NULL AND Category != 'None'")
+        essayCategorised += l.cur.fetchone()[0]
+
+        l.cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%' AND Category IS NOT NULL AND Category != 'None'")
+        essayCategorised += l.cur.fetchone()[0]
+
+        pctEssayCategorised = round((essayCategorised / essayNum) * 100, 2)
+
+        essayPlagiarism = 0
+
+        l.cur.execute("SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%' AND (Category = 4 OR Category = 5)")
+        essayPlagiarism += l.cur.fetchone()[0]
+
+        l.cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Essay Writing%' AND Tags NOT LIKE '%Academic Writing%' AND (Category = 4 OR Category = 5)")
+        essayPlagiarism += l.cur.fetchone()[0]
+
+        pctEssayPlagiarism = round((essayPlagiarism / essayCategorised) * 100, 2)
+
+        academicNum = 0
+
+        l.cur.execute("SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%'")
+        academicNum += l.cur.fetchone()[0]
+
+        l.cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%'")
+        academicNum += l.cur.fetchone()[0]
+
+        academicCategorised = 0
+
+        l.cur.execute(
+            "SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%' AND Category IS NOT NULL AND Category != 'None'")
+        academicCategorised += l.cur.fetchone()[0]
+
+        l.cur.execute(
+            "SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%' AND Category IS NOT NULL AND Category != 'None'")
+        academicCategorised += l.cur.fetchone()[0]
+
+        pctAcademicCategorised = round((academicCategorised / academicNum) * 100, 2)
+
+        academicPlagiarism = 0
+
+        l.cur.execute(
+            "SELECT COUNT(JobID) FROM Jobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%' AND (Category = 4 OR Category = 5)")
+        academicPlagiarism += l.cur.fetchone()[0]
+
+
+        l.cur.execute(
+            "SELECT COUNT(JobID) FROM ReviewJobs WHERE Tags LIKE '%Academic Writing%' AND Tags NOT LIKE '%Essay Writing%' AND (Category = 4 OR Category = 5)")
+        academicPlagiarism += l.cur.fetchone()[0]
+
+        pctAcademicPlagiarism = round((academicPlagiarism / academicCategorised) * 100, 2)
+
+        tagTot = essayCategorised + academicCategorised
+        tagPlagiarismTot = essayPlagiarism + academicPlagiarism
+        tagPctPlagiarism = round((tagPlagiarismTot / tagTot) * 100, 2)
+
         self.lblNumProjects.setText('Number of projects: ' + str(numJobs))
         self.lblNumCategorised.setText('Number categorised: ' + str(numCategorised) + " (" + str(pctCategorised) + "%)")
         self.lblNumPlagiarism.setText(
             'Number considered plagiarism: ' + str(numPlagiarism) + " (" + str(pctPlagiarism) + "%)")
+
+        self.lblEssayNum.setText("Number from 'Essay Writing' tag: " + str(essayNum))
+        self.lblEssayCategorised.setText('Number categorised: ' + str(essayCategorised) + " (" + str(pctEssayCategorised) + "%)")
+        self.lblNumPlagiarismEssay.setText(
+            "Number considered plagiarism: " + str(essayPlagiarism) + " (" + str(pctEssayPlagiarism) + "%)")
+
+        self.lblAcademicNum.setText("Number from 'Academic Writing' tag: " + str(academicNum))
+        self.lblAcademicCategorised.setText(
+            'Number categorised: ' + str(academicCategorised) + " (" + str(pctAcademicCategorised) + "%)")
+        self.lblNumPlagiarismAcademic.setText(
+            "Number considered plagiarism: " + str(academicPlagiarism) + " (" + str(pctAcademicPlagiarism) + "%)")
+
+        self.lblNumPlagiarismBoth.setText(
+            "Plagiarism across both tags: " + str(tagPlagiarismTot) + "/" + str(tagTot) + " (" + str(tagPctPlagiarism) + "%)"
+        )
 
     def getTrends(self):
         l.viewStats.close()
@@ -517,7 +537,16 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
         self.btnGraphProjectsByYear.clicked.connect(self.plotProjectsByYear)
         self.btnGraphProjectsByCategory.clicked.connect(self.plotProjectsByCategory)
 
+        self.btnNumBiddersTime.clicked.connect(self.plotBiddersOverTime)
+        self.btnNumWorkersTime.clicked.connect(self.plotWorkersOverTime)
+
         self.btnBack.clicked.connect(self.back)
+
+    def plotBiddersOverTime(self):
+        return
+
+    def plotWorkersOverTime(self):
+        return
 
     def plotBiddersByYear(self):
         l.trends.close()
@@ -530,28 +559,28 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
     def plotBidderCountries(self):
         data = {}
 
-        l.cur.execute('SELECT Country FROM Bids WHERE User IN (SELECT DISTINCT(User) FROM Bids)')
+        l.cur.execute(
+            "SELECT DISTINCT(Country) FROM Bids WHERE User IN (SELECT DISTINCT(User) FROM Bids) AND Country != 'None'")
 
         countries = [each[0] for each in l.cur.fetchall()]
 
         for country in countries:
             if country != 'None':
-                val = data.get(country)
-                if val is not None:
-                    data.update({country: val + 1})
-                else:
-                    data.update({country: 1})
+                query = "SELECT COUNT(Country) FROM Bids WHERE Country = '" + country + "'"
+                l.cur.execute(query)
+                num = l.cur.fetchone()[0]
+                data.update({country: num})
 
         plotBarChartsOfBidderCountries(data)
 
     def plotWorkerCountries(self):
         data = {}
 
-        l.cur.execute('SELECT DISTINCT(CountryOfWinner) FROM Jobs')
+        l.cur.execute('SELECT CountryOfWinner FROM Jobs')
 
         countries = [each[0] for each in l.cur.fetchall()]
 
-        l.cur.execute('SELECT DISTINCT(CountryOfWinner) FROM ReviewJobs')
+        l.cur.execute('SELECT CountryOfWinner FROM ReviewJobs')
 
         countries += [each[0] for each in l.cur.fetchall() if each[0] not in countries]
 
@@ -566,7 +595,6 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
         plotBarChartsOfBidderCountries(data)
 
     def plotProjectsByYear(self):
-
         startYear = 9999
         endYear = 0
 

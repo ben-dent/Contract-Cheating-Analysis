@@ -214,11 +214,22 @@ def plotBarChartsOfBidderCountries(countryValues):
         data = countryData.get(name)
 
         if (data != [[], []]):
-            countries = data[0]
-            values = data[1]
+            countries = sorted(data[0])
+            values = []
+            for country in countries:
+
+                if country == "Lao People's Democratic Republic":
+                    country = "Lao Peoples Democratic Republic"
+                elif country == "Cote D'Ivoire":
+                    country = "Cote DIvoire"
+
+                values.append(countryValues.get(country))
 
             nameOfContinent = continents.get(name)
-            continentPlotData.update({nameOfContinent: sum(values)})
+            try:
+                continentPlotData.update({nameOfContinent: sum(values)})
+            except TypeError:
+                b = 2
 
             yPos = np.arange(len(countries))
 
@@ -226,7 +237,7 @@ def plotBarChartsOfBidderCountries(countryValues):
 
             fig.canvas.set_window_title("Countries of bidders")
 
-            plt.xticks(yPos, sorted(countries), rotation='vertical')
+            plt.xticks(yPos, countries, rotation='vertical')
 
             ax.bar(yPos, values, align='center', alpha=0.5)
             ax.set_ylim(bottom=0)
