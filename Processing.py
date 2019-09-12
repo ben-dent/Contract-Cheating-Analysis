@@ -534,19 +534,19 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
 
         self.btnGraphBiddersByYear.clicked.connect(self.plotBiddersByYear)
         self.btnGraphWorkersByYear.clicked.connect(self.plotWorkersByYear)
-        self.btnGraphProjectsByYear.clicked.connect(self.plotProjectsByYear)
+        # self.btnGraphProjectsByYear.clicked.connect(self.plotProjectsByYear)
         self.btnGraphProjectsByCategory.clicked.connect(self.plotProjectsByCategory)
 
         self.btnNumBiddersTime.clicked.connect(self.plotBiddersOverTime)
-        self.btnNumWorkersTime.clicked.connect(self.plotWorkersOverTime)
+        self.btnNumProjectsTime.clicked.connect(self.plotProjectsOverTime)
 
         self.btnBack.clicked.connect(self.back)
 
     def plotBiddersOverTime(self):
-        return
+        plotYears('Bidders')
 
-    def plotWorkersOverTime(self):
-        return
+    def plotProjectsOverTime(self):
+        plotYears('Projects')
 
     def plotBiddersByYear(self):
         l.trends.close()
@@ -594,40 +594,40 @@ class Trends(QtWidgets.QMainWindow, trendsUi):
 
         plotBarChartsOfBidderCountries(data)
 
-    def plotProjectsByYear(self):
-        startYear = 9999
-        endYear = 0
-
-        l.cur.execute('SELECT DateRange FROM Jobs')
-        res = l.cur.fetchall()
-        for each in res:
-            dateRange = each[0]
-            split = dateRange.split()
-
-            start = 2000 + int(split[0].split('/')[-1])
-            end = 2000 + int(split[-1].split('/')[-1])
-
-            if start < startYear:
-                startYear = start
-
-            if end > endYear:
-                endYear = start
-
-        data = {}
-
-        for year in range(startYear, endYear + 1):
-            query = 'SELECT COUNT(JobID) FROM Jobs WHERE Year = ' + str(year)
-            l.cur.execute(query)
-            num = l.cur.fetchone()[0]
-
-            start = date(year, 1, 1)
-            end = date(year, 12, 31)
-
-            num += len(jobsInDateRange(start, end))
-
-            data.update({year: num})
-
-        plotComparison(data, 'Years')
+    # def plotProjectsByYear(self):
+    #     startYear = 9999
+    #     endYear = 0
+    #
+    #     l.cur.execute('SELECT DateRange FROM Jobs')
+    #     res = l.cur.fetchall()
+    #     for each in res:
+    #         dateRange = each[0]
+    #         split = dateRange.split()
+    #
+    #         start = 2000 + int(split[0].split('/')[-1])
+    #         end = 2000 + int(split[-1].split('/')[-1])
+    #
+    #         if start < startYear:
+    #             startYear = start
+    #
+    #         if end > endYear:
+    #             endYear = start
+    #
+    #     data = {}
+    #
+    #     for year in range(startYear, endYear + 1):
+    #         query = 'SELECT COUNT(JobID) FROM Jobs WHERE Year = ' + str(year)
+    #         l.cur.execute(query)
+    #         num = l.cur.fetchone()[0]
+    #
+    #         start = date(year, 1, 1)
+    #         end = date(year, 12, 31)
+    #
+    #         num += len(jobsInDateRange(start, end))
+    #
+    #         data.update({year: num})
+    #
+    #     plotComparison(data, 'Years')
 
     def plotProjectsByCategory(self):
         data = {}
@@ -676,7 +676,6 @@ class PlotByYear(QtWidgets.QMainWindow, plotYearUi):
     def plot(self):
         entered = self.edtYear.text()
         enteredYear = (len(entered) > 0)
-        validYear = False
 
         if not enteredYear:
             QtWidgets.QMessageBox.warning(self, 'Enter year!', 'Enter year!',

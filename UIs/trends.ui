@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>600</width>
-    <height>500</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -64,7 +64,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>410</y>
+      <y>260</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -86,37 +86,11 @@
      <string>Graph Bidders By Year</string>
     </property>
    </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>40</y>
-      <width>300</width>
-      <height>3</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="Line" name="line_2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>140</y>
-      <width>300</width>
-      <height>3</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnGraphWorkersByYear">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>200</y>
+      <x>350</x>
+      <y>150</y>
       <width>200</width>
       <height>32</height>
      </rect>
@@ -125,43 +99,17 @@
      <string>Graph Workers By Year</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnGraphProjectsByYear">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>250</y>
-      <width>200</width>
-      <height>32</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Graph Projects By Year</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btnGraphProjectsByCategory">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>300</y>
+      <x>200</x>
+      <y>200</y>
       <width>200</width>
       <height>32</height>
      </rect>
     </property>
     <property name="text">
      <string>Graph Projects By Category</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line_3">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>40</y>
-      <width>3</width>
-      <height>310</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="btnNumBiddersTime">
@@ -177,7 +125,7 @@
      <string>Graph Bidders Over Time</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnNumWorkersTime">
+   <widget class="QPushButton" name="btnNumProjectsTime">
     <property name="geometry">
      <rect>
       <x>350</x>
@@ -187,7 +135,20 @@
      </rect>
     </property>
     <property name="text">
-     <string>Graph Workers Over Time</string>
+     <string>Graph Projects Over Time</string>
+    </property>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>240</y>
+      <width>600</width>
+      <height>3</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>

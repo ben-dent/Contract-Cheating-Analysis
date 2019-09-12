@@ -795,7 +795,7 @@ def jobsInDateRange(start, end):
 
 
 def conversions():
-    cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None'")
+    cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None' or ConvertedCurrency = ''")
 
     res = cur.fetchall()
 
@@ -838,7 +838,7 @@ def conversions():
 
 def jobConversions():
     cur.execute(
-        "SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
+        "SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE (ConvertedFinalCost = 'None' or ConvertedFinalCost = '') AND ConvertedFinalCost != ")
 
     res = cur.fetchall()
 
@@ -1095,6 +1095,76 @@ def optimiseConstant():
 
     print(constant)
 
+
+def plotYears(type):
+    cur.execute('SELECT DISTINCT(Year) FROM Jobs ORDER BY Year')
+    years = [each[0] for each in cur.fetchall()]
+
+    cur.execute('SELECT PossibleYears FROM ReviewJobs')
+    results = [each[0] for each in cur.fetchall()]
+
+    for result in results:
+        ys = [int(each.lstrip().rstrip()) for each in result.split(',')]
+        years += [each for each in ys if each not in years]
+
+    years = sorted(years)
+
+    data = {}
+
+    for year in years:
+        num = 0
+        if type == 'Projects':
+            query = "SELECT COUNT(JobID) FROM Jobs WHERE Year = " + str(year)
+            cur.execute(query)
+            num = cur.fetchone()[0]
+
+            query = "SELECT COUNT(JobID) FROM ReviewJobs WHERE PossibleYears LIKE '%" + str(year) + "%'"
+            cur.execute(query)
+            num += cur.fetchone()[0]
+        elif type == 'Bidders':
+            query = "SELECT COUNT(DISTINCT(User)) FROM Bids WHERE JobID IN (SELECT JobID FROM Jobs WHERE Year = " + str(year) + ")"
+            cur.execute(query)
+
+            num = cur.fetchone()[0]
+
+            query = "SELECT COUNT(DISTINCT(User)) FROM Bids WHERE JobID IN (SELECT JobID FROM ReviewJobs WHERE PossibleYears LIKE '%" + str(
+                year) + "%')"
+            cur.execute(query)
+
+            num += cur.fetchone()[0]
+
+        data.update({year: num})
+
+    yPos = np.arange(len(data))
+    vals = []
+
+    for year in sorted(list(data.keys())):
+        vals.append(data.get(year))
+
+    fig, ax = plt.subplots(1, 1, sharex=True, sharey=True)
+    fig.canvas.set_window_title(type + ' By Year')
+
+    ax.bar(yPos, vals, align='center', alpha=0.5)
+    ax.set_ylim(bottom=0)
+
+    plt.xticks(yPos, years)
+    ax.yaxis.set_major_locator(plt.MaxNLocator(20, integer=True))
+
+    plt.ylabel('Number')
+    plt.title(type + ' By Year')
+
+    # Resizing the graphs to fit in the window
+    fig_size = plt.rcParams["figure.figsize"]
+    fig_size[0] = 10
+    plt.rcParams["figure.figsize"] = fig_size
+
+    plt.tight_layout()
+
+    plt.savefig("image" + type + ' By Year', bbox_inches='tight', dpi=100)
+
+    plt.show(block=False)
+
+
 def possibleYears():
     cur.execute('SELECT JobID, DateRange FROM ReviewJobs')
 
@@ -1126,8 +1196,9 @@ def doExtras():
     # doAverages()
     # jobConversions()
     # reviewJobConversions()
-    # conversions()
+    conversions()
     # getDateRanges()
-    possibleYears()
+    # possibleYears()
 
+# plotYears('Projects')
 doExtras()
