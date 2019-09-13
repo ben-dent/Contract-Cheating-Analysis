@@ -2,6 +2,7 @@ import sqlite3 as lite
 import sys
 
 from PyQt5 import uic, QtWidgets
+from SecondCategory import doScore
 
 DATABASE_NAME = 'JobDetails.db'
 
@@ -127,6 +128,11 @@ class Categorise(QtWidgets.QMainWindow, categoriseUi):
     def five(self):
         self.cats.append([self.jID, 5])
         self.displayNext()
+
+    def closeEvent(self, event):
+        # do stuff
+        doScore()
+        event.accept()
 
 
 app = QtWidgets.QApplication(sys.argv)

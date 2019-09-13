@@ -262,7 +262,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'Score' INTEGER,
         'PositiveMatches' TEXT,
         'NegativeMatches' TEXT,
-        'Attachment' INTEGER
+        'Attachment' INTEGER,
+        'CategoryTypeTwo' INTEGER
         );''')
 
         con.commit()
@@ -356,7 +357,8 @@ class Main(QtWidgets.QMainWindow, mainUI):
         'PositiveMatches' TEXT,
         'NegativeMatches' TEXT,
         'Attachment' INTEGER,
-        'PossibleYears' TEXT
+        'PossibleYears' TEXT,
+        'CategoryTypeTwo' INTEGER
         );''')
 
         con.commit()
