@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt;
-
-plt.rcdefaults()
+# import matplotlib.pyplot as plt;
+#
+# plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -795,7 +795,7 @@ def jobsInDateRange(start, end):
 
 
 def conversions():
-    cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None' or ConvertedCurrency = ''")
+    cur.execute("SELECT ReviewID, AmountPaid, Currency, Date FROM Reviews WHERE ConvertedCurrency = 'None' or ConvertedCurrency = '' AND AmountPaid != ''")
 
     res = cur.fetchall()
 
@@ -809,7 +809,10 @@ def conversions():
         id = r[0]
         value = r[1]
         if (value != 'SEALED'):
-            amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+            try:
+                amount = float(''.join(c for c in value if c.isnumeric() or c == '.'))
+            except ValueError:
+                a = 1
         else:
             amount = "None"
         currency = r[2]
@@ -838,7 +841,7 @@ def conversions():
 
 def jobConversions():
     cur.execute(
-        "SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE (ConvertedFinalCost = 'None' or ConvertedFinalCost = '') AND ConvertedFinalCost != ")
+        "SELECT JobID, FinalCost, Currency, Year, Week FROM Jobs WHERE (ConvertedFinalCost = 'None' or ConvertedFinalCost = '') AND FinalCost != 'None'")
 
     res = cur.fetchall()
 
@@ -879,7 +882,7 @@ def jobConversions():
 
 def reviewJobConversions():
     cur.execute(
-        "SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs WHERE ConvertedFinalCost = 'None' or ConvertedFinalCost = ''")
+        "SELECT JobID, FinalCost, Currency, TimeAgo FROM ReviewJobs WHERE (ConvertedFinalCost = 'None' or ConvertedFinalCost = '') AND FinalCost != 'None'")
 
     res = cur.fetchall()
 
