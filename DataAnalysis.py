@@ -1194,11 +1194,11 @@ def possibleYears():
 
 def doExtras():
     # doAverages()
-    # jobConversions()
-    # reviewJobConversions()
+    jobConversions()
+    reviewJobConversions()
     conversions()
     # getDateRanges()
     # possibleYears()
 
 # plotYears('Projects')
-# doExtras()
+doExtras()

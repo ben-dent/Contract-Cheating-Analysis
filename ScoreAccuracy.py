@@ -36,3 +36,18 @@ for table in ['Jobs', 'ReviewJobs']:
     diffs += cur.fetchone()[0]
 
 print('Average Difference: ' + str(diffs / numCategorised))
+
+fiveScore = 0
+
+for table in ['Jobs', 'ReviewJobs']:
+    cur.execute('SELECT COUNT(JobID) FROM ' + table + " WHERE Category = 5")
+    numFives = cur.fetchone()[0]
+
+for table in ['Jobs', 'ReviewJobs']:
+    query = "SELECT COUNT(JobID) FROM " + table +  " WHERE (Category = 5 AND Score = 5)"
+    cur.execute(query)
+    fiveScore += cur.fetchone()[0]
+
+pctCorrect = round((fiveScore / numFives), 2) * 100
+
+print('Correct: ' + str(fiveScore) + "/" + str(numFives) + " (" + str(pctCorrect) + "%)")
