@@ -1297,7 +1297,7 @@ def avConversions():
         av = pair[1]
 
         if av != 'None':
-            cur.execute('SELECT DateRange FROM Jobs WHERE JobID = ' + str(jID))
+            cur.execute("SELECT DateRange FROM Jobs WHERE JobID = " + str(jID))
             dateRange = cur.fetchone()[0]
             split = dateRange.split()
 
@@ -1317,12 +1317,13 @@ def avConversions():
 
             av = '%.2f' % (av / numBids)
 
-        cur.execute('UPDATE Jobs SET AverageBidCost = ' + str(av) + ' WHERE JobID = ' + str(jID))
+        cur.execute("UPDATE Jobs SET AverageBidCost = " + str(av) + " WHERE JobID = " + str(jID))
+        con.commit()
 
 
     reviewJobsDf = pd.read_csv('reviewJobsAv.txt', delimiter="\t")
 
-    reviewJobstoSave = [pair for pair in jobsDf if pair[0] not in saved]
+    reviewJobstoSave = [pair for pair in reviewJobsDf if pair[0] not in saved]
 
     for i in range(len(reviewJobstoSave)):
         pair = reviewJobstoSave[i]
@@ -1333,7 +1334,7 @@ def avConversions():
         av = pair[1]
 
         if av != 'None':
-            cur.execute('SELECT DateRange FROM ReviewJobs WHERE JobID = ' + str(jID))
+            cur.execute("SELECT DateRange FROM ReviewJobs WHERE JobID = " + str(jID))
             dateRange = cur.fetchone()[0]
             split = dateRange.split()
 
@@ -1343,17 +1344,20 @@ def avConversions():
             endSplit = split[2].split('/')
             endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit)[0])
 
-            cur.execute('SELECT Currency FROM ReviewJobs WHERE JobID = ' + str(jID))
+            cur.execute("SELECT Currency FROM ReviewJobs WHERE JobID = " + str(jID))
             currency = cur.fetchone()[0]
 
             av = getAverage(currency, startDate, endDate, av)
 
-            cur.execute('SELECT NumberOfBidders FROM ReviewJobs WHERE JobID = ' + str(jID))
+            cur.execute("SELECT NumberOfBidders FROM ReviewJobs WHERE JobID = " + str(jID))
             numBids = cur.fetchone()[0]
 
             av = '%.2f' % (av / numBids)
 
-        cur.execute('UPDATE ReviewJobs SET AverageBidCost = ' + str(av) + ' WHERE JobID = ' + str(jID))
+        cur.execute("UPDATE ReviewJobs SET AverageBidCost = " + str(av) + ' WHERE JobID = ' + str(jID))
+        con.commit()
+
+
 
 
 
