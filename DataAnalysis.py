@@ -1302,10 +1302,10 @@ def avConversions():
             split = dateRange.split()
 
             startSplit = split[0].split('/')
-            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit)[0])
+            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit[0]))
 
             endSplit = split[2].split('/')
-            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit)[0])
+            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit[0]))
 
             cur.execute('SELECT Currency FROM Jobs WHERE JobID = ' + str(jID))
             currency = cur.fetchone()[0]
@@ -1339,10 +1339,10 @@ def avConversions():
             split = dateRange.split()
 
             startSplit = split[0].split('/')
-            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit)[0])
+            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit[0]))
 
             endSplit = split[2].split('/')
-            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit)[0])
+            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit[0])
 
             cur.execute("SELECT Currency FROM ReviewJobs WHERE JobID = " + str(jID))
             currency = cur.fetchone()[0]
