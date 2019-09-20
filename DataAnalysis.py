@@ -1289,6 +1289,8 @@ def avConversions():
 
     jobsToSave = [pair for pair in jobsDf.values if pair[0] not in saved]
 
+    a = open('savedIDs.txt', 'at')
+
     for i in range(len(jobsToSave)):
         pair = jobsToSave[i]
 
@@ -1323,6 +1325,8 @@ def avConversions():
             cur.execute("UPDATE Jobs SET AverageBidCost = " + str(av) + " WHERE JobID = " + str(jID))
         else:
             cur.execute("UPDATE Jobs SET AverageBidCost = 'None' WHERE JobID = " + str(jID))
+
+        a.write(str(jID) + "\n")
 
         con.commit()
 
@@ -1361,6 +1365,7 @@ def avConversions():
             av = '%.2f' % (av / numBids)
 
         cur.execute("UPDATE ReviewJobs SET AverageBidCost = " + str(av) + ' WHERE JobID = ' + str(jID))
+        a.write(str(jID) + "\n")
         con.commit()
 
 
