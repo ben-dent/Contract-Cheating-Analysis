@@ -1281,13 +1281,13 @@ def possibleYears():
 
 
 def avConversions():
-    data = pd.read_csv('Attachments.txt', delimiter="\t")
+    data = pd.read_csv('savedIDs.txt', delimiter="\t")
 
     saved = [each[0] for each in data.values]
 
     jobsDf = pd.read_csv('jobsAv.txt', delimiter="\t")
 
-    jobsToSave = [pair for pair in jobsDf if pair[0] not in saved]
+    jobsToSave = [pair for pair in jobsDf.values if pair[0] not in saved]
 
     for i in range(len(jobsToSave)):
         pair = jobsToSave[i]
