@@ -1,6 +1,6 @@
-import matplotlib.pyplot as plt;
-
-plt.rcdefaults()
+# import matplotlib.pyplot as plt;
+#
+# plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -1289,4 +1289,4 @@ def doExtras():
     jobAvConversions()
 
 # plotYears('Projects')
-# doExtras()
+doExtras()
