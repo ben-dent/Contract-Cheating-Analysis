@@ -23,7 +23,7 @@ for year in range(2013, 2020):
     data = []
     for i in range(len(tables)):
         table = tables[i]
-        query = 'SELECT DateRange, ConvertedFinalCost FROM ' + table + " WHERE ConvertedFinalCost != 'None' AND " + columns[i] + " LIKE '%" + str(year) + "%'"
+        query = 'SELECT DateRange, ConvertedFinalCost FROM ' + table + " WHERE ConvertedFinalCost != 'None' AND " + columns[i] + " LIKE '%" + str(year) + "%' AND ConvertedFinalCost != 'Unavailable'"
         cur.execute(query)
         results = [list(each) for each in cur.fetchall()]
 
@@ -60,4 +60,6 @@ for year in range(2013, 2020):
     finalResults.append(toAppend)
 
 print("\n###################\n")
-print(str(finalResults))
+# print(str(finalResults))
+for each in finalResults:
+    print(each + "\n\n")

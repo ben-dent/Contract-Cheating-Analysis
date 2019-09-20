@@ -11,9 +11,10 @@ for year in range(2017, 2020):
     for i in range(len(workers)):
         worker = workers[i]
         print(str(year) + " - Worker " + str(i + 1) + "/5")
-        cur.execute("SELECT SUM(ConvertedCurrency) FROM Reviews WHERE Profile = '" + worker + "' AND ConvertedCurrency != '' AND ConvertedCurrency != 'None' AND PossibleYears LIKE '%" + str(year) + "%'")
-        num = cur.fetchone()[0]
-
+        cur.execute("SELECT SUM(ConvertedCurrency), COUNT(ConvertedCurrency) FROM Reviews WHERE Profile = '" + worker + "' AND ConvertedCurrency != '' AND ConvertedCurrency != 'None' AND PossibleYears LIKE '%" + str(year) + "%'")
+        r = cur.fetchone()
+        num = r[0]
+        print(worker + " " + str(r[1]) + " jobs")
         amounts.update({worker + " - " + str(year): num})
 
 # topWorkers = [[reviews.get(number), number] for number in sorted(list(reviews.keys()))[-5:]]
