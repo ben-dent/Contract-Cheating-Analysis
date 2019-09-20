@@ -1315,12 +1315,15 @@ def avConversions():
             cur.execute('SELECT NumberOfBidders FROM Jobs WHERE JobID = ' + str(jID))
             numBids = cur.fetchone()[0]
 
-            av = '%.2f' % (float(av) / int(numBids))
+            if numBids != 0:
+                av = '%.2f' % (float(av) / int(numBids))
+            else:
+                av = 0
 
             cur.execute("UPDATE Jobs SET AverageBidCost = " + str(av) + " WHERE JobID = " + str(jID))
         else:
             cur.execute("UPDATE Jobs SET AverageBidCost = 'None' WHERE JobID = " + str(jID))
-            
+
         con.commit()
 
 
