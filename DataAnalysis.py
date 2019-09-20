@@ -12,6 +12,7 @@ import pycountry_convert as pc
 from dateutil.relativedelta import relativedelta
 from forex_python.converter import CurrencyRates, RatesNotAvailableError
 import random
+import pandas as pd
 
 DATABASE_NAME = 'JobDetails.db'
 con = lite.connect(DATABASE_NAME)
@@ -1279,14 +1280,92 @@ def possibleYears():
 
 
 
-def doExtras():
-    # doAverages()
-    # jobConversions()
-    # reviewJobConversions()
-    # conversions()
-    # getDateRanges()
-    # possibleYears()
-    jobAvConversions()
+def avConversions():
+    data = pd.read_csv('Attachments.txt', delimiter="\t")
 
-# plotYears('Projects')
-doExtras()
+    saved = [each[0] for each in data.values]
+
+    jobsDf = pd.read_csv('jobsAv.txt', delimiter="\t")
+
+    jobsToSave = [pair for pair in jobsDf if pair[0] not in saved]
+
+    for i in range(len(jobsToSave)):
+        pair = jobsToSave[i]
+
+        print("Job " + str(i + 1) + "/" + str(len(jobsToSave)))
+        jID = pair[0]
+        av = pair[1]
+
+        if av != 'None':
+            cur.execute('SELECT DateRange FROM Jobs WHERE JobID = ' + str(jID))
+            dateRange = cur.fetchone()[0]
+            split = dateRange.split()
+
+            startSplit = split[0].split('/')
+            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit)[0])
+
+            endSplit = split[2].split('/')
+            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit)[0])
+
+            cur.execute('SELECT Currency FROM Jobs WHERE JobID = ' + str(jID))
+            currency = cur.fetchone()[0]
+
+            av = getAverage(currency, startDate, endDate, av)
+
+            cur.execute('SELECT NumberOfBidders FROM Jobs WHERE JobID = ' + str(jID))
+            numBids = cur.fetchone()[0]
+
+            av = '%.2f' % (av / numBids)
+
+        cur.execute('UPDATE Jobs SET AverageBidCost = ' + str(av) + ' WHERE JobID = ' + str(jID))
+
+
+    reviewJobsDf = pd.read_csv('reviewJobsAv.txt', delimiter="\t")
+
+    reviewJobstoSave = [pair for pair in jobsDf if pair[0] not in saved]
+
+    for i in range(len(reviewJobstoSave)):
+        pair = reviewJobstoSave[i]
+
+        print("Job " + str(i + 1) + "/" + str(len(reviewJobstoSave)))
+
+        jID = pair[0]
+        av = pair[1]
+
+        if av != 'None':
+            cur.execute('SELECT DateRange FROM ReviewJobs WHERE JobID = ' + str(jID))
+            dateRange = cur.fetchone()[0]
+            split = dateRange.split()
+
+            startSplit = split[0].split('/')
+            startDate = date(2000 + int(startSplit[2]), int(startSplit[1]), int(startSplit)[0])
+
+            endSplit = split[2].split('/')
+            endDate = date(2000 + int(endSplit[2]), int(endSplit[1]), int(endSplit)[0])
+
+            cur.execute('SELECT Currency FROM ReviewJobs WHERE JobID = ' + str(jID))
+            currency = cur.fetchone()[0]
+
+            av = getAverage(currency, startDate, endDate, av)
+
+            cur.execute('SELECT NumberOfBidders FROM ReviewJobs WHERE JobID = ' + str(jID))
+            numBids = cur.fetchone()[0]
+
+            av = '%.2f' % (av / numBids)
+
+        cur.execute('UPDATE ReviewJobs SET AverageBidCost = ' + str(av) + ' WHERE JobID = ' + str(jID))
+
+
+
+# def doExtras():
+#     # doAverages()
+#     # jobConversions()
+#     # reviewJobConversions()
+#     # conversions()
+#     # getDateRanges()
+#     # possibleYears()
+
+
+# # plotYears('Projects')
+# doExtras()
+avConversions()
