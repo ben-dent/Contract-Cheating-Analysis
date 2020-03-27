@@ -15,13 +15,13 @@ for table in ['Jobs', 'ReviewJobs']:
     cur.execute("SELECT CountryOfPoster FROM " + table)
     countries += [each[0] for each in cur.fetchall()]
 
-for i in range(len(countries)):
-    country = countries[i]
-    num = cs.get(country)
-    if num is None:
-        cs.update({country: 1})
-    else:
-        cs.update({country: num + 1})
+# for i in range(len(countries)):
+#     country = countries[i]
+#     num = cs.get(country)
+#     if num is None:
+#         cs.update({country: 1})
+#     else:
+#         cs.update({country: num + 1})
 
 
 # cur.execute("SELECT Country, ConvertedCurrency FROM Reviews WHERE ConvertedCurrency != '' AND ConvertedCurrency != 'None' AND ConvertedCurrency != 'Unavailable'")
@@ -39,6 +39,8 @@ for i in range(len(countries)):
 cur.execute("SELECT CountryOfPoster, ConvertedFinalCost FROM Jobs WHERE ConvertedFinalCost != '' AND ConvertedFinalCost != 'None' AND ConvertedFinalCost != 'Unavailable'")
 results = [list(each) for each in cur.fetchall()]
 
+print(len(results))
+
 for result in results:
     country = result[0]
     paid = float(result[1])
@@ -47,10 +49,17 @@ for result in results:
         amounts.update({country: paid})
     else:
         amounts.update({country: num + paid})
+
+    num = cs.get(country)
+    if num is None:
+        cs.update({country: 1})
+    else:
+        cs.update({country: num + 1})
 
 
 cur.execute("SELECT CountryOfPoster, ConvertedFinalCost FROM ReviewJobs WHERE ConvertedFinalCost != '' AND ConvertedFinalCost != 'None' AND ConvertedFinalCost != 'Unavailable'")
 results = [list(each) for each in cur.fetchall()]
+print(len(results))
 
 for result in results:
     country = result[0]
@@ -60,6 +69,12 @@ for result in results:
         amounts.update({country: paid})
     else:
         amounts.update({country: num + paid})
+
+    num = cs.get(country)
+    if num is None:
+        cs.update({country: 1})
+    else:
+        cs.update({country: num + 1})
 
 countryNums = sorted(list(cs.values()))[-5:]
 

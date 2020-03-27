@@ -1,6 +1,6 @@
-# import matplotlib.pyplot as plt;
-#
-# plt.rcdefaults()
+import matplotlib.pyplot as plt;
+
+plt.rcdefaults()
 import csv
 import sqlite3 as lite
 from calendar import monthrange
@@ -18,22 +18,23 @@ DATABASE_NAME = 'JobDetails.db'
 con = lite.connect(DATABASE_NAME)
 cur = con.cursor()
 
-bidNames = ["Bid ID", "Job ID", "Country", "User"]
+bidNames = ["Bid ID", "Job ID", "Country", "User", "Price", "Currency"]
 jobNames = ["Job ID", "URL", "Title", "Description", "Tags", "Number Of Bidders", "Average Bid Cost", "Final Cost",
             "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Year", "Week",
-            "Date Range", "Category"]
+            "Date Range", "Category", "Score", "Positive Matches", "Negative Matches", "Attachment", "Category Type Two", "Possible Months"]
 reviewJobNames = ["Job ID", "URL", "Title", "Description", "Tags", "Number Of Bidders", "Average Bid Cost", "Final Cost",
             "Currency", "Time", "Converted Final Cost", "Country Of Poster", "Country Of Winner", "Date Scraped",
-                  "Time Ago", "Date Range", "Category"]
+                  "Time Ago", "Date Range", "Category", "Score", "Positive Matches", "Negative Matches", "Attachment",
+                  "Possible Years", "Category Type Two", "Possible Months"]
 profileNames = ["Profile ID", "Username", "Number Of Reviews", "Average Review", "Hourly Rate",
                 "Earnings Percentage",
                 "Country"]
 qualificationNames = ["Qualification ID", "Qualification Type", "User", "Qualification Name", "Extra Information"]
 reviewNames = ["Review ID", "Project URL", "Profile", "Score", "Amount Paid", "Currency", "Converted Currency",
-               "Date Scraped", "Date", "Country", "Notes"]
+               "Date Scraped", "Date", "Country", "Notes", "Date Range", "Possible Months", "Possible Years"]
 winnerNames = ["Job ID", "Job URL", "Username", "Profile URL"]
 
-names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "ReviewJobs": reviewJobNames," Profiles": profileNames,
+names = {"Bids": bidNames, "Jobs": jobNames, "JobsHourly": jobNames, "ReviewJobs": reviewJobNames, "Profiles": profileNames,
          "Qualifications": qualificationNames, "Reviews": reviewNames, "Winners": winnerNames}
 
 
@@ -493,6 +494,7 @@ def saveToCSV(tables, columns, filter, name):
                     a = csv.writer(fp, delimiter=',')
                     line = [line]
                     a.writerows(line)
+
 
 def countDateRange(start, end):
     givenRange = DateTimeRange(start, end)
@@ -1383,4 +1385,4 @@ def avConversions():
 
 # # plotYears('Projects')
 # doExtras()
-avConversions()
+# avConversions()

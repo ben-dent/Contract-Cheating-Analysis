@@ -463,7 +463,7 @@ class Main(QtWidgets.QMainWindow, mainUI):
             for result in res:
                 jID = result[0]
                 av = result[1]
-                if av != "None":
+                if av != "None" and av != "Not Found":
                     av = '{0:.2f}'.format(float(''.join(c for c in av if c.isnumeric() or c == '.')))
 
                 final = result[2]

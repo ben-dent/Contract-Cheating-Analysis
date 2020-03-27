@@ -11,15 +11,15 @@ data = []
 for year in range(2017, 2020):
     for month in range(1, 13):
         monthName = yearMonths.get(month)
-        cur.execute('SELECT COUNT(JobID) FROM Jobs WHERE Year = ' + str(year) + " AND PossibleMonths LIKE '%" + monthName + "%'")
+        cur.execute('SELECT COUNT(JobID) FROM Jobs WHERE Year = ' + str(year) + " AND PossibleMonths LIKE '%" + monthName + "%' AND ConvertedFinalCost != 'None'")
         num = cur.fetchone()[0]
 
-        cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE PossibleYears LIKE '%" + str(year) + "' AND PossibleMonths LIKE '%" + monthName + "%'")
+        cur.execute("SELECT COUNT(JobID) FROM ReviewJobs WHERE PossibleYears LIKE '%" + str(year) + "' AND PossibleMonths LIKE '%" + monthName + "%' AND ConvertedFinalCost != 'None'")
         num += cur.fetchone()[0]
 
-        cur.execute("SELECT COUNT(ReviewID) FROM Reviews WHERE PossibleYears LIKE '%" + str(
-            year) + "' AND PossibleMonths LIKE '%" + monthName + "%'")
-        num += cur.fetchone()[0]
+        # cur.execute("SELECT COUNT(ReviewID) FROM Reviews WHERE PossibleYears LIKE '%" + str(
+        #     year) + "' AND PossibleMonths LIKE '%" + monthName + "%'")
+        # num += cur.fetchone()[0]
 
         data.append([str(year) + " - " + monthName, num])
     data.append("\n")
